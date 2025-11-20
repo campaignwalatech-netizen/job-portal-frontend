@@ -1,29 +1,26 @@
+// src/contexts/AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isProfileComplete, setIsProfileComplete] = useState(false);
   const [onboardingData, setOnboardingData] = useState({
     mobile: '',
     userType: '',
     otp: ''
   });
-  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  // Check if user already completed onboarding
+  // Load user data from localStorage on app start
   useEffect(() => {
-    const savedUserType = localStorage.getItem('userType');
-    const savedMobile = localStorage.getItem('mobile');
     const savedUser = localStorage.getItem('user');
+    const profileComplete = localStorage.getItem('profileComplete');
     
-    if (savedUserType && savedMobile) {
-      const userInfo = {
-        userType: savedUserType,
-        mobile: savedMobile,
-        ...(savedUser ? JSON.parse(savedUser) : {})
-      };
-      setUser(userInfo);
+    if (savedUser) {
+      const userData = JSON.parse(savedUser);
+      setUser(userData);
+      setIsProfileComplete(profileComplete === 'true');
     }
   }, []);
 
@@ -35,35 +32,44 @@ export const AuthProvider = ({ children }) => {
     const userInfo = {
       userType: onboardingData.userType,
       mobile: onboardingData.mobile,
-      ...userData
+      ...userData,
+      id: Date.now().toString(),
+      joinedAt: new Date().toISOString()
     };
-    setUser(userInfo);
-    localStorage.setItem('userType', onboardingData.userType);
-    localStorage.setItem('mobile', onboardingData.mobile);
-    localStorage.setItem('user', JSON.stringify(userInfo));
     
-    // Set redirect flag
-    setShouldRedirect(true);
+    setUser(userInfo);
+    localStorage.setItem('user', JSON.stringify(userInfo));
+  };
+
+  const completeProfile = () => {
+    setIsProfileComplete(true);
+    localStorage.setItem('profileComplete', 'true');
+    
+    const updatedUser = { ...user, profileCompleted: true };
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('userType');
-    localStorage.removeItem('mobile');
+    setIsProfileComplete(false);
+    setOnboardingData({
+      mobile: '',
+      userType: '',
+      otp: ''
+    });
     localStorage.removeItem('user');
-    setShouldRedirect(false);
+    localStorage.removeItem('profileComplete');
   };
 
   const value = {
     user,
-    setUser,
+    isProfileComplete,
     onboardingData,
     updateOnboardingData,
     completeOnboarding,
-    logout,
-    shouldRedirect,
-    resetRedirect: () => setShouldRedirect(false),
-    resetOnboarding: () => setOnboardingData({ mobile: '', userType: '', otp: '' })
+    completeProfile,
+    logout
   };
 
   return (

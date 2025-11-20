@@ -66,7 +66,7 @@ const ProfileForm = () => {
   
   const [isEditing, setIsEditing] = useState(false);
   const [activeSection, setActiveSection] = useState('personal');
-  const [formData, setFormData] = useState(onboardingData);
+  const [formData, setFormData] = useState({});
   const [photoPreview, setPhotoPreview] = useState(null);
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
   const [newSkill, setNewSkill] = useState('');
@@ -81,15 +81,90 @@ const ProfileForm = () => {
     'Leadership', 'Problem Solving', 'Team Management'
   ];
 
+  // Initialize formData with onboardingData, ensuring no undefined values
   useEffect(() => {
-    setFormData(onboardingData);
+    if (onboardingData) {
+      setFormData({
+        personalInfo: onboardingData.personalInfo || {},
+        professionalInfo: onboardingData.professionalInfo || {},
+        education: onboardingData.education || [],
+        experience: onboardingData.experience || [],
+        skills: onboardingData.skills || [],
+        resume: onboardingData.resume || null,
+        profilePhoto: onboardingData.profilePhoto || null,
+        ...onboardingData
+      });
+    }
   }, [onboardingData]);
+
+  // Safe calculateProfileCompletion function
+  const calculateProfileCompletion = () => {
+    const sections = {
+      personalInfo: 20,
+      professionalInfo: 20,
+      education: 15,
+      experience: 20,
+      skills: 15,
+      resume: 10
+    };
+
+    let totalScore = 0;
+
+    Object.entries(sections).forEach(([key, weight]) => {
+      const section = formData[key];
+      
+      if (!section) {
+        return; // Skip if section doesn't exist
+      }
+
+      if (Array.isArray(section)) {
+        // For arrays (education, experience, skills)
+        totalScore += section.length > 0 ? weight : 0;
+      } else if (typeof section === 'object') {
+        // For objects (personalInfo, professionalInfo)
+        const filledFields = Object.values(section).filter(value => 
+          value !== null && value !== undefined && value.toString().trim() !== ''
+        ).length;
+        const totalFields = Object.keys(section).length;
+        
+        if (totalFields > 0) {
+          totalScore += (filledFields / totalFields) * weight;
+        }
+      } else {
+        // For simple values (resume)
+        totalScore += section ? weight : 0;
+      }
+    });
+
+    return Math.min(Math.round(totalScore), 100);
+  };
+
+  const profileCompletion = calculateProfileCompletion();
+
+  const getCompletionColor = (percentage) => {
+    if (percentage >= 80) return 'success';
+    if (percentage >= 60) return 'warning';
+    return 'error';
+  };
+
+  // Safe section completion calculation
+  const calculateSectionCompletion = (sectionKey) => {
+    const section = formData[sectionKey];
+    if (!section || typeof section !== 'object') return 0;
+    
+    const filled = Object.values(section).filter(value => 
+      value !== null && value !== undefined && value.toString().trim() !== ''
+    ).length;
+    const total = Object.keys(section).length;
+    
+    return total > 0 ? Math.round((filled / total) * 100) : 0;
+  };
 
   const handleChange = (section, field) => (event) => {
     setFormData(prev => ({
       ...prev,
       [section]: {
-        ...prev[section],
+        ...(prev[section] || {}), // Ensure section exists
         [field]: event.target.value
       }
     }));
@@ -107,6 +182,7 @@ const ProfileForm = () => {
     }));
   };
 
+  // Missing function: handlePhotoUpload
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -121,6 +197,7 @@ const ProfileForm = () => {
     }
   };
 
+  // Missing function: handleResumeUpload
   const handleResumeUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -146,6 +223,7 @@ const ProfileForm = () => {
     }
   };
 
+  // Missing function: handleSave
   const handleSave = () => {
     Object.keys(formData).forEach(section => {
       if (typeof formData[section] === 'object' && !Array.isArray(formData[section])) {
@@ -156,11 +234,13 @@ const ProfileForm = () => {
     localStorage.setItem('profileComplete', 'true');
   };
 
+  // Missing function: handleCancel
   const handleCancel = () => {
     setFormData(onboardingData);
     setIsEditing(false);
   };
 
+  // Missing function: handleAddEducation
   const handleAddEducation = () => {
     const newEducation = {
       id: Date.now(),
@@ -175,6 +255,7 @@ const ProfileForm = () => {
     addEducation(newEducation);
   };
 
+  // Missing function: handleAddExperience
   const handleAddExperience = () => {
     const newExperience = {
       id: Date.now(),
@@ -189,6 +270,7 @@ const ProfileForm = () => {
     addExperience(newExperience);
   };
 
+  // Missing function: handleAddSkill
   const handleAddSkill = () => {
     if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
       addSkill(newSkill.trim());
@@ -197,58 +279,14 @@ const ProfileForm = () => {
     }
   };
 
+  // Missing function: handleQuickSkillAdd
   const handleQuickSkillAdd = (skill) => {
     if (!formData.skills.includes(skill)) {
       addSkill(skill);
     }
   };
 
-  const getCompletionColor = (percentage) => {
-    if (percentage >= 80) return 'success';
-    if (percentage >= 60) return 'warning';
-    return 'error';
-  };
-
-  const profileCompletion = calculateProfileCompletion();
-
-  function calculateProfileCompletion() {
-    const sections = [
-      { key: 'personalInfo', weight: 20, required: ['fullName', 'email', 'phone'] },
-      { key: 'professionalInfo', weight: 20, required: ['currentTitle', 'totalExperience'] },
-      { key: 'education', weight: 15, required: [] },
-      { key: 'experience', weight: 20, required: [] },
-      { key: 'skills', weight: 15, required: [] },
-      { key: 'resume', weight: 10, required: [] }
-    ];
-
-    let totalScore = 0;
-
-    sections.forEach(({ key, weight, required }) => {
-      const section = formData[key];
-      
-      if (Array.isArray(section)) {
-        totalScore += section.length > 0 ? weight : 0;
-      } else if (typeof section === 'object') {
-        const filledRequired = required.filter(field => 
-          section[field] && section[field].toString().trim() !== ''
-        ).length;
-        const requiredScore = (filledRequired / required.length) * (weight * 0.6);
-        
-        const filledOptional = Object.entries(section).filter(([key, value]) => 
-          !required.includes(key) && value && value.toString().trim() !== ''
-        ).length;
-        const totalOptional = Object.keys(section).length - required.length;
-        const optionalScore = totalOptional > 0 ? (filledOptional / totalOptional) * (weight * 0.4) : 0;
-        
-        totalScore += requiredScore + optionalScore;
-      } else {
-        totalScore += section ? weight : 0;
-      }
-    });
-
-    return Math.min(Math.round(totalScore), 100);
-  }
-
+  // Define sections for navigation
   const sections = [
     { 
       id: 'personal', 
@@ -294,21 +332,9 @@ const ProfileForm = () => {
     }
   ];
 
-  function calculateSectionCompletion(sectionKey) {
-    const section = formData[sectionKey];
-    if (!section || typeof section !== 'object') return 0;
-    
-    const filled = Object.values(section).filter(value => 
-      value !== null && value !== undefined && value.toString().trim() !== ''
-    ).length;
-    const total = Object.keys(section).length;
-    
-    return Math.round((filled / total) * 100);
-  }
-
   return (
     <Box sx={{ maxWidth: 1400, margin: '0 auto', p: { xs: 2, md: 4 } }}>
-      {/* Header with Enhanced Design */}
+      {/* Header with Profile Completion */}
       <Slide in={true} direction="down" timeout={800}>
         <Card sx={{ 
           mb: 4, 
@@ -317,9 +343,6 @@ const ProfileForm = () => {
           position: 'relative',
           overflow: 'hidden'
         }}>
-          <Box sx={{ position: 'absolute', top: 0, right: 0, opacity: 0.1 }}>
-            {/* Background pattern */}
-          </Box>
           <CardContent sx={{ p: 4, position: 'relative' }}>
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
@@ -420,6 +443,7 @@ const ProfileForm = () => {
               </Grid>
             </Grid>
 
+            {/* Edit/Save buttons */}
             <Fade in={true} timeout={1000}>
               <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
                 {!isEditing ? (
@@ -926,7 +950,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
         )}
       </Box>
 
-      {formData.education?.length === 0 ? (
+      {(!formData.education || formData.education.length === 0) ? (
         <Paper sx={{ p: 6, textAlign: 'center', bgcolor: 'grey.50' }}>
           <School sx={{ fontSize: 64, color: 'grey.400', mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>
@@ -978,7 +1002,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
                   <TextField
                     fullWidth
                     label="Degree/Course"
-                    value={edu.degree}
+                    value={edu.degree || ''}
                     onChange={onChange('education', index, 'degree')}
                     disabled={!isEditing}
                   />
@@ -987,7 +1011,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
                   <TextField
                     fullWidth
                     label="Institution"
-                    value={edu.institution}
+                    value={edu.institution || ''}
                     onChange={onChange('education', index, 'institution')}
                     disabled={!isEditing}
                   />
@@ -996,7 +1020,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
                   <TextField
                     fullWidth
                     label="Field of Study"
-                    value={edu.field}
+                    value={edu.field || ''}
                     onChange={onChange('education', index, 'field')}
                     disabled={!isEditing}
                   />
@@ -1005,7 +1029,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
                   <TextField
                     fullWidth
                     label="Grade/Percentage"
-                    value={edu.grade}
+                    value={edu.grade || ''}
                     onChange={onChange('education', index, 'grade')}
                     disabled={!isEditing}
                   />
@@ -1015,7 +1039,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
                     fullWidth
                     label="Start Date"
                     type="month"
-                    value={edu.startDate}
+                    value={edu.startDate || ''}
                     onChange={onChange('education', index, 'startDate')}
                     InputLabelProps={{ shrink: true }}
                     disabled={!isEditing}
@@ -1026,7 +1050,7 @@ const EducationSection = ({ formData, onAdd, onRemove, onChange, isEditing }) =>
                     fullWidth
                     label="End Date"
                     type="month"
-                    value={edu.endDate}
+                    value={edu.endDate || ''}
                     onChange={onChange('education', index, 'endDate')}
                     InputLabelProps={{ shrink: true }}
                     disabled={!isEditing || edu.currentlyStudying}
@@ -1069,7 +1093,7 @@ const SkillsSection = ({ formData, onAdd, onRemove, onQuickAdd, popularSkills, i
         )}
       </Box>
 
-      {formData.skills?.length === 0 ? (
+      {(!formData.skills || formData.skills.length === 0) ? (
         <Paper sx={{ p: 6, textAlign: 'center', bgcolor: 'grey.50' }}>
           <Build sx={{ fontSize: 64, color: 'grey.400', mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>

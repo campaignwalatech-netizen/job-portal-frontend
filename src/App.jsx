@@ -1,112 +1,194 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from "./contexts/AuthContext.jsx";
-import { OnboardingProvider } from "./contexts/OnboardingContext.jsx";
-import OnboardingFlow from "./components/auth/OnboardingFlow.jsx";
-import Header from "./components/common/Header/Header.jsx";
-import EmployerDashboard from "./pages/Employer/EmployerDashboard.jsx";
-import JobSeekerDashboard from "./pages/jobseeker/JobSeekerDashboard.jsx";
-import EmployeeOnboarding from "./pages/jobseeker/EmployeeOnboarding.jsx";
-import ProfilePage from "./components/profile/ProfileForm.jsx";
-import { Box, Typography } from '@mui/material';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { OnboardingProvider } from "./contexts/OnboardingContext";
+import {
+  ProtectedRoute,
+  PublicRoute,
+  ProfileCompleteRoute,
+} from "./components/auth";
+import OnboardingFlow from "./components/auth/OnboardingFlow";
+import Header from "./components/common/Header/Header";
+import EmployerDashboard from "./pages/Employer/EmployerDashboard";
+import JobSeekerDashboard from "./pages/jobseeker/JobSeekerDashboard";
+import EmployeeOnboarding from "./pages/jobseeker/EmployeeOnboarding";
+import EmployerOnboarding from "./pages/Employer/EmployerOnboarding";
+import ProfilePage from "./components/profile/ProfileForm";
+import { Box, Typography, Button } from "@mui/material";
 
 const theme = createTheme({
   typography: {
     fontSize: 14,
     h6: {
-      fontSize: '1.1rem',
-      fontWeight: 600
+      fontSize: "1.1rem",
+      fontWeight: 600,
     },
     body2: {
-      fontSize: '0.875rem'
+      fontSize: "0.875rem",
     },
     caption: {
-      fontSize: '0.75rem'
-    }
+      fontSize: "0.75rem",
+    },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          fontSize: '0.875rem',
-          textTransform: 'none'
-        }
-      }
+          fontSize: "0.875rem",
+          textTransform: "none",
+        },
+      },
     },
     MuiTextField: {
       styleOverrides: {
         root: {
-          '& .MuiInputBase-input': {
-            fontSize: '0.875rem'
-          }
-        }
-      }
-    }
-  }
+          "& .MuiInputBase-input": {
+            fontSize: "0.875rem",
+          },
+        },
+      },
+    },
+  },
 });
 
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  return user.userType ? children : <Navigate to="/" />;
-};
-
-// Public Route Component (redirect if already logged in)
-const PublicRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  return !user.userType ? children : <Navigate to={user.userType === 'employer' ? '/employer/dashboard' : '/jobs'} />;
-};
-
-function HomePage() {
+// Simple landing page component
+const LandingPage = () => {
   return (
-    <Box sx={{ textAlign: 'center', py: 8 }}>
-      <JobSeekerDashboard />
+    <Box sx={{ 
+      p: 4, 
+      textAlign: 'center',
+      minHeight: '60vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
+        Welcome to JobPortal
+      </Typography>
+      <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+        Find your dream job or hire the best talent
+      </Typography>
+      <Button 
+        variant="contained" 
+        size="large"
+        sx={{ px: 4, py: 1.5 }}
+        onClick={() => window.location.reload()}
+      >
+        Get Started
+      </Button>
     </Box>
   );
-}
+};
+
+// New component to handle redirection based on user status
+const HomeRedirect = () => {
+  const { user, isProfileComplete } = useAuth();
+  
+  console.log('HomeRedirect - User:', user, 'ProfileComplete:', isProfileComplete);
+  
+  if (!user) {
+    return <LandingPage />;
+  }
+  
+  // If profile is not complete, redirect to onboarding
+  if (!isProfileComplete) {
+    if (user.userType === 'employer') {
+      return <Navigate to="/employer/onboarding" replace />;
+    } else {
+      return <Navigate to="/onboarding" replace />;
+    }
+  }
+  
+  // Profile is complete, redirect to dashboard
+  if (user.userType === 'employer') {
+    return <Navigate to="/employer/dashboard" replace />;
+  } else {
+    return <Navigate to="/jobseeker/dashboard" replace />;
+  }
+};
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <OnboardingProvider>
-          <AuthProvider>
-            <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+        <AuthProvider>
+          <OnboardingProvider>
+            <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
               <Header />
               <OnboardingFlow />
               <Routes>
-                <Route path="/" element={
-                  <PublicRoute>
-                    <HomePage />
-                  </PublicRoute>
-                } />
-                <Route path="/employer/dashboard" element={
-                  <ProtectedRoute>
-                    <EmployerDashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/jobs" element={
-                  <ProtectedRoute>
-                    <JobSeekerDashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/onboarding" element={
-                  <ProtectedRoute>
-                    <EmployeeOnboarding />
-                  </ProtectedRoute>
-                } />
-                <Route path="/profile" element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                } />
-                <Route path="*" element={<Navigate to="/" />} />
+                {/* Public routes - only accessible when not logged in */}
+                <Route
+                  path="/"
+                  element={
+                    <PublicRoute>
+                      <HomeRedirect />
+                    </PublicRoute>
+                  }
+                />
+
+                {/* Onboarding routes */}
+                <Route
+                  path="/onboarding"
+                  element={
+                    <ProtectedRoute>
+                      <EmployeeOnboarding />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/employer/onboarding"
+                  element={
+                    <ProtectedRoute>
+                      <EmployerOnboarding />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Profile routes */}
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Dashboard routes - require both auth and complete profile */}
+                <Route
+                  path="/employer/dashboard"
+                  element={
+                    <ProfileCompleteRoute>
+                      <EmployerDashboard />
+                    </ProfileCompleteRoute>
+                  }
+                />
+
+                <Route
+                  path="/jobseeker/dashboard"
+                  element={
+                    <ProfileCompleteRoute>
+                      <JobSeekerDashboard />
+                    </ProfileCompleteRoute>
+                  }
+                />
+
+                {/* Fallback route */}
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Box>
-          </AuthProvider>
-        </OnboardingProvider>
+          </OnboardingProvider>
+        </AuthProvider>
       </Router>
     </ThemeProvider>
   );

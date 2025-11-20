@@ -7,7 +7,8 @@ import {
   Button,
   Chip,
   Grid,
-  Autocomplete
+  Autocomplete,
+  Alert
 } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
@@ -41,6 +42,13 @@ const SkillsStep = ({ onNext, onBack }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('SkillsStep - Submitting, skills count:', skills.length);
+    
+    if (skills.length === 0) {
+      alert('Please add at least one skill');
+      return;
+    }
+    
     onNext();
   };
 
@@ -122,12 +130,21 @@ const SkillsStep = ({ onNext, onBack }) => {
         </Box>
       </Box>
 
+      {/* Debug Info */}
+      <Alert severity="info" sx={{ mb: 2 }}>
+        Skills added: {skills.length} | {skills.length >= 3 ? 'Ready to continue!' : 'Add at least 3 skills'}
+      </Alert>
+
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
         <Button onClick={onBack}>
           Back
         </Button>
-        <Button type="submit" variant="contained" disabled={skills.length === 0}>
-          Continue
+        <Button 
+          type="submit" 
+          variant="contained" 
+          disabled={skills.length === 0}
+        >
+          Continue to Resume
         </Button>
       </Box>
     </Box>

@@ -1,33 +1,22 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext.jsx';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import UserTypeModal from './UserTypeModal.jsx';
-import MobileInputModal from './MobileInputModal.jsx';
-import OtpVerificationModal from './OtpVerificationModal.jsx';
+import UserTypeModal from './UserTypeModal';
+import MobileInputModal from './MobileInputModal';
+import OtpVerificationModal from './OtpVerificationModal';
 
 const OnboardingFlow = () => {
   const [currentStep, setCurrentStep] = useState(null);
-  const { user, onboardingData, shouldRedirect, resetRedirect } = useAuth();
+  const { user, isProfileComplete, onboardingData } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Only show onboarding if user is not logged in
+    // Only show initial onboarding modals for new users (not logged in)
     if (!user) {
       setCurrentStep('userType');
     }
-  }, [user]);
-
-  useEffect(() => {
-    // Handle redirection after onboarding completion
-    if (shouldRedirect && user) {
-      if (user.userType === 'employer') {
-        navigate('/employer/dashboard');
-      } else {
-        navigate('/jobs');
-      }
-      resetRedirect();
-    }
-  }, [shouldRedirect, user, navigate, resetRedirect]);
+    // For logged-in users with incomplete profiles, they'll be redirected via routes
+  }, [user, isProfileComplete, navigate]);
 
   const handleUserTypeSelected = () => {
     setCurrentStep('mobileInput');
@@ -38,7 +27,9 @@ const OnboardingFlow = () => {
   };
 
   const handleOtpVerified = () => {
-    setCurrentStep('complete');
+    setCurrentStep(null);
+    // After OTP verification, user is created but profile is not complete
+    // They will be redirected to appropriate onboarding form via App.js routing
   };
 
   const handleBackToUserType = () => {
@@ -48,6 +39,11 @@ const OnboardingFlow = () => {
   const handleClose = () => {
     setCurrentStep(null);
   };
+
+  // Don't show modals if user exists (they'll be redirected via routes)
+  if (user) {
+    return null;
+  }
 
   if (currentStep === null) return null;
 

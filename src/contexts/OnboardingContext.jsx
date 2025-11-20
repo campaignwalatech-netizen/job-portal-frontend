@@ -4,7 +4,6 @@ const OnboardingContext = createContext();
 
 export const OnboardingProvider = ({ children }) => {
   const [onboardingData, setOnboardingData] = useState({
-    // Personal Information
     personalInfo: {
       fullName: '',
       email: '',
@@ -13,7 +12,6 @@ export const OnboardingProvider = ({ children }) => {
       dateOfBirth: '',
       gender: ''
     },
-    // Professional Information
     professionalInfo: {
       currentTitle: '',
       totalExperience: '',
@@ -22,26 +20,15 @@ export const OnboardingProvider = ({ children }) => {
       expectedSalary: '',
       noticePeriod: ''
     },
-    // Education
     education: [],
-    // Work Experience
     experience: [],
-    // Skills
     skills: [],
-    // Resume
     resume: null,
-    // Profile Photo
     profilePhoto: null,
-    // Job Preferences
-    jobPreferences: {
-      preferredLocations: [],
-      jobTypes: [],
-      industries: [],
-      preferredRoles: []
-    }
   });
 
   const updateOnboardingData = (section, data) => {
+    console.log('Updating:', section, data);
     setOnboardingData(prev => ({
       ...prev,
       [section]: { ...prev[section], ...data }
@@ -49,6 +36,7 @@ export const OnboardingProvider = ({ children }) => {
   };
 
   const addEducation = (education) => {
+    console.log('Adding education:', education);
     setOnboardingData(prev => ({
       ...prev,
       education: [...prev.education, education]
@@ -56,6 +44,7 @@ export const OnboardingProvider = ({ children }) => {
   };
 
   const removeEducation = (index) => {
+    console.log('Removing education at index:', index);
     setOnboardingData(prev => ({
       ...prev,
       education: prev.education.filter((_, i) => i !== index)
