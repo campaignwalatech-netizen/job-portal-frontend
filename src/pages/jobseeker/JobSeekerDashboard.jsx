@@ -305,7 +305,7 @@ const JobSeekerDashboard = () => {
             >
               <Box>
                 <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                  🎉 Profile Complete!
+                   Profile Complete!
                 </Typography>
                 <Typography variant="body2" sx={{ opacity: 0.9, maxWidth: 500 }}>
                   Your profile is 100% complete! You're now ready to apply for jobs and get 
@@ -390,7 +390,7 @@ const JobSeekerDashboard = () => {
         {/* Job Categories */}
         <Paper sx={{ p: 3, mb: 4, borderRadius: 3 }}>
           <Typography variant="h5" sx={{ fontWeight: 700, mb: 3 }}>
-            🔥 Popular Job Categories
+            Popular Job Categories
           </Typography>
           <Grid container spacing={2}>
             {jobCategories.map((category, index) => (
@@ -429,7 +429,7 @@ const JobSeekerDashboard = () => {
         {/* Departments */}
         <Paper sx={{ p: 3, mb: 4, borderRadius: 3 }}>
           <Typography variant="h5" sx={{ fontWeight: 700, mb: 3 }}>
-            🏢 Browse by Department
+            Browse by Department
           </Typography>
           <Grid container spacing={2}>
             {departments.map((dept, index) => (
@@ -479,7 +479,7 @@ const JobSeekerDashboard = () => {
           >
             <Box>
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
-                💼 Recommended For You
+                 Recommended For You
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 {isProfileComplete 
@@ -703,7 +703,7 @@ const JobSeekerDashboard = () => {
           }}
         >
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-            ⚡ Quick Actions
+            Quick Actions
           </Typography>
           <Grid container spacing={2}>
             {[
@@ -748,7 +748,7 @@ const JobSeekerDashboard = () => {
           }}
         >
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
-            📈 Recent Activity
+            Recent Activity
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {[

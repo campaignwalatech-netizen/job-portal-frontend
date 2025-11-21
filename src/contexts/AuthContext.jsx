@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -6,11 +5,10 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isProfileComplete, setIsProfileComplete] = useState(false);
-  const [onboardingData, setOnboardingData] = useState({
-    mobile: '',
-    userType: '',
-    otp: ''
-  });
+  const [authModal, setAuthModal] = useState(null); // 'employee', 'employer', 'mobile', 'otp'
+  const [tempUserType, setTempUserType] = useState('');
+  const [tempMobile, setTempMobile] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load user data from localStorage on app start
   useEffect(() => {
@@ -22,26 +20,44 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       setIsProfileComplete(profileComplete === 'true');
     }
+    setIsLoading(false);
   }, []);
 
-  const updateOnboardingData = (data) => {
-    setOnboardingData(prev => ({ ...prev, ...data }));
+  const openAuthModal = (type) => {
+    setTempUserType(type);
+    setAuthModal('mobile');
   };
 
-  const completeOnboarding = (userData) => {
+  const handleMobileSubmit = (mobile) => {
+    setTempMobile(mobile);
+    setAuthModal('otp');
+  };
+
+  const handleOtpVerify = () => {
+    // Create user with mobile and userType
     const userInfo = {
-      userType: onboardingData.userType,
-      mobile: onboardingData.mobile,
-      ...userData,
       id: Date.now().toString(),
-      joinedAt: new Date().toISOString()
+      mobile: tempMobile,
+      userType: tempUserType,
+      joinedAt: new Date().toISOString(),
+      profileCompleted: false
     };
     
+    console.log('Creating user:', userInfo);
+    
     setUser(userInfo);
+    setIsProfileComplete(false); // Ensure profile is marked as incomplete
     localStorage.setItem('user', JSON.stringify(userInfo));
+    localStorage.setItem('profileComplete', 'false');
+    
+    // Close modal - user will be redirected to onboarding via routing
+    setAuthModal(null);
+    setTempUserType('');
+    setTempMobile('');
   };
 
   const completeProfile = () => {
+    console.log('Completing profile...');
     setIsProfileComplete(true);
     localStorage.setItem('profileComplete', 'true');
     
@@ -53,11 +69,9 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setIsProfileComplete(false);
-    setOnboardingData({
-      mobile: '',
-      userType: '',
-      otp: ''
-    });
+    setAuthModal(null);
+    setTempUserType('');
+    setTempMobile('');
     localStorage.removeItem('user');
     localStorage.removeItem('profileComplete');
   };
@@ -65,11 +79,16 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     isProfileComplete,
-    onboardingData,
-    updateOnboardingData,
-    completeOnboarding,
+    authModal,
+    tempUserType,
+    tempMobile,
+    isLoading,
+    openAuthModal,
+    handleMobileSubmit,
+    handleOtpVerify,
     completeProfile,
-    logout
+    logout,
+    closeAuthModal: () => setAuthModal(null)
   };
 
   return (

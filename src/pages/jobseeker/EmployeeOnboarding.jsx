@@ -49,7 +49,7 @@ const EmployeeOnboarding = () => {
       return;
     }
     
-    if (user.userType !== 'job_seeker') {
+    if (user.userType !== 'employee') {
       navigate('/employer/onboarding');
       return;
     }
@@ -58,6 +58,7 @@ const EmployeeOnboarding = () => {
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
       // Last step - complete profile and redirect to job seeker dashboard
+      console.log('Completing employee profile...');
       completeProfile();
       navigate('/jobseeker/dashboard');
     } else {

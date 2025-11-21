@@ -13,21 +13,57 @@ import {
   PublicRoute,
   ProfileCompleteRoute,
 } from "./components/auth";
-import OnboardingFlow from "./components/auth/OnboardingFlow";
 import Header from "./components/common/Header/Header";
 import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import JobSeekerDashboard from "./pages/jobseeker/JobSeekerDashboard";
 import EmployeeOnboarding from "./pages/jobseeker/EmployeeOnboarding";
 import EmployerOnboarding from "./pages/Employer/EmployerOnboarding";
 import ProfilePage from "./components/profile/ProfileForm";
-import { Box, Typography, Button } from "@mui/material";
+import JobPortalLanding from "./pages/landing/JobPortalLanding";
+import { Box } from "@mui/material";
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2563eb',
+      light: '#3b82f6',
+      dark: '#1d4ed8',
+    },
+    secondary: {
+      main: '#64748b',
+      light: '#94a3b8',
+      dark: '#475569',
+    },
+    background: {
+      default: '#ffffff',
+      paper: '#f8fafc',
+    },
+  },
   typography: {
     fontSize: 14,
+    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontSize: '3.5rem',
+      fontWeight: 800,
+      lineHeight: 1.2,
+    },
+    h2: {
+      fontSize: '3rem',
+      fontWeight: 700,
+      lineHeight: 1.3,
+    },
+    h3: {
+      fontSize: '2rem',
+      fontWeight: 600,
+      lineHeight: 1.4,
+    },
     h6: {
       fontSize: "1.1rem",
       fontWeight: 600,
+    },
+    body1: {
+      fontSize: '1rem',
+      lineHeight: 1.6,
     },
     body2: {
       fontSize: "0.875rem",
@@ -42,6 +78,9 @@ const theme = createTheme({
         root: {
           fontSize: "0.875rem",
           textTransform: "none",
+          borderRadius: '8px',
+          fontWeight: 600,
+          padding: '8px 24px',
         },
       },
     },
@@ -59,39 +98,12 @@ const theme = createTheme({
 
 // Simple landing page component
 const LandingPage = () => {
-  return (
-    <Box sx={{ 
-      p: 4, 
-      textAlign: 'center',
-      minHeight: '60vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
-        Welcome to JobPortal
-      </Typography>
-      <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-        Find your dream job or hire the best talent
-      </Typography>
-      <Button 
-        variant="contained" 
-        size="large"
-        sx={{ px: 4, py: 1.5 }}
-        onClick={() => window.location.reload()}
-      >
-        Get Started
-      </Button>
-    </Box>
-  );
+  return <JobPortalLanding />;
 };
 
-// New component to handle redirection based on user status
+// Component to handle redirection based on user status
 const HomeRedirect = () => {
   const { user, isProfileComplete } = useAuth();
-  
-  console.log('HomeRedirect - User:', user, 'ProfileComplete:', isProfileComplete);
   
   if (!user) {
     return <LandingPage />;
@@ -123,9 +135,8 @@ function App() {
           <OnboardingProvider>
             <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
               <Header />
-              <OnboardingFlow />
               <Routes>
-                {/* Public routes - only accessible when not logged in */}
+                {/* Public routes */}
                 <Route
                   path="/"
                   element={
@@ -164,7 +175,7 @@ function App() {
                   }
                 />
 
-                {/* Dashboard routes - require both auth and complete profile */}
+                {/* Dashboard routes */}
                 <Route
                   path="/employer/dashboard"
                   element={
