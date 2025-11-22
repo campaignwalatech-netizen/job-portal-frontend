@@ -21,6 +21,8 @@ import EmployerOnboarding from "./pages/Employer/EmployerOnboarding";
 import ProfilePage from "./components/profile/ProfileForm";
 import JobPortalLanding from "./pages/landing/JobPortalLanding";
 import { Box } from "@mui/material";
+import EmployeeLanding from "./pages/landing/EmployeeLanding";
+import EmployerLanding from "./pages/landing/EmployerLanding";
 
 const theme = createTheme({
   palette: {
@@ -96,17 +98,12 @@ const theme = createTheme({
   },
 });
 
-// Simple landing page component
-const LandingPage = () => {
-  return <JobPortalLanding />;
-};
-
 // Component to handle redirection based on user status
 const HomeRedirect = () => {
   const { user, isProfileComplete } = useAuth();
   
   if (!user) {
-    return <LandingPage />;
+    return <JobPortalLanding />;
   }
   
   // If profile is not complete, redirect to onboarding
@@ -142,6 +139,25 @@ function App() {
                   element={
                     <PublicRoute>
                       <HomeRedirect />
+                    </PublicRoute>
+                  }
+                />
+
+                {/* Landing pages */}
+                <Route
+                  path="/employee-login"
+                  element={
+                    <PublicRoute>
+                      <EmployeeLanding />
+                    </PublicRoute>
+                  }
+                />
+
+                <Route
+                  path="/employer-login"
+                  element={
+                    <PublicRoute>
+                      <EmployerLanding />
                     </PublicRoute>
                   }
                 />

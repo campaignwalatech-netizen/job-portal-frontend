@@ -34,7 +34,7 @@ import {
   TrendingFlat,
 } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
-import { AuthModals } from "../../contexts/AuthModals";
+// import { AuthModals } from "../../contexts/AuthModals";
 
 const JobPortalLanding = () => {
   const theme = useTheme();
@@ -272,7 +272,7 @@ const JobPortalLanding = () => {
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
       {/* Auth Modals */}
-      <AuthModals />
+      {/* <AuthModals /> */}
 
       {/* Hero Section - Single Frame */}
       <Box
