@@ -34,8 +34,25 @@ import {
   SupportAgent,
   Analytics,
   PriceCheck,
+  Star,
+  Work,
+  LocationOn,
+  Business,
+  PlayArrow,
 } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
+
+// Indian Flag Color Palette
+const colors = {
+  saffron: '#FF9933',
+  white: '#FFFFFF',
+  green: '#138808',
+  blue: '#000080',
+  lightGreen: '#4CAF50',
+  lightSaffron: '#FFB74D',
+  darkGreen: '#0A5C08',
+  darkSaffron: '#E68900',
+};
 
 // Enhanced Animations
 const float = keyframes`
@@ -151,7 +168,7 @@ const slideStatsRightToLeft = keyframes`
 `;
 
 // Custom OTP Input Component
-const CustomOtpInput = ({ value, onChange, inputRefs }) => {
+const CustomOtpInput = ({ value, onChange, inputRefs, length = 6 }) => {
   const handleInputChange = (val, index) => {
     if (/^\d?$/.test(val)) {
       onChange(val, index);
@@ -166,14 +183,14 @@ const CustomOtpInput = ({ value, onChange, inputRefs }) => {
 
   return (
     <Box sx={{ display: "flex", gap: 1.5, justifyContent: "center", mb: 3 }}>
-      {[...Array(4)].map((_, index) => (
+      {[...Array(length)].map((_, index) => (
         <Box
           key={index}
           sx={{
             width: 48,
             height: 56,
             border: 2,
-            borderColor: value[index] ? "primary.main" : "grey.300",
+            borderColor: value[index] ? colors.green : "#e2e8f0",
             borderRadius: 1.5,
             display: "flex",
             alignItems: "center",
@@ -181,8 +198,8 @@ const CustomOtpInput = ({ value, onChange, inputRefs }) => {
             bgcolor: "background.paper",
             transition: "all 0.2s ease",
             "&:focus-within": {
-              borderColor: "primary.main",
-              boxShadow: "0 0 0 3px rgba(102, 126, 234, 0.1)",
+              borderColor: colors.green,
+              boxShadow: `0 0 0 3px ${colors.green}20`,
               transform: "scale(1.05)",
             },
           }}
@@ -202,7 +219,7 @@ const CustomOtpInput = ({ value, onChange, inputRefs }) => {
               fontSize: "18px",
               fontWeight: 600,
               outline: "none",
-              color: "#333",
+              color: colors.blue,
             }}
             maxLength={1}
           />
@@ -503,7 +520,7 @@ const EmployerLanding = () => {
           variant="h4"
           sx={{
             fontWeight: 800,
-            color: "#fbbf24",
+            color: colors.saffron,
             animation: isVisible ? `${gentlePulse} 2s ease-in-out` : "none",
           }}
         >
@@ -514,13 +531,45 @@ const EmployerLanding = () => {
     );
   };
 
+  // Process steps for hiring
+  const processSteps = [
+    {
+      step: 1,
+      title: "Post Your Job",
+      description: "Create detailed job descriptions in minutes",
+      icon: <Work sx={{ fontSize: 40 }} />,
+      color: colors.blue
+    },
+    {
+      step: 2,
+      title: "Smart Matching",
+      description: "AI matches you with perfect candidates instantly",
+      icon: <AutoAwesome sx={{ fontSize: 40 }} />,
+      color: colors.saffron
+    },
+    {
+      step: 3,
+      title: "Review & Connect",
+      description: "Screen profiles and schedule interviews",
+      icon: <Groups sx={{ fontSize: 40 }} />,
+      color: colors.green
+    },
+    {
+      step: 4,
+      title: "Hire Fast",
+      description: "Onboard your ideal candidate quickly",
+      icon: <CheckCircle sx={{ fontSize: 40 }} />,
+      color: colors.darkSaffron
+    },
+  ];
+
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
       {/* Hero Section - Single Frame */}
       <Box
         sx={{
-          background: "linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)",
-          color: "white",
+          background: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.white} 50%, ${colors.green} 100%)`,
+          color: colors.blue,
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
@@ -566,7 +615,7 @@ const EmployerLanding = () => {
             height: 100,
             borderRadius: "30%",
             background:
-              "linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%)",
+              `linear-gradient(135deg, ${colors.saffron}20 0%, ${colors.saffron}10 100%)`,
             animation: `${float} 7s ease-in-out infinite 1s`,
             filter: "blur(15px)",
           }}
@@ -590,13 +639,13 @@ const EmployerLanding = () => {
                 <Paper
                   sx={{
                     display: "inline-block",
-                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                    bgcolor: "rgba(255, 255, 255, 0.9)",
                     backdropFilter: "blur(10px)",
                     borderRadius: 20,
                     px: 2,
                     py: 0.5,
                     mb: 2,
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    border: `2px solid ${colors.green}`,
                     animation: `${gentlePulse} 2s ease-in-out infinite`,
                   }}
                 >
@@ -604,7 +653,7 @@ const EmployerLanding = () => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 600,
-                      color: "#fbbf24",
+                      color: colors.green,
                       textAlign: "center",
                       fontSize: "0.8rem",
                     }}
@@ -623,6 +672,7 @@ const EmployerLanding = () => {
                     fontWeight: 800,
                     lineHeight: 1.1,
                     mb: 2,
+                    color: colors.blue,
                   }}
                 >
                   Hire the Best
@@ -630,7 +680,7 @@ const EmployerLanding = () => {
                     component="span"
                     sx={{
                       display: "block",
-                      background: "linear-gradient(45deg, #fbbf24, #f59e0b)",
+                      background: `linear-gradient(45deg, ${colors.saffron}, ${colors.green})`,
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       color: "transparent",
@@ -652,7 +702,7 @@ const EmployerLanding = () => {
                     fontSize: { xs: "1rem", md: "1.2rem" },
                     lineHeight: 1.5,
                     fontWeight: 400,
-                    color: "#e2e8f0",
+                    color: colors.blue,
                   }}
                 >
                   Access 5Cr+ Verified Candidates | 95% Success Rate | 70%
@@ -674,7 +724,7 @@ const EmployerLanding = () => {
                     <AnimatedCounter end={5} suffix="Cr+" />
                     <Typography
                       variant="body1"
-                      sx={{ opacity: 0.9, fontWeight: 600 }}
+                      sx={{ opacity: 0.9, fontWeight: 600, color: colors.blue }}
                     >
                       Candidates
                     </Typography>
@@ -683,7 +733,7 @@ const EmployerLanding = () => {
                     <AnimatedCounter end={95} suffix="%+" />
                     <Typography
                       variant="body1"
-                      sx={{ opacity: 0.9, fontWeight: 600 }}
+                      sx={{ opacity: 0.9, fontWeight: 600, color: colors.blue }}
                     >
                       Success Rate
                     </Typography>
@@ -692,7 +742,7 @@ const EmployerLanding = () => {
                     <AnimatedCounter end={70} suffix="%" />
                     <Typography
                       variant="body1"
-                      sx={{ opacity: 0.9, fontWeight: 600 }}
+                      sx={{ opacity: 0.9, fontWeight: 600, color: colors.blue }}
                     >
                       Faster Hiring
                     </Typography>
@@ -708,7 +758,7 @@ const EmployerLanding = () => {
                     sx={{
                       fontWeight: 600,
                       mb: 3,
-                      color: "white",
+                      color: colors.blue,
                       fontSize: "1.1rem",
                     }}
                   >
@@ -720,6 +770,7 @@ const EmployerLanding = () => {
                       mb: 3,
                       opacity: 0.9,
                       fontSize: "0.9rem",
+                      color: colors.blue,
                     }}
                   >
                     Join thousands of companies hiring with us.
@@ -733,12 +784,12 @@ const EmployerLanding = () => {
                             sx={{
                               width: 60,
                               height: 60,
-                              bgcolor: "rgba(255, 255, 255, 0.2)",
-                              color: "white",
+                              bgcolor: colors.white,
+                              color: colors.blue,
                               fontWeight: 700,
                               fontSize: "1.2rem",
                               margin: "0 auto 8px",
-                              border: "2px solid rgba(255, 255, 255, 0.3)",
+                              border: `2px solid ${colors.saffron}`,
                               animation: `${gentlePulse} 3s ease-in-out infinite ${
                                 index * 0.2
                               }s`,
@@ -749,7 +800,7 @@ const EmployerLanding = () => {
                           <Typography
                             variant="caption"
                             sx={{
-                              color: "white",
+                              color: colors.blue,
                               fontWeight: 600,
                               display: "block",
                               fontSize: "0.7rem",
@@ -760,7 +811,8 @@ const EmployerLanding = () => {
                           <Typography
                             variant="caption"
                             sx={{
-                              color: "rgba(255, 255, 255, 0.7)",
+                              color: colors.blue,
+                              opacity: 0.7,
                               display: "block",
                               fontSize: "0.6rem",
                             }}
@@ -791,14 +843,14 @@ const EmployerLanding = () => {
                     overflow: "hidden",
                     boxShadow: "0 32px 64px rgba(0, 0, 0, 0.2)",
                     background:
-                      "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+                      `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
                     minHeight: "200px",
                     width: "100%",
                     maxWidth: "450px",
                     display: "flex",
                     flexDirection: "column",
                     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                    border: `2px solid ${colors.saffron}`,
                     "&:hover": {
                       boxShadow: "0 40px 80px rgba(0, 0, 0, 0.25)",
                       transform: "translateY(-8px)",
@@ -830,7 +882,7 @@ const EmployerLanding = () => {
                               sx={{
                                 fontWeight: 600,
                                 mb: 3,
-                                color: "text.primary",
+                                color: colors.blue,
                               }}
                             >
                               Employer Login
@@ -859,7 +911,7 @@ const EmployerLanding = () => {
                                         borderRadius: 2,
                                         px: 2,
                                         py: 1.5,
-                                        border: "1px solid #e2e8f0",
+                                        border: `1px solid ${colors.saffron}`,
                                         mr: 2,
                                       }}
                                     >
@@ -876,7 +928,7 @@ const EmployerLanding = () => {
                                         variant="body1"
                                         sx={{
                                           fontWeight: 700,
-                                          color: "text.primary",
+                                          color: colors.blue,
                                         }}
                                       >
                                         +91
@@ -893,11 +945,11 @@ const EmployerLanding = () => {
                                     borderWidth: 2,
                                   },
                                   "&:hover .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "#1e3a8a",
+                                    borderColor: colors.green,
                                   },
                                   "&.Mui-focused .MuiOutlinedInput-notchedOutline":
                                     {
-                                      borderColor: "#1e3a8a",
+                                      borderColor: colors.green,
                                       borderWidth: 2,
                                     },
                                 },
@@ -917,15 +969,15 @@ const EmployerLanding = () => {
                               sx={{
                                 mb: 4,
                                 borderRadius: 2,
-                                backgroundColor: "#f0f9ff",
-                                border: "1px solid #bae6fd",
+                                backgroundColor: `${colors.green}10`,
+                                border: `1px solid ${colors.green}30`,
                                 animation: `${slideInFromBottom} 0.6s ease-out`,
                               }}
-                              icon={<Security sx={{ color: "#0369a1" }} />}
+                              icon={<Security sx={{ color: colors.green }} />}
                             >
                               <Typography
                                 variant="body2"
-                                sx={{ fontWeight: 500, color: "#0369a1" }}
+                                sx={{ fontWeight: 500, color: colors.green }}
                               >
                                 Your number is secure with end-to-end encryption
                               </Typography>
@@ -944,11 +996,11 @@ const EmployerLanding = () => {
                                   background:
                                     loading || mobileNumber.length !== 10
                                       ? "#9ca3af"
-                                      : "linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)",
+                                      : `linear-gradient(135deg, ${colors.green} 0%, ${colors.darkGreen} 100%)`,
                                   boxShadow:
                                     loading || mobileNumber.length !== 10
                                       ? "none"
-                                      : "0 8px 24px rgba(30, 58, 138, 0.4)",
+                                      : `0 8px 24px ${colors.green}40`,
                                   fontSize: "17px",
                                   fontWeight: 600,
                                   textTransform: "none",
@@ -961,7 +1013,7 @@ const EmployerLanding = () => {
                                     boxShadow:
                                       loading || mobileNumber.length !== 10
                                         ? "none"
-                                        : "0 12px 32px rgba(30, 58, 138, 0.5)",
+                                        : `0 12px 32px ${colors.green}50`,
                                     transform:
                                       loading || mobileNumber.length !== 10
                                         ? "none"
@@ -979,135 +1031,135 @@ const EmployerLanding = () => {
                           </>
                         )}
 
-                       {/* OTP Verification Step */}
-{authStep === "otp" && (
-  <>
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        mb: 2,
-      }}
-    >
-      <IconButton
-        onClick={handleBackToMobile}
-        sx={{ mr: 1, color: "text.secondary" }}
-      >
-        <ArrowBack />
-      </IconButton>
-      <Typography
-        variant="h6"
-        sx={{ fontWeight: 600, color: "text.primary" }}
-      >
-        Verify OTP
-      </Typography>
-    </Box>
+                        {/* OTP Verification Step */}
+                        {authStep === "otp" && (
+                          <>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                mb: 2,
+                              }}
+                            >
+                              <IconButton
+                                onClick={handleBackToMobile}
+                                sx={{ mr: 1, color: colors.blue }}
+                              >
+                                <ArrowBack />
+                              </IconButton>
+                              <Typography
+                                variant="h6"
+                                sx={{ fontWeight: 600, color: colors.blue }}
+                              >
+                                Verify OTP
+                              </Typography>
+                            </Box>
 
-    <Typography
-      variant="body2"
-      sx={{
-        mb: 3,
-        color: "text.secondary",
-        textAlign: "center",
-      }}
-    >
-      Enter the 4-digit code sent to
-      <br />
-      <strong>+91 {mobileNumber}</strong>
-    </Typography>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                mb: 3,
+                                color: colors.blue,
+                                textAlign: "center",
+                              }}
+                            >
+                              Enter the 6-digit code sent to
+                              <br />
+                              <strong>+91 {mobileNumber}</strong>
+                            </Typography>
 
-    {/* OTP Input Fields - 4 digits */}
-    <CustomOtpInput
-      length={4} // Add this prop to specify 4 digits
-      value={otp}
-      onChange={handleOtpChange}
-      inputRefs={otpRefs}
-    />
+                            {/* OTP Input Fields - 6 digits */}
+                            <CustomOtpInput
+                              value={otp}
+                              onChange={handleOtpChange}
+                              inputRefs={otpRefs}
+                              length={6}
+                            />
 
-    {/* Resend OTP */}
-    <Box sx={{ textAlign: "center", mb: 4 }}>
-      {countdown > 0 ? (
-        <Typography
-          variant="body2"
-          sx={{ color: "text.secondary" }}
-        >
-          Resend OTP in{" "}
-          <Box
-            component="span"
-            sx={{
-              color: "#1e3a8a",
-              fontWeight: 600,
-              animation: `${countdownAnimation} 1s ease-in-out infinite`,
-            }}
-          >
-            {countdown}s
-          </Box>
-        </Typography>
-      ) : (
-        <Button
-          onClick={handleResendOtp}
-          disabled={loading}
-          startIcon={<Refresh />}
-          sx={{
-            color: "#1e3a8a",
-            fontWeight: 600,
-            textTransform: "none",
-            "&:hover": {
-              backgroundColor: "transparent",
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Resend Code
-        </Button>
-      )}
-    </Box>
+                            {/* Resend OTP */}
+                            <Box sx={{ textAlign: "center", mb: 4 }}>
+                              {countdown > 0 ? (
+                                <Typography
+                                  variant="body2"
+                                  sx={{ color: colors.blue }}
+                                >
+                                  Resend OTP in{" "}
+                                  <Box
+                                    component="span"
+                                    sx={{
+                                      color: colors.green,
+                                      fontWeight: 600,
+                                      animation: `${countdownAnimation} 1s ease-in-out infinite`,
+                                    }}
+                                  >
+                                    {countdown}s
+                                  </Box>
+                                </Typography>
+                              ) : (
+                                <Button
+                                  onClick={handleResendOtp}
+                                  disabled={loading}
+                                  startIcon={<Refresh />}
+                                  sx={{
+                                    color: colors.green,
+                                    fontWeight: 600,
+                                    textTransform: "none",
+                                    "&:hover": {
+                                      backgroundColor: "transparent",
+                                      textDecoration: "underline",
+                                    },
+                                  }}
+                                >
+                                  Resend Code
+                                </Button>
+                              )}
+                            </Box>
 
-    <Box sx={{ mt: "auto" }}>
-      <Button
-        variant="contained"
-        fullWidth
-        onClick={handleOtpSubmit}
-        disabled={
-          loading || otp.some((digit) => digit === "")
-        }
-        startIcon={<VerifiedUser />}
-        sx={{
-          py: 2,
-          borderRadius: 3,
-          background:
-            loading || otp.some((digit) => digit === "")
-              ? "#9ca3af"
-              : "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-          boxShadow:
-            loading || otp.some((digit) => digit === "")
-              ? "none"
-              : "0 8px 24px rgba(16, 185, 129, 0.4)",
-          fontSize: "17px",
-          fontWeight: 600,
-          textTransform: "none",
-          transition: "all 0.3s ease",
-          "&:hover": {
-            boxShadow:
-              loading || otp.some((digit) => digit === "")
-                ? "none"
-                : "0 12px 32px rgba(16, 185, 129, 0.5)",
-            transform:
-              loading || otp.some((digit) => digit === "")
-                ? "none"
-                : "translateY(-2px)",
-          },
-        }}
-      >
-        {loading ? (
-          <CircularProgress size={24} color="inherit" />
-        ) : (
-          "Verify & Continue"
-        )}
-      </Button>
-    </Box>
-  </>
-)}
+                            <Box sx={{ mt: "auto" }}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                onClick={handleOtpSubmit}
+                                disabled={
+                                  loading || otp.some((digit) => digit === "")
+                                }
+                                startIcon={<VerifiedUser />}
+                                sx={{
+                                  py: 2,
+                                  borderRadius: 3,
+                                  background:
+                                    loading || otp.some((digit) => digit === "")
+                                      ? "#9ca3af"
+                                      : `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
+                                  boxShadow:
+                                    loading || otp.some((digit) => digit === "")
+                                      ? "none"
+                                      : `0 8px 24px ${colors.saffron}40`,
+                                  fontSize: "17px",
+                                  fontWeight: 600,
+                                  textTransform: "none",
+                                  transition: "all 0.3s ease",
+                                  "&:hover": {
+                                    boxShadow:
+                                      loading || otp.some((digit) => digit === "")
+                                        ? "none"
+                                        : `0 12px 32px ${colors.saffron}50`,
+                                    transform:
+                                      loading || otp.some((digit) => digit === "")
+                                        ? "none"
+                                        : "translateY(-2px)",
+                                  },
+                                }}
+                              >
+                                {loading ? (
+                                  <CircularProgress size={24} color="inherit" />
+                                ) : (
+                                  "Verify & Continue"
+                                )}
+                              </Button>
+                            </Box>
+                          </>
+                        )}
                       </Box>
                     </Fade>
                   </Box>
@@ -1119,7 +1171,7 @@ const EmployerLanding = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ background: "white", py: 8 }}>
+      <Box sx={{ background: colors.white, py: 8 }}>
         <Container maxWidth="lg">
           <Typography
             variant="h3"
@@ -1127,7 +1179,7 @@ const EmployerLanding = () => {
               fontWeight: 700,
               textAlign: "center",
               mb: 6,
-              color: "#1a202c",
+              color: colors.blue,
             }}
           >
             Why Employers Choose Us?
@@ -1188,16 +1240,19 @@ const EmployerLanding = () => {
                     border: "none",
                     boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
                     transition: "transform 0.3s ease-in-out",
+                    border: `2px solid ${colors.saffron}20`,
                     "&:hover": {
                       transform: "translateY(-5px)",
+                      boxShadow: `0 8px 30px ${colors.saffron}20`,
+                      border: `2px solid ${colors.saffron}`,
                     },
                   }}
                 >
-                  <Box sx={{ color: "#1e3a8a", mb: 2 }}>{feature.icon}</Box>
-                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+                  <Box sx={{ color: colors.blue, mb: 2 }}>{feature.icon}</Box>
+                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: colors.blue }}>
                     {feature.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color={colors.blue}>
                     {feature.description}
                   </Typography>
                 </Card>
@@ -1211,7 +1266,7 @@ const EmployerLanding = () => {
       <Box
         sx={{
           py: 8,
-          bgcolor: "#1e293b",
+          bgcolor: colors.blue,
           overflow: "hidden",
           position: "relative",
         }}
@@ -1222,7 +1277,7 @@ const EmployerLanding = () => {
               variant="h3"
               sx={{
                 fontWeight: 800,
-                color: "white",
+                color: colors.white,
                 mb: 2,
                 fontSize: { xs: "2rem", md: "2.5rem" },
               }}
@@ -1274,15 +1329,15 @@ const EmployerLanding = () => {
                       justifyContent: "center",
                       borderRadius: 3,
                       background:
-                        "linear-gradient(135deg, #334155 0%, #475569 100%)",
+                        `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
                       boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-                      border: "1px solid #475569",
+                      border: `2px solid ${colors.white}`,
                       transition: "all 0.3s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         boxShadow: "0 8px 30px rgba(0, 0, 0, 0.25)",
                         background:
-                          "linear-gradient(135deg, #475569 0%, #4b5563 100%)",
+                          `linear-gradient(135deg, ${colors.darkSaffron} 0%, ${colors.saffron} 100%)`,
                       },
                     }}
                   >
@@ -1290,7 +1345,7 @@ const EmployerLanding = () => {
                       variant="h4"
                       sx={{
                         fontWeight: 800,
-                        color: "#fbbf24",
+                        color: colors.white,
                         fontSize: { xs: "1.5rem", md: "1.75rem" },
                         lineHeight: 1.2,
                         mb: 0.5,
@@ -1301,7 +1356,7 @@ const EmployerLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#e2e8f0",
+                        color: colors.white,
                         fontWeight: 600,
                         fontSize: "0.8rem",
                         textAlign: "center",
@@ -1325,15 +1380,15 @@ const EmployerLanding = () => {
                       justifyContent: "center",
                       borderRadius: 3,
                       background:
-                        "linear-gradient(135deg, #334155 0%, #475569 100%)",
+                        `linear-gradient(135deg, ${colors.green} 0%, ${colors.darkGreen} 100%)`,
                       boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-                      border: "1px solid #475569",
+                      border: `2px solid ${colors.white}`,
                       transition: "all 0.3s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         boxShadow: "0 8px 30px rgba(0, 0, 0, 0.25)",
                         background:
-                          "linear-gradient(135deg, #475569 0%, #4b5563 100%)",
+                          `linear-gradient(135deg, ${colors.darkGreen} 0%, ${colors.green} 100%)`,
                       },
                     }}
                   >
@@ -1341,7 +1396,7 @@ const EmployerLanding = () => {
                       variant="h4"
                       sx={{
                         fontWeight: 800,
-                        color: "#fbbf24",
+                        color: colors.white,
                         fontSize: { xs: "1.5rem", md: "1.75rem" },
                         lineHeight: 1.2,
                         mb: 0.5,
@@ -1352,7 +1407,7 @@ const EmployerLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#e2e8f0",
+                        color: colors.white,
                         fontWeight: 600,
                         fontSize: "0.8rem",
                         textAlign: "center",
@@ -1375,7 +1430,7 @@ const EmployerLanding = () => {
               bottom: 0,
               width: "100px",
               background:
-                "linear-gradient(90deg, #1e293b 0%, transparent 100%)",
+                `linear-gradient(90deg, ${colors.blue} 0%, transparent 100%)`,
               zIndex: 2,
             }}
           />
@@ -1387,10 +1442,89 @@ const EmployerLanding = () => {
               bottom: 0,
               width: "100px",
               background:
-                "linear-gradient(270deg, #1e293b 0%, transparent 100%)",
+                `linear-gradient(270deg, ${colors.blue} 0%, transparent 100%)`,
               zIndex: 2,
             }}
           />
+        </Container>
+      </Box>
+
+      {/* Process Section */}
+      <Box sx={{ py: 8, bgcolor: "#f8fafc" }}>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: "center", mb: 6 }}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                color: colors.blue,
+                mb: 2,
+              }}
+            >
+              How It Works
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: colors.blue,
+                fontWeight: 400,
+                maxWidth: "600px",
+                mx: "auto",
+              }}
+            >
+              Simple, fast, and effective hiring process
+            </Typography>
+          </Box>
+
+          <Grid container spacing={4}>
+            {processSteps.map((step, index) => (
+              <Grid item xs={12} sm={6} md={3} key={step.step}>
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    position: "relative",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 80,
+                      height: 80,
+                      borderRadius: "50%",
+                      background: `linear-gradient(135deg, ${step.color} 0%, ${step.color}99 100%)`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 auto 16px",
+                      color: colors.white,
+                      fontWeight: 700,
+                      fontSize: "1.5rem",
+                      border: `3px solid ${colors.white}`,
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                      animation: `${gentlePulse} 3s ease-in-out infinite ${index * 0.5}s`,
+                    }}
+                  >
+                    {step.icon}
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 1,
+                      color: colors.blue,
+                    }}
+                  >
+                    {step.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: colors.blue }}
+                  >
+                    {step.description}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
 
@@ -1418,9 +1552,10 @@ const EmployerLanding = () => {
                     height: "auto",
                     borderRadius: 3,
                     transition: "all 0.3s ease",
+                    border: `2px solid ${colors.saffron}`,
                     "&:hover": {
                       transform: "translateY(-8px)",
-                      boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
+                      boxShadow: `0 25px 50px ${colors.saffron}30`,
                     },
                   }}
                 />
@@ -1439,11 +1574,12 @@ const EmployerLanding = () => {
                 <Paper
                   sx={{
                     background:
-                      "linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)",
-                    color: "white",
+                      `linear-gradient(135deg, ${colors.blue} 0%, ${colors.saffron} 100%)`,
+                    color: colors.white,
                     borderRadius: 3,
                     p: 4,
                     textAlign: "center",
+                    border: `2px solid ${colors.green}`,
                   }}
                 >
                   <Typography
@@ -1498,7 +1634,7 @@ const EmployerLanding = () => {
                         key={index}
                         sx={{ display: "flex", alignItems: "center", gap: 2 }}
                       >
-                        <CheckCircle sx={{ color: "#10b981", fontSize: 24 }} />
+                        <CheckCircle sx={{ color: colors.green, fontSize: 24 }} />
                         <Typography sx={{ fontWeight: 500 }}>
                           {feature}
                         </Typography>
@@ -1509,18 +1645,19 @@ const EmployerLanding = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      bgcolor: "#fbbf24",
-                      color: "#1e293b",
+                      bgcolor: colors.saffron,
+                      color: colors.blue,
                       px: 4,
                       py: 1.5,
                       borderRadius: 2,
                       fontWeight: 700,
                       fontSize: "1rem",
                       textTransform: "none",
+                      border: `2px solid ${colors.white}`,
                       "&:hover": {
-                        bgcolor: "#f59e0b",
+                        bgcolor: colors.darkSaffron,
                         transform: "translateY(-2px)",
-                        boxShadow: "0 8px 25px rgba(251, 191, 36, 0.3)",
+                        boxShadow: `0 8px 25px ${colors.saffron}30`,
                       },
                       transition: "all 0.3s ease",
                     }}
@@ -1534,23 +1671,8 @@ const EmployerLanding = () => {
         </Container>
       </Box>
 
-      {/* Snackbar for notifications */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
       {/* What People Are Saying Section */}
-      <Box sx={{ py: 8, bgcolor: "white" }}>
+      <Box sx={{ py: 8, bgcolor: colors.white }}>
         <Container maxWidth="lg">
           {/* Section Header */}
           <Box sx={{ textAlign: "center", mb: 6 }}>
@@ -1559,7 +1681,7 @@ const EmployerLanding = () => {
               sx={{
                 fontWeight: 700,
                 fontSize: { xs: "2rem", md: "2.5rem" },
-                color: "#1a202c",
+                color: colors.blue,
                 mb: 2,
               }}
             >
@@ -1568,7 +1690,7 @@ const EmployerLanding = () => {
             <Typography
               variant="h6"
               sx={{
-                color: "#64748b",
+                color: colors.blue,
                 fontWeight: 400,
                 fontSize: "1.1rem",
                 maxWidth: "600px",
@@ -1576,7 +1698,7 @@ const EmployerLanding = () => {
                 lineHeight: 1.6,
               }}
             >
-              Consectetur adipisicing elit, sed do eiusmod temp
+              Hear from employers who transformed their hiring with Job ChaaHiye
             </Typography>
           </Box>
 
@@ -1604,55 +1726,55 @@ const EmployerLanding = () => {
                 {
                   id: 1,
                   name: "Sarah Johnson",
-                  role: "Product Designer",
+                  role: "HR Director",
                   company: "TechInnovate",
                   rating: 5,
-                  text: "The platform completely transformed my job search experience. Found my dream role in just 2 weeks!",
+                  text: "Reduced our hiring time by 60% and found exceptional talent we couldn't find elsewhere.",
                   avatar: "👩‍💼",
                 },
                 {
                   id: 2,
                   name: "Michael Chen",
-                  role: "Full Stack Developer",
+                  role: "Talent Acquisition Head",
                   company: "CodeCraft",
                   rating: 5,
-                  text: "As a developer, I appreciate the clean interface and relevant job matches. Highly recommended!",
+                  text: "The quality of candidates and AI matching has transformed our recruitment process completely.",
                   avatar: "👨‍💻",
                 },
                 {
                   id: 3,
                   name: "Emily Rodriguez",
-                  role: "Marketing Director",
+                  role: "CEO",
                   company: "GrowthGenius",
                   rating: 4,
-                  text: "The quality of candidates we found through this platform exceeded our expectations.",
+                  text: "Saved over 40% in recruitment costs while improving candidate quality significantly.",
                   avatar: "👩‍🎓",
                 },
                 {
                   id: 4,
                   name: "David Park",
-                  role: "Data Scientist",
+                  role: "HR Manager",
                   company: "DataDriven",
                   rating: 5,
-                  text: "Finally a job portal that understands what tech professionals are looking for.",
+                  text: "Streamlined our hiring process and helped us find perfect cultural fits quickly.",
                   avatar: "👨‍🔬",
                 },
                 {
                   id: 5,
                   name: "Lisa Thompson",
-                  role: "HR Manager",
+                  role: "Recruitment Lead",
                   company: "TalentFirst",
                   rating: 5,
-                  text: "Streamlined our hiring process and helped us find perfect cultural fits.",
+                  text: "The platform's AI matching saved us countless hours in screening and shortlisting.",
                   avatar: "👩‍💼",
                 },
                 {
                   id: 6,
                   name: "Alex Kumar",
-                  role: "UX Researcher",
+                  role: "HR Director",
                   company: "DesignHub",
                   rating: 4,
-                  text: "The application process is so smooth. Received multiple interview calls quickly.",
+                  text: "Exceptional candidate quality and responsive support team made all the difference.",
                   avatar: "👨‍🎨",
                 },
               ].map((testimonial) => (
@@ -1661,17 +1783,17 @@ const EmployerLanding = () => {
                   sx={{
                     flex: "0 0 380px",
                     background:
-                      "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+                      `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
                     borderRadius: 3,
                     p: 4,
-                    border: "1px solid #e2e8f0",
+                    border: `2px solid ${colors.saffron}`,
                     boxShadow:
                       "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-8px)",
-                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                      borderColor: "#3b82f6",
+                      boxShadow: `0 25px 50px -12px ${colors.saffron}30`,
+                      borderColor: colors.green,
                     },
                   }}
                 >
@@ -1682,13 +1804,14 @@ const EmployerLanding = () => {
                         width: 60,
                         height: 60,
                         borderRadius: "50%",
-                        bgcolor: "#f1f5f9",
+                        bgcolor: `${colors.saffron}20`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         mx: "auto",
                         fontSize: "1.5rem",
-                        color: "#3b82f6",
+                        color: colors.saffron,
+                        border: `2px solid ${colors.saffron}40`,
                       }}
                     >
                       "
@@ -1699,7 +1822,7 @@ const EmployerLanding = () => {
                   <Typography
                     variant="body1"
                     sx={{
-                      color: "#475569",
+                      color: colors.blue,
                       lineHeight: 1.7,
                       mb: 4,
                       textAlign: "center",
@@ -1727,7 +1850,7 @@ const EmployerLanding = () => {
                         key={index}
                         sx={{
                           color:
-                            index < testimonial.rating ? "#fbbf24" : "#e2e8f0",
+                            index < testimonial.rating ? colors.saffron : "#e2e8f0",
                           fontSize: "1.5rem",
                         }}
                       >
@@ -1743,15 +1866,16 @@ const EmployerLanding = () => {
                         width: 60,
                         height: 60,
                         borderRadius: "50%",
-                        bgcolor: "#3b82f6",
+                        bgcolor: colors.green,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         mx: "auto",
                         mb: 2,
                         fontSize: "1.5rem",
-                        color: "white",
+                        color: colors.white,
                         fontWeight: 600,
+                        border: `2px solid ${colors.saffron}`,
                       }}
                     >
                       {testimonial.avatar}
@@ -1761,7 +1885,7 @@ const EmployerLanding = () => {
                       sx={{
                         fontWeight: 700,
                         fontSize: "1.1rem",
-                        color: "#1a202c",
+                        color: colors.blue,
                         mb: 0.5,
                       }}
                     >
@@ -1770,7 +1894,7 @@ const EmployerLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#64748b",
+                        color: colors.blue,
                         fontWeight: 500,
                         fontSize: "0.9rem",
                       }}
@@ -1780,7 +1904,7 @@ const EmployerLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#3b82f6",
+                        color: colors.green,
                         fontWeight: 600,
                         fontSize: "0.85rem",
                       }}
@@ -1796,55 +1920,55 @@ const EmployerLanding = () => {
                 {
                   id: 1,
                   name: "Sarah Johnson",
-                  role: "Product Designer",
+                  role: "HR Director",
                   company: "TechInnovate",
                   rating: 5,
-                  text: "The platform completely transformed my job search experience. Found my dream role in just 2 weeks!",
+                  text: "Reduced our hiring time by 60% and found exceptional talent we couldn't find elsewhere.",
                   avatar: "👩‍💼",
                 },
                 {
                   id: 2,
                   name: "Michael Chen",
-                  role: "Full Stack Developer",
+                  role: "Talent Acquisition Head",
                   company: "CodeCraft",
                   rating: 5,
-                  text: "As a developer, I appreciate the clean interface and relevant job matches. Highly recommended!",
+                  text: "The quality of candidates and AI matching has transformed our recruitment process completely.",
                   avatar: "👨‍💻",
                 },
                 {
                   id: 3,
                   name: "Emily Rodriguez",
-                  role: "Marketing Director",
+                  role: "CEO",
                   company: "GrowthGenius",
                   rating: 4,
-                  text: "The quality of candidates we found through this platform exceeded our expectations.",
+                  text: "Saved over 40% in recruitment costs while improving candidate quality significantly.",
                   avatar: "👩‍🎓",
                 },
                 {
                   id: 4,
                   name: "David Park",
-                  role: "Data Scientist",
+                  role: "HR Manager",
                   company: "DataDriven",
                   rating: 5,
-                  text: "Finally a job portal that understands what tech professionals are looking for.",
+                  text: "Streamlined our hiring process and helped us find perfect cultural fits quickly.",
                   avatar: "👨‍🔬",
                 },
                 {
                   id: 5,
                   name: "Lisa Thompson",
-                  role: "HR Manager",
+                  role: "Recruitment Lead",
                   company: "TalentFirst",
                   rating: 5,
-                  text: "Streamlined our hiring process and helped us find perfect cultural fits.",
+                  text: "The platform's AI matching saved us countless hours in screening and shortlisting.",
                   avatar: "👩‍💼",
                 },
                 {
                   id: 6,
                   name: "Alex Kumar",
-                  role: "UX Researcher",
+                  role: "HR Director",
                   company: "DesignHub",
                   rating: 4,
-                  text: "The application process is so smooth. Received multiple interview calls quickly.",
+                  text: "Exceptional candidate quality and responsive support team made all the difference.",
                   avatar: "👨‍🎨",
                 },
               ].map((testimonial, index) => (
@@ -1853,17 +1977,17 @@ const EmployerLanding = () => {
                   sx={{
                     flex: "0 0 380px",
                     background:
-                      "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+                      `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
                     borderRadius: 3,
                     p: 4,
-                    border: "1px solid #e2e8f0",
+                    border: `2px solid ${colors.saffron}`,
                     boxShadow:
                       "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-8px)",
-                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                      borderColor: "#3b82f6",
+                      boxShadow: `0 25px 50px -12px ${colors.saffron}30`,
+                      borderColor: colors.green,
                     },
                   }}
                 >
@@ -1874,13 +1998,14 @@ const EmployerLanding = () => {
                         width: 60,
                         height: 60,
                         borderRadius: "50%",
-                        bgcolor: "#f1f5f9",
+                        bgcolor: `${colors.saffron}20`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         mx: "auto",
                         fontSize: "1.5rem",
-                        color: "#3b82f6",
+                        color: colors.saffron,
+                        border: `2px solid ${colors.saffron}40`,
                       }}
                     >
                       "
@@ -1891,7 +2016,7 @@ const EmployerLanding = () => {
                   <Typography
                     variant="body1"
                     sx={{
-                      color: "#475569",
+                      color: colors.blue,
                       lineHeight: 1.7,
                       mb: 4,
                       textAlign: "center",
@@ -1920,7 +2045,7 @@ const EmployerLanding = () => {
                         sx={{
                           color:
                             starIndex < testimonial.rating
-                              ? "#fbbf24"
+                              ? colors.saffron
                               : "#e2e8f0",
                           fontSize: "1.5rem",
                         }}
@@ -1937,15 +2062,16 @@ const EmployerLanding = () => {
                         width: 60,
                         height: 60,
                         borderRadius: "50%",
-                        bgcolor: "#3b82f6",
+                        bgcolor: colors.green,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         mx: "auto",
                         mb: 2,
                         fontSize: "1.5rem",
-                        color: "white",
+                        color: colors.white,
                         fontWeight: 600,
+                        border: `2px solid ${colors.saffron}`,
                       }}
                     >
                       {testimonial.avatar}
@@ -1955,7 +2081,7 @@ const EmployerLanding = () => {
                       sx={{
                         fontWeight: 700,
                         fontSize: "1.1rem",
-                        color: "#1a202c",
+                        color: colors.blue,
                         mb: 0.5,
                       }}
                     >
@@ -1964,7 +2090,7 @@ const EmployerLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#64748b",
+                        color: colors.blue,
                         fontWeight: 500,
                         fontSize: "0.9rem",
                       }}
@@ -1974,7 +2100,7 @@ const EmployerLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#3b82f6",
+                        color: colors.green,
                         fontWeight: 600,
                         fontSize: "0.85rem",
                       }}
@@ -1995,7 +2121,7 @@ const EmployerLanding = () => {
                 width: "100px",
                 height: "100%",
                 background:
-                  "linear-gradient(90deg, white 0%, transparent 100%)",
+                  `linear-gradient(90deg, ${colors.white} 0%, transparent 100%)`,
                 zIndex: 2,
               }}
             />
@@ -2007,17 +2133,67 @@ const EmployerLanding = () => {
                 width: "100px",
                 height: "100%",
                 background:
-                  "linear-gradient(270deg, white 0%, transparent 100%)",
+                  `linear-gradient(270deg, ${colors.white} 0%, transparent 100%)`,
                 zIndex: 2,
               }}
             />
           </Box>
+        </Container>
+      </Box>
 
+      {/* Final CTA Section */}
+      <Box sx={{ py: 8, bgcolor: colors.blue }}>
+        <Container maxWidth="md">
+          <Box sx={{ textAlign: "center" }}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                mb: 3,
+                color: colors.white,
+              }}
+            >
+              Ready to Transform Your Hiring?
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                mb: 4,
+                color: "#e2e8f0",
+              }}
+            >
+              Join 10,000+ companies already hiring with us
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => setAuthStep("mobile")}
+              sx={{
+                py: 2,
+                px: 6,
+                borderRadius: 3,
+                background: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
+                color: colors.blue,
+                fontSize: "18px",
+                fontWeight: 700,
+                textTransform: "none",
+                border: `2px solid ${colors.white}`,
+                boxShadow: `0 8px 32px ${colors.saffron}40`,
+                "&:hover": {
+                  boxShadow: `0 12px 40px ${colors.saffron}50`,
+                  transform: "translateY(-2px)",
+                },
+                transition: "all 0.3s ease",
+              }}
+            >
+              Start Hiring Now
+            </Button>
+          </Box>
         </Container>
       </Box>
 
       {/* Footer Section */}
-      <Box sx={{ bgcolor: "#1a202c", color: "white" }}>
+      <Box sx={{ bgcolor: colors.blue, color: colors.white }}>
         <Container maxWidth="lg">
           {/* Main Footer Content */}
           <Box sx={{ py: 8 }}>
@@ -2031,14 +2207,14 @@ const EmployerLanding = () => {
                       fontWeight: 700,
                       fontSize: "1.8rem",
                       background:
-                        "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
+                        `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.green} 100%)`,
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       color: "transparent",
                       mb: 2,
                     }}
                   >
-                    Job Chashiye
+                    Job ChaaHiye
                   </Typography>
                   <Typography
                     variant="body1"
@@ -2048,7 +2224,7 @@ const EmployerLanding = () => {
                       mb: 3,
                     }}
                   >
-                    Connecting talent with opportunity. Job Chashiye is India's
+                    Connecting talent with opportunity. Job ChaaHiye is India's
                     leading job portal helping millions of job seekers find
                     their dream careers and employers find the perfect
                     candidates.
@@ -2058,10 +2234,10 @@ const EmployerLanding = () => {
                 {/* Social Links */}
                 <Box sx={{ display: "flex", gap: 2 }}>
                   {[
-                    { icon: "📘", label: "Facebook", color: "#1877f2" },
-                    { icon: "🐦", label: "Twitter", color: "#1da1f2" },
-                    { icon: "💼", label: "LinkedIn", color: "#0077b5" },
-                    { icon: "📷", label: "Instagram", color: "#e4405f" },
+                    { icon: "📘", label: "Facebook", color: colors.saffron },
+                    { icon: "🐦", label: "Twitter", color: colors.saffron },
+                    { icon: "💼", label: "LinkedIn", color: colors.saffron },
+                    { icon: "📷", label: "Instagram", color: colors.saffron },
                   ].map((social) => (
                     <Box
                       key={social.label}
@@ -2069,7 +2245,7 @@ const EmployerLanding = () => {
                         width: 44,
                         height: 44,
                         borderRadius: 2,
-                        bgcolor: "#2d3748",
+                        bgcolor: `${colors.saffron}20`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -2077,9 +2253,9 @@ const EmployerLanding = () => {
                         transition: "all 0.3s ease",
                         fontSize: "1.2rem",
                         "&:hover": {
-                          bgcolor: social.color,
+                          bgcolor: colors.saffron,
                           transform: "translateY(-2px)",
-                          boxShadow: `0 4px 12px ${social.color}40`,
+                          boxShadow: `0 4px 12px ${colors.saffron}40`,
                         },
                       }}
                     >
@@ -2096,7 +2272,7 @@ const EmployerLanding = () => {
                   sx={{
                     fontWeight: 600,
                     fontSize: "1.1rem",
-                    color: "white",
+                    color: colors.white,
                     mb: 3,
                   }}
                 >
@@ -2119,7 +2295,7 @@ const EmployerLanding = () => {
                         cursor: "pointer",
                         transition: "color 0.3s ease",
                         "&:hover": {
-                          color: "#3b82f6",
+                          color: colors.saffron,
                         },
                       }}
                     >
@@ -2136,7 +2312,7 @@ const EmployerLanding = () => {
                   sx={{
                     fontWeight: 600,
                     fontSize: "1.1rem",
-                    color: "white",
+                    color: colors.white,
                     mb: 3,
                   }}
                 >
@@ -2159,7 +2335,7 @@ const EmployerLanding = () => {
                         cursor: "pointer",
                         transition: "color 0.3s ease",
                         "&:hover": {
-                          color: "#3b82f6",
+                          color: colors.saffron,
                         },
                       }}
                     >
@@ -2176,7 +2352,7 @@ const EmployerLanding = () => {
                   sx={{
                     fontWeight: 600,
                     fontSize: "1.1rem",
-                    color: "white",
+                    color: colors.white,
                     mb: 3,
                   }}
                 >
@@ -2199,7 +2375,7 @@ const EmployerLanding = () => {
                         cursor: "pointer",
                         transition: "color 0.3s ease",
                         "&:hover": {
-                          color: "#3b82f6",
+                          color: colors.saffron,
                         },
                       }}
                     >
@@ -2216,7 +2392,7 @@ const EmployerLanding = () => {
                   sx={{
                     fontWeight: 600,
                     fontSize: "1.1rem",
-                    color: "white",
+                    color: colors.white,
                     mb: 3,
                   }}
                 >
@@ -2239,7 +2415,7 @@ const EmployerLanding = () => {
                         cursor: "pointer",
                         transition: "color 0.3s ease",
                         "&:hover": {
-                          color: "#3b82f6",
+                          color: colors.saffron,
                         },
                       }}
                     >
@@ -2255,8 +2431,8 @@ const EmployerLanding = () => {
           <Box
             sx={{
               py: 4,
-              borderTop: "1px solid #2d3748",
-              borderBottom: "1px solid #2d3748",
+              borderTop: `1px solid ${colors.saffron}`,
+              borderBottom: `1px solid ${colors.saffron}`,
             }}
           >
             <Grid container spacing={4} alignItems="center">
@@ -2265,7 +2441,7 @@ const EmployerLanding = () => {
                   variant="h5"
                   sx={{
                     fontWeight: 600,
-                    color: "white",
+                    color: colors.white,
                     mb: 1,
                   }}
                 >
@@ -2291,17 +2467,17 @@ const EmployerLanding = () => {
                       px: 3,
                       py: 1.5,
                       borderRadius: 2,
-                      border: "1px solid #4a5568",
-                      bgcolor: "#2d3748",
-                      color: "white",
+                      border: `1px solid ${colors.saffron}`,
+                      bgcolor: "rgba(255, 255, 255, 0.1)",
+                      color: colors.white,
                       fontSize: "0.95rem",
                       "&::placeholder": {
                         color: "#a0aec0",
                       },
                       "&:focus": {
                         outline: "none",
-                        borderColor: "#3b82f6",
-                        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)",
+                        borderColor: colors.saffron,
+                        boxShadow: `0 0 0 3px ${colors.saffron}20`,
                       },
                     }}
                   />
@@ -2314,9 +2490,10 @@ const EmployerLanding = () => {
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "0.95rem",
-                      bgcolor: "#3b82f6",
+                      bgcolor: colors.saffron,
+                      color: colors.blue,
                       "&:hover": {
-                        bgcolor: "#2563eb",
+                        bgcolor: colors.darkSaffron,
                         transform: "translateY(-1px)",
                       },
                       transition: "all 0.3s ease",
@@ -2335,7 +2512,7 @@ const EmployerLanding = () => {
               variant="h6"
               sx={{
                 fontWeight: 600,
-                color: "white",
+                color: colors.white,
                 mb: 3,
                 textAlign: "center",
               }}
@@ -2355,14 +2532,15 @@ const EmployerLanding = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  bgcolor: "#2d3748",
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
                   borderRadius: 3,
                   px: 3,
                   py: 2,
                   cursor: "pointer",
                   transition: "all 0.3s ease",
+                  border: `1px solid ${colors.saffron}`,
                   "&:hover": {
-                    bgcolor: "#3b82f6",
+                    bgcolor: colors.saffron,
                     transform: "translateY(-2px)",
                   },
                 }}
@@ -2377,7 +2555,7 @@ const EmployerLanding = () => {
                   </Typography>
                   <Typography
                     variant="h6"
-                    sx={{ color: "white", fontSize: "1.1rem", fontWeight: 600 }}
+                    sx={{ color: colors.white, fontSize: "1.1rem", fontWeight: 600 }}
                   >
                     App Store
                   </Typography>
@@ -2389,14 +2567,15 @@ const EmployerLanding = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  bgcolor: "#2d3748",
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
                   borderRadius: 3,
                   px: 3,
                   py: 2,
                   cursor: "pointer",
                   transition: "all 0.3s ease",
+                  border: `1px solid ${colors.saffron}`,
                   "&:hover": {
-                    bgcolor: "#3b82f6",
+                    bgcolor: colors.saffron,
                     transform: "translateY(-2px)",
                   },
                 }}
@@ -2411,7 +2590,7 @@ const EmployerLanding = () => {
                   </Typography>
                   <Typography
                     variant="h6"
-                    sx={{ color: "white", fontSize: "1.1rem", fontWeight: 600 }}
+                    sx={{ color: colors.white, fontSize: "1.1rem", fontWeight: 600 }}
                   >
                     Google Play
                   </Typography>
@@ -2424,7 +2603,7 @@ const EmployerLanding = () => {
           <Box
             sx={{
               py: 4,
-              borderTop: "1px solid #2d3748",
+              borderTop: `1px solid ${colors.saffron}`,
             }}
           >
             <Grid container spacing={3} alignItems="center">
@@ -2436,7 +2615,7 @@ const EmployerLanding = () => {
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
-                  © 2024 Job Chashiye. All rights reserved.
+                  © 2024 Job ChaaHiye. All rights reserved.
                 </Typography>
               </Grid>
               <Grid item xs={12} md={6}>
@@ -2463,7 +2642,7 @@ const EmployerLanding = () => {
                         cursor: "pointer",
                         transition: "color 0.3s ease",
                         "&:hover": {
-                          color: "#3b82f6",
+                          color: colors.saffron,
                         },
                       }}
                     >
@@ -2495,8 +2674,9 @@ const EmployerLanding = () => {
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
-                    color: "#a0aec0",
+                    color: colors.saffron,
                     fontSize: "0.9rem",
+                    fontWeight: 500,
                   }}
                 >
                   {badge.text}
@@ -2506,6 +2686,22 @@ const EmployerLanding = () => {
           </Box>
         </Container>
       </Box>
+
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

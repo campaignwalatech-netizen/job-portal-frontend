@@ -46,6 +46,18 @@ import {
 } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
 
+// Indian Flag Color Palette
+const colors = {
+  saffron: '#FF9933',
+  white: '#FFFFFF',
+  green: '#138808',
+  blue: '#000080',
+  lightGreen: '#4CAF50',
+  lightSaffron: '#FFB74D',
+  darkGreen: '#0A5C08',
+  darkSaffron: '#E68900',
+};
+
 // Enhanced Animations from reference
 const float = keyframes`
   0%, 100% { 
@@ -159,7 +171,7 @@ const slideStatsRightToLeft = keyframes`
   }
 `;
 
-const JobPortalLanding = () => {
+const EmployeeLanding = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { openAuthModal } = useAuth();
@@ -499,35 +511,35 @@ const JobPortalLanding = () => {
       title: "Part time Jobs",
       trend: 3,
       count: "45K+",
-      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      gradient: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
       icon: <BusinessCenter />,
     },
     {
       title: "Jobs for Freshers",
       trend: 1,
       count: "120K+",
-      gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      gradient: `linear-gradient(135deg, ${colors.green} 0%, ${colors.darkGreen} 100%)`,
       icon: <School />,
     },
     {
       title: "Jobs for Women",
       trend: 4,
       count: "85K+",
-      gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      gradient: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
       icon: <People />,
     },
     {
       title: "Work from home Jobs",
       trend: 2,
       count: "95K+",
-      gradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+      gradient: `linear-gradient(135deg, ${colors.green} 0%, ${colors.darkGreen} 100%)`,
       icon: <TrendingUp />,
     },
     {
       title: "International Jobs",
       trend: 5,
       count: "35K+",
-      gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+      gradient: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
       icon: <Place />,
     },
   ];
@@ -627,7 +639,7 @@ const JobPortalLanding = () => {
           variant="h4"
           sx={{
             fontWeight: 800,
-            color: "#fbbf24",
+            color: colors.saffron,
             animation: isVisible ? `${gentlePulse} 2s ease-in-out` : "none",
           }}
         >
@@ -683,8 +695,8 @@ const JobPortalLanding = () => {
       {/* Hero Section - Single Frame */}
       <Box
         sx={{
-          background: "linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)",
-          color: "white",
+          background: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.white} 50%, ${colors.green} 100%)`,
+          color: colors.blue,
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
@@ -730,7 +742,7 @@ const JobPortalLanding = () => {
             height: 100,
             borderRadius: "30%",
             background:
-              "linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%)",
+              `linear-gradient(135deg, ${colors.saffron}20 0%, ${colors.saffron}10 100%)`,
             animation: `${float} 7s ease-in-out infinite 1s`,
             filter: "blur(15px)",
           }}
@@ -754,13 +766,13 @@ const JobPortalLanding = () => {
                 <Paper
                   sx={{
                     display: "inline-block",
-                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                    bgcolor: "rgba(255, 255, 255, 0.9)",
                     backdropFilter: "blur(10px)",
                     borderRadius: 20,
                     px: 2,
                     py: 0.5,
                     mb: 2,
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    border: `2px solid ${colors.green}`,
                     animation: `${gentlePulse} 2s ease-in-out infinite`,
                   }}
                 >
@@ -768,7 +780,7 @@ const JobPortalLanding = () => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 600,
-                      color: "#fbbf24",
+                      color: colors.green,
                       textAlign: "center",
                       fontSize: "0.8rem",
                     }}
@@ -787,6 +799,7 @@ const JobPortalLanding = () => {
                     fontWeight: 800,
                     lineHeight: 1.1,
                     mb: 2,
+                    color: colors.blue,
                   }}
                 >
                   Your Job Search
@@ -794,7 +807,7 @@ const JobPortalLanding = () => {
                     component="span"
                     sx={{
                       display: "block",
-                      background: "linear-gradient(45deg, #fbbf24, #f59e0b)",
+                      background: `linear-gradient(45deg, ${colors.saffron}, ${colors.green})`,
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       color: "transparent",
@@ -816,7 +829,7 @@ const JobPortalLanding = () => {
                     fontSize: { xs: "1rem", md: "1.2rem" },
                     lineHeight: 1.5,
                     fontWeight: 400,
-                    color: "#e2e8f0",
+                    color: colors.blue,
                   }}
                 >
                   Find Jobs, Employment & Career Opportunities
@@ -837,7 +850,7 @@ const JobPortalLanding = () => {
                     <AnimatedCounter end={50} suffix="Cr+" />
                     <Typography
                       variant="body1"
-                      sx={{ opacity: 0.9, fontWeight: 600 }}
+                      sx={{ opacity: 0.9, fontWeight: 600, color: colors.blue }}
                     >
                       Job Seekers
                     </Typography>
@@ -846,7 +859,7 @@ const JobPortalLanding = () => {
                     <AnimatedCounter end={7} suffix="L+" />
                     <Typography
                       variant="body1"
-                      sx={{ opacity: 0.9, fontWeight: 600 }}
+                      sx={{ opacity: 0.9, fontWeight: 600, color: colors.blue }}
                     >
                       Companies
                     </Typography>
@@ -855,7 +868,7 @@ const JobPortalLanding = () => {
                     <AnimatedCounter end={95} suffix="%+" />
                     <Typography
                       variant="body1"
-                      sx={{ opacity: 0.9, fontWeight: 600 }}
+                      sx={{ opacity: 0.9, fontWeight: 600, color: colors.blue }}
                     >
                       Success Rate
                     </Typography>
@@ -867,11 +880,12 @@ const JobPortalLanding = () => {
               <Slide direction="up" in timeout={1600}>
                 <Paper
                   sx={{
-                    background: "white",
+                    background: colors.white,
                     borderRadius: 2,
                     p: 2,
                     boxShadow: "0 20px 40px rgba(0, 0, 0, 0.25)",
                     mb: 3,
+                    border: `2px solid ${colors.green}`,
                   }}
                 >
                   <Stack
@@ -888,7 +902,7 @@ const JobPortalLanding = () => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <Work sx={{ color: "#1e3a8a", fontSize: 20 }} />
+                            <Work sx={{ color: colors.green, fontSize: 20 }} />
                           </InputAdornment>
                         ),
                         sx: {
@@ -901,8 +915,8 @@ const JobPortalLanding = () => {
                         flex: 1,
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": { borderColor: "transparent" },
-                          "&:hover fieldset": { borderColor: "#1e3a8a" },
-                          "&.Mui-focused fieldset": { borderColor: "#1e3a8a" },
+                          "&:hover fieldset": { borderColor: colors.green },
+                          "&.Mui-focused fieldset": { borderColor: colors.green },
                         },
                       }}
                     />
@@ -916,7 +930,7 @@ const JobPortalLanding = () => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <Place sx={{ color: "#1e3a8a", fontSize: 20 }} />
+                            <Place sx={{ color: colors.green, fontSize: 20 }} />
                           </InputAdornment>
                         ),
                         sx: {
@@ -929,8 +943,8 @@ const JobPortalLanding = () => {
                         flex: 1,
                         "& .MuiOutlinedInput-root": {
                           "& fieldset": { borderColor: "transparent" },
-                          "&:hover fieldset": { borderColor: "#1e3a8a" },
-                          "&.Mui-focused fieldset": { borderColor: "#1e3a8a" },
+                          "&:hover fieldset": { borderColor: colors.green },
+                          "&.Mui-focused fieldset": { borderColor: colors.green },
                         },
                       }}
                     />
@@ -939,8 +953,8 @@ const JobPortalLanding = () => {
                       variant="contained"
                       onClick={handleSearch}
                       sx={{
-                        bgcolor: "#1e3a8a",
-                        color: "white",
+                        bgcolor: colors.green,
+                        color: colors.white,
                         px: 3,
                         py: 1,
                         fontSize: "0.9rem",
@@ -954,9 +968,9 @@ const JobPortalLanding = () => {
                             ? `${gentlePulse} 2s ease-in-out infinite`
                             : "none",
                         "&:hover": {
-                          bgcolor: "#1e40af",
+                          bgcolor: colors.darkGreen,
                           transform: "translateY(-1px)",
-                          boxShadow: "0 5px 15px rgba(30, 58, 138, 0.3)",
+                          boxShadow: `0 5px 15px ${colors.green}30`,
                         },
                         transition: "all 0.3s ease",
                       }}
@@ -983,13 +997,11 @@ const JobPortalLanding = () => {
                     },
                     "&::before": {
                       left: 0,
-                      background:
-                        "linear-gradient(90deg, rgba(30, 58, 138, 0.8) 0%, transparent 100%)",
+                      background: `linear-gradient(90deg, ${colors.saffron} 0%, transparent 100%)`,
                     },
                     "&::after": {
                       right: 0,
-                      background:
-                        "linear-gradient(270deg, rgba(30, 58, 138, 0.8) 0%, transparent 100%)",
+                      background: `linear-gradient(270deg, ${colors.green} 0%, transparent 100%)`,
                     },
                   }}
                 >
@@ -998,7 +1010,7 @@ const JobPortalLanding = () => {
                     sx={{
                       fontWeight: 700,
                       mb: 2,
-                      color: "#fbbf24",
+                      color: colors.green,
                       fontSize: "0.9rem",
                       textAlign: "center",
                     }}
@@ -1023,11 +1035,11 @@ const JobPortalLanding = () => {
                             display: "flex",
                             alignItems: "center",
                             gap: 1.5,
-                            background: "rgba(255, 255, 255, 0.1)",
+                            background: "rgba(255, 255, 255, 0.9)",
                             borderRadius: 2,
                             p: 1.5,
                             minWidth: "280px",
-                            border: "1px solid rgba(255, 255, 255, 0.2)",
+                            border: `2px solid ${colors.saffron}`,
                             backdropFilter: "blur(10px)",
                           }}
                         >
@@ -1035,7 +1047,7 @@ const JobPortalLanding = () => {
                             sx={{
                               width: 40,
                               height: 40,
-                              bgcolor: "#10b981",
+                              bgcolor: colors.green,
                               fontWeight: 600,
                               fontSize: "1rem",
                             }}
@@ -1047,7 +1059,7 @@ const JobPortalLanding = () => {
                               variant="body2"
                               sx={{
                                 fontWeight: 600,
-                                color: "white",
+                                color: colors.blue,
                                 fontSize: "0.85rem",
                                 whiteSpace: "nowrap",
                                 overflow: "hidden",
@@ -1059,7 +1071,7 @@ const JobPortalLanding = () => {
                             <Typography
                               variant="caption"
                               sx={{
-                                color: "#10b981",
+                                color: colors.green,
                                 fontWeight: 500,
                                 fontSize: "0.75rem",
                                 display: "block",
@@ -1070,7 +1082,7 @@ const JobPortalLanding = () => {
                             <Typography
                               variant="caption"
                               sx={{
-                                color: "#cbd5e1",
+                                color: colors.blue,
                                 fontSize: "0.7rem",
                                 display: "block",
                               }}
@@ -1078,7 +1090,7 @@ const JobPortalLanding = () => {
                               {achiever.role} • {achiever.time}
                             </Typography>
                           </Box>
-                          <Verified sx={{ color: "#10b981", fontSize: 20 }} />
+                          <Verified sx={{ color: colors.green, fontSize: 20 }} />
                         </Paper>
                       )
                     )}
@@ -1103,14 +1115,14 @@ const JobPortalLanding = () => {
                     overflow: "hidden",
                     boxShadow: "0 32px 64px rgba(0, 0, 0, 0.2)",
                     background:
-                      "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+                      `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
                     minHeight: "200px",
                     width: "100%",
                     maxWidth: "450px",
                     display: "flex",
                     flexDirection: "column",
                     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                    border: `2px solid ${colors.saffron}`,
                     "&:hover": {
                       boxShadow: "0 40px 80px rgba(0, 0, 0, 0.25)",
                       transform: "translateY(-8px)",
@@ -1142,7 +1154,7 @@ const JobPortalLanding = () => {
                               sx={{
                                 fontWeight: 600,
                                 mb: 4,
-                                color: "text.primary",
+                                color: colors.blue,
                                 textAlign: "center",
                               }}
                             >
@@ -1172,7 +1184,7 @@ const JobPortalLanding = () => {
                                         borderRadius: 2,
                                         px: 2,
                                         py: 1.5,
-                                        border: "1px solid #e2e8f0",
+                                        border: `1px solid ${colors.saffron}`,
                                         mr: 2,
                                       }}
                                     >
@@ -1189,7 +1201,7 @@ const JobPortalLanding = () => {
                                         variant="body1"
                                         sx={{
                                           fontWeight: 700,
-                                          color: "text.primary",
+                                          color: colors.blue,
                                         }}
                                       >
                                         +91
@@ -1206,11 +1218,11 @@ const JobPortalLanding = () => {
                                     borderWidth: 2,
                                   },
                                   "&:hover .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "#1e3a8a",
+                                    borderColor: colors.green,
                                   },
                                   "&.Mui-focused .MuiOutlinedInput-notchedOutline":
                                     {
-                                      borderColor: "#1e3a8a",
+                                      borderColor: colors.green,
                                       borderWidth: 2,
                                     },
                                 },
@@ -1230,15 +1242,15 @@ const JobPortalLanding = () => {
                               sx={{
                                 mb: 4,
                                 borderRadius: 2,
-                                backgroundColor: "#f0f9ff",
-                                border: "1px solid #bae6fd",
+                                backgroundColor: `${colors.green}10`,
+                                border: `1px solid ${colors.green}30`,
                                 animation: `${slideInFromBottom} 0.6s ease-out`,
                               }}
-                              icon={<Security sx={{ color: "#0369a1" }} />}
+                              icon={<Security sx={{ color: colors.green }} />}
                             >
                               <Typography
                                 variant="body2"
-                                sx={{ fontWeight: 500, color: "#0369a1" }}
+                                sx={{ fontWeight: 500, color: colors.green }}
                               >
                                 Your number is secure with end-to-end encryption
                               </Typography>
@@ -1256,11 +1268,11 @@ const JobPortalLanding = () => {
                                   background:
                                     loading || mobileNumber.length !== 10
                                       ? "#9ca3af"
-                                      : "linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)",
+                                      : `linear-gradient(135deg, ${colors.green} 0%, ${colors.darkGreen} 100%)`,
                                   boxShadow:
                                     loading || mobileNumber.length !== 10
                                       ? "none"
-                                      : "0 8px 24px rgba(30, 58, 138, 0.4)",
+                                      : `0 8px 24px ${colors.green}40`,
                                   fontSize: "17px",
                                   fontWeight: 600,
                                   textTransform: "none",
@@ -1273,7 +1285,7 @@ const JobPortalLanding = () => {
                                     boxShadow:
                                       loading || mobileNumber.length !== 10
                                         ? "none"
-                                        : "0 12px 32px rgba(30, 58, 138, 0.5)",
+                                        : `0 12px 32px ${colors.green}50`,
                                     transform:
                                       loading || mobileNumber.length !== 10
                                         ? "none"
@@ -1303,7 +1315,7 @@ const JobPortalLanding = () => {
                             >
                               <IconButton
                                 onClick={handleBackToMobile}
-                                sx={{ mr: 1, color: "text.secondary" }}
+                                sx={{ mr: 1, color: colors.blue }}
                               >
                                 <ArrowForward
                                   sx={{ transform: "rotate(180deg)" }}
@@ -1311,7 +1323,7 @@ const JobPortalLanding = () => {
                               </IconButton>
                               <Typography
                                 variant="h6"
-                                sx={{ fontWeight: 600, color: "text.primary" }}
+                                sx={{ fontWeight: 600, color: colors.blue }}
                               >
                                 Verify OTP
                               </Typography>
@@ -1321,7 +1333,7 @@ const JobPortalLanding = () => {
                               variant="body2"
                               sx={{
                                 mb: 3,
-                                color: "text.secondary",
+                                color: colors.blue,
                                 textAlign: "center",
                               }}
                             >
@@ -1364,8 +1376,16 @@ const JobPortalLanding = () => {
                                     width: "60px",
                                     "& .MuiOutlinedInput-root": {
                                       borderRadius: 2,
+                                      borderColor: colors.saffron,
                                       "& input": {
                                         textAlign: "center",
+                                      },
+                                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: colors.green,
+                                      },
+                                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: colors.green,
+                                        borderWidth: 2,
                                       },
                                     },
                                   }}
@@ -1378,13 +1398,13 @@ const JobPortalLanding = () => {
                               {countdown > 0 ? (
                                 <Typography
                                   variant="body2"
-                                  sx={{ color: "text.secondary" }}
+                                  sx={{ color: colors.blue }}
                                 >
                                   Resend OTP in{" "}
                                   <Box
                                     component="span"
                                     sx={{
-                                      color: "#1e3a8a",
+                                      color: colors.green,
                                       fontWeight: 600,
                                       animation: `${countdownAnimation} 1s ease-in-out infinite`,
                                     }}
@@ -1397,7 +1417,7 @@ const JobPortalLanding = () => {
                                   onClick={handleResendOtp}
                                   disabled={loading}
                                   sx={{
-                                    color: "#1e3a8a",
+                                    color: colors.green,
                                     fontWeight: 600,
                                     textTransform: "none",
                                     "&:hover": {
@@ -1425,11 +1445,11 @@ const JobPortalLanding = () => {
                                   background:
                                     loading || otp.some((digit) => digit === "")
                                       ? "#9ca3af"
-                                      : "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                                      : `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
                                   boxShadow:
                                     loading || otp.some((digit) => digit === "")
                                       ? "none"
-                                      : "0 8px 24px rgba(16, 185, 129, 0.4)",
+                                      : `0 8px 24px ${colors.saffron}40`,
                                   fontSize: "17px",
                                   fontWeight: 600,
                                   textTransform: "none",
@@ -1439,7 +1459,7 @@ const JobPortalLanding = () => {
                                       loading ||
                                       otp.some((digit) => digit === "")
                                         ? "none"
-                                        : "0 12px 32px rgba(16, 185, 129, 0.5)",
+                                        : `0 12px 32px ${colors.saffron}50`,
                                     transform:
                                       loading ||
                                       otp.some((digit) => digit === "")
@@ -1483,7 +1503,7 @@ const JobPortalLanding = () => {
               variant="h3"
               sx={{
                 fontWeight: 800,
-                color: "#1e293b",
+                color: colors.blue,
                 mb: 2,
                 fontSize: { xs: "2rem", md: "2.5rem" },
               }}
@@ -1493,7 +1513,7 @@ const JobPortalLanding = () => {
             <Typography
               variant="h6"
               sx={{
-                color: "#64748b",
+                color: colors.blue,
                 fontWeight: 400,
                 maxWidth: "600px",
                 mx: "auto",
@@ -1562,13 +1582,13 @@ const JobPortalLanding = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 3,
-                    background: "white",
+                    background: colors.white,
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                    border: "1px solid #e2e8f0",
+                    border: `2px solid ${colors.saffron}`,
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
-                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
+                      boxShadow: `0 8px 30px ${colors.saffron}30`,
                     },
                   }}
                 >
@@ -1635,13 +1655,13 @@ const JobPortalLanding = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 3,
-                    background: "white",
+                    background: colors.white,
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                    border: "1px solid #e2e8f0",
+                    border: `2px solid ${colors.saffron}`,
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
-                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
+                      boxShadow: `0 8px 30px ${colors.saffron}30`,
                     },
                   }}
                 >
@@ -1720,13 +1740,13 @@ const JobPortalLanding = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 3,
-                    background: "white",
+                    background: colors.white,
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                    border: "1px solid #e2e8f0",
+                    border: `2px solid ${colors.green}`,
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
-                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
+                      boxShadow: `0 8px 30px ${colors.green}30`,
                     },
                   }}
                 >
@@ -1793,13 +1813,13 @@ const JobPortalLanding = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 3,
-                    background: "white",
+                    background: colors.white,
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                    border: "1px solid #e2e8f0",
+                    border: `2px solid ${colors.green}`,
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
-                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
+                      boxShadow: `0 8px 30px ${colors.green}30`,
                     },
                   }}
                 >
@@ -1856,7 +1876,7 @@ const JobPortalLanding = () => {
       <Box
         sx={{
           py: 8,
-          bgcolor: "#1e293b",
+          bgcolor: colors.blue,
           overflow: "hidden",
           position: "relative",
         }}
@@ -1867,7 +1887,7 @@ const JobPortalLanding = () => {
               variant="h3"
               sx={{
                 fontWeight: 800,
-                color: "white",
+                color: colors.white,
                 mb: 2,
                 fontSize: { xs: "2rem", md: "2.5rem" },
               }}
@@ -1919,15 +1939,15 @@ const JobPortalLanding = () => {
                       justifyContent: "center",
                       borderRadius: 3,
                       background:
-                        "linear-gradient(135deg, #334155 0%, #475569 100%)",
+                        `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.darkSaffron} 100%)`,
                       boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-                      border: "1px solid #475569",
+                      border: `2px solid ${colors.white}`,
                       transition: "all 0.3s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         boxShadow: "0 8px 30px rgba(0, 0, 0, 0.25)",
                         background:
-                          "linear-gradient(135deg, #475569 0%, #4b5563 100%)",
+                          `linear-gradient(135deg, ${colors.darkSaffron} 0%, ${colors.saffron} 100%)`,
                       },
                     }}
                   >
@@ -1935,7 +1955,7 @@ const JobPortalLanding = () => {
                       variant="h4"
                       sx={{
                         fontWeight: 800,
-                        color: "#fbbf24",
+                        color: colors.white,
                         fontSize: { xs: "1.5rem", md: "1.75rem" },
                         lineHeight: 1.2,
                         mb: 0.5,
@@ -1946,7 +1966,7 @@ const JobPortalLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#e2e8f0",
+                        color: colors.white,
                         fontWeight: 600,
                         fontSize: "0.8rem",
                         textAlign: "center",
@@ -1970,15 +1990,15 @@ const JobPortalLanding = () => {
                       justifyContent: "center",
                       borderRadius: 3,
                       background:
-                        "linear-gradient(135deg, #334155 0%, #475569 100%)",
+                        `linear-gradient(135deg, ${colors.green} 0%, ${colors.darkGreen} 100%)`,
                       boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-                      border: "1px solid #475569",
+                      border: `2px solid ${colors.white}`,
                       transition: "all 0.3s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         boxShadow: "0 8px 30px rgba(0, 0, 0, 0.25)",
                         background:
-                          "linear-gradient(135deg, #475569 0%, #4b5563 100%)",
+                          `linear-gradient(135deg, ${colors.darkGreen} 0%, ${colors.green} 100%)`,
                       },
                     }}
                   >
@@ -1986,7 +2006,7 @@ const JobPortalLanding = () => {
                       variant="h4"
                       sx={{
                         fontWeight: 800,
-                        color: "#fbbf24",
+                        color: colors.white,
                         fontSize: { xs: "1.5rem", md: "1.75rem" },
                         lineHeight: 1.2,
                         mb: 0.5,
@@ -1997,7 +2017,7 @@ const JobPortalLanding = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: "#e2e8f0",
+                        color: colors.white,
                         fontWeight: 600,
                         fontSize: "0.8rem",
                         textAlign: "center",
@@ -2020,7 +2040,7 @@ const JobPortalLanding = () => {
               bottom: 0,
               width: "100px",
               background:
-                "linear-gradient(90deg, #1e293b 0%, transparent 100%)",
+                `linear-gradient(90deg, ${colors.blue} 0%, transparent 100%)`,
               zIndex: 2,
             }}
           />
@@ -2032,7 +2052,7 @@ const JobPortalLanding = () => {
               bottom: 0,
               width: "100px",
               background:
-                "linear-gradient(270deg, #1e293b 0%, transparent 100%)",
+                `linear-gradient(270deg, ${colors.blue} 0%, transparent 100%)`,
               zIndex: 2,
             }}
           />
@@ -2055,954 +2075,956 @@ const JobPortalLanding = () => {
         </Alert>
       </Snackbar>
 
-   
- {/* What Employers Are Saying Section */}
-<Box sx={{ py: 8, bgcolor: "white" }}>
-  <Container maxWidth="lg">
-    {/* Section Header */}
-    <Box sx={{ textAlign: "center", mb: 6 }}>
-      <Typography
-        variant="h2"
-        sx={{
-          fontWeight: 700,
-          fontSize: { xs: "2rem", md: "2.5rem" },
-          color: "#1a202c",
-          mb: 2,
-        }}
-      >
-        What Employers Are Saying
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{
-          color: "#64748b",
-          fontWeight: 400,
-          fontSize: "1.1rem",
-          maxWidth: "600px",
-          mx: "auto",
-          lineHeight: 1.6,
-        }}
-      >
-        Join thousands of companies that have transformed their hiring process
-      </Typography>
-    </Box>
-
-    {/* Testimonials Slider */}
-    <Box sx={{ position: "relative", overflow: "hidden" }}>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 3,
-          animation: "slideInfinite 40s linear infinite",
-          "&:hover": {
-            animationPlayState: "paused",
-          },
-          "@keyframes slideInfinite": {
-            "0%": {
-              transform: "translateX(0)",
-            },
-            "100%": {
-              transform: "translateX(-50%)",
-            },
-          },
-        }}
-      >
-        {[
-          {
-            id: 1,
-            name: "Rajesh Kumar",
-            role: "HR Director",
-            company: "TechMahindra",
-            rating: 5,
-            text: "The quality of candidates is outstanding! We filled 15 positions in just 2 weeks with perfect cultural fits.",
-            avatar: "👨‍💼",
-            highlight: "15 positions in 2 weeks"
-          },
-          {
-            id: 2,
-            name: "Priya Sharma",
-            role: "Talent Acquisition Head",
-            company: "Infosys",
-            rating: 5,
-            text: "Our hiring time reduced by 70%. The AI matching is incredibly accurate - every candidate was interview-ready!",
-            avatar: "👩‍💼",
-            highlight: "70% faster hiring"
-          },
-          {
-            id: 3,
-            name: "Amit Patel",
-            role: "Startup Founder",
-            company: "FinTech Innovations",
-            rating: 5,
-            text: "As a startup, every hire matters. This platform helped us find exceptional talent we couldn't find elsewhere.",
-            avatar: "🚀",
-            highlight: "Exceptional talent found"
-          },
-          {
-            id: 4,
-            name: "Neha Gupta",
-            role: "HR Manager",
-            company: "HDFC Bank",
-            rating: 5,
-            text: "The verified profiles saved us hundreds of screening hours. 9/10 candidates were perfect for the role!",
-            avatar: "👩‍🎓",
-            highlight: "9/10 perfect matches"
-          },
-          {
-            id: 5,
-            name: "Sanjay Mehta",
-            role: "CTO",
-            company: "EcomGiant",
-            rating: 5,
-            text: "Found senior developers in 3 days! The platform understands tech roles better than any other we've used.",
-            avatar: "👨‍💻",
-            highlight: "Senior hires in 3 days"
-          },
-          {
-            id: 6,
-            name: "Ananya Reddy",
-            role: "VP Talent",
-            company: "Global Solutions",
-            rating: 5,
-            text: "International hiring made easy! We sourced candidates from 5 different countries seamlessly through this platform.",
-            avatar: "🌍",
-            highlight: "Global hiring simplified"
-          },
-        ].map((testimonial) => (
-          <Card
-            key={testimonial.id}
-            sx={{
-              flex: "0 0 380px",
-              background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-              borderRadius: 3,
-              p: 4,
-              border: "1px solid #e2e8f0",
-              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                transform: "translateY(-8px)",
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                borderColor: "#1e3a8a",
-              },
-            }}
-          >
-            {/* Quote Icon */}
-            <Box sx={{ textAlign: "center", mb: 3 }}>
-              <Box
-                sx={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  bgcolor: "#f0f9ff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mx: "auto",
-                  fontSize: "1.5rem",
-                  color: "#1e3a8a",
-                  border: "2px solid #e0f2fe",
-                }}
-              >
-                "
-              </Box>
-            </Box>
-
-            {/* Highlight Badge */}
-            <Box sx={{ textAlign: "center", mb: 2 }}>
-              <Chip
-                label={testimonial.highlight}
-                sx={{
-                  bgcolor: "#dbeafe",
-                  color: "#1e40af",
-                  fontWeight: 600,
-                  fontSize: "0.75rem",
-                  py: 1,
-                }}
-              />
-            </Box>
-
-            {/* Testimonial Text */}
+      {/* What Employers Are Saying Section */}
+      <Box sx={{ py: 8, bgcolor: colors.white }}>
+        <Container maxWidth="lg">
+          {/* Section Header */}
+          <Box sx={{ textAlign: "center", mb: 6 }}>
             <Typography
-              variant="body1"
-              sx={{
-                color: "#475569",
-                lineHeight: 1.7,
-                mb: 4,
-                textAlign: "center",
-                fontStyle: "italic",
-                fontSize: "1rem",
-                minHeight: "120px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              "{testimonial.text}"
-            </Typography>
-
-            {/* Rating Stars */}
-            <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5, mb: 3 }}>
-              {[...Array(5)].map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    color: index < testimonial.rating ? "#fbbf24" : "#e2e8f0",
-                    fontSize: "1.5rem",
-                  }}
-                >
-                  ★
-                </Box>
-              ))}
-            </Box>
-
-            {/* User Info */}
-            <Box sx={{ textAlign: "center" }}>
-              <Box
-                sx={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  bgcolor: "#1e3a8a",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mx: "auto",
-                  mb: 2,
-                  fontSize: "1.5rem",
-                  color: "white",
-                  fontWeight: 600,
-                  border: "3px solid #e0f2fe",
-                }}
-              >
-                {testimonial.avatar}
-              </Box>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "1.1rem",
-                  color: "#1a202c",
-                  mb: 0.5,
-                }}
-              >
-                {testimonial.name}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#64748b",
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
-                }}
-              >
-                {testimonial.role}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#1e3a8a",
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                }}
-              >
-                {testimonial.company}
-              </Typography>
-            </Box>
-          </Card>
-        ))}
-        
-        {/* Duplicate for seamless loop */}
-        {[
-          {
-            id: 1,
-            name: "Rajesh Kumar",
-            role: "HR Director",
-            company: "TechMahindra",
-            rating: 5,
-            text: "The quality of candidates is outstanding! We filled 15 positions in just 2 weeks with perfect cultural fits.",
-            avatar: "👨‍💼",
-            highlight: "15 positions in 2 weeks"
-          },
-          {
-            id: 2,
-            name: "Priya Sharma",
-            role: "Talent Acquisition Head",
-            company: "Infosys",
-            rating: 5,
-            text: "Our hiring time reduced by 70%. The AI matching is incredibly accurate - every candidate was interview-ready!",
-            avatar: "👩‍💼",
-            highlight: "70% faster hiring"
-          },
-          {
-            id: 3,
-            name: "Amit Patel",
-            role: "Startup Founder",
-            company: "FinTech Innovations",
-            rating: 5,
-            text: "As a startup, every hire matters. This platform helped us find exceptional talent we couldn't find elsewhere.",
-            avatar: "🚀",
-            highlight: "Exceptional talent found"
-          },
-          {
-            id: 4,
-            name: "Neha Gupta",
-            role: "HR Manager",
-            company: "HDFC Bank",
-            rating: 5,
-            text: "The verified profiles saved us hundreds of screening hours. 9/10 candidates were perfect for the role!",
-            avatar: "👩‍🎓",
-            highlight: "9/10 perfect matches"
-          },
-          {
-            id: 5,
-            name: "Sanjay Mehta",
-            role: "CTO",
-            company: "EcomGiant",
-            rating: 5,
-            text: "Found senior developers in 3 days! The platform understands tech roles better than any other we've used.",
-            avatar: "👨‍💻",
-            highlight: "Senior hires in 3 days"
-          },
-          {
-            id: 6,
-            name: "Ananya Reddy",
-            role: "VP Talent",
-            company: "Global Solutions",
-            rating: 5,
-            text: "International hiring made easy! We sourced candidates from 5 different countries seamlessly through this platform.",
-            avatar: "🌍",
-            highlight: "Global hiring simplified"
-          },
-        ].map((testimonial, index) => (
-          <Card
-            key={`duplicate-${testimonial.id}-${index}`}
-            sx={{
-              flex: "0 0 380px",
-              background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-              borderRadius: 3,
-              p: 4,
-              border: "1px solid #e2e8f0",
-              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                transform: "translateY(-8px)",
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                borderColor: "#1e3a8a",
-              },
-            }}
-          >
-            {/* Quote Icon */}
-            <Box sx={{ textAlign: "center", mb: 3 }}>
-              <Box
-                sx={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  bgcolor: "#f0f9ff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mx: "auto",
-                  fontSize: "1.5rem",
-                  color: "#1e3a8a",
-                  border: "2px solid #e0f2fe",
-                }}
-              >
-                "
-              </Box>
-            </Box>
-
-            {/* Highlight Badge */}
-            <Box sx={{ textAlign: "center", mb: 2 }}>
-              <Chip
-                label={testimonial.highlight}
-                sx={{
-                  bgcolor: "#dbeafe",
-                  color: "#1e40af",
-                  fontWeight: 600,
-                  fontSize: "0.75rem",
-                  py: 1,
-                }}
-              />
-            </Box>
-
-            {/* Testimonial Text */}
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#475569",
-                lineHeight: 1.7,
-                mb: 4,
-                textAlign: "center",
-                fontStyle: "italic",
-                fontSize: "1rem",
-                minHeight: "120px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              "{testimonial.text}"
-            </Typography>
-
-            {/* Rating Stars */}
-            <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5, mb: 3 }}>
-              {[...Array(5)].map((_, starIndex) => (
-                <Box
-                  key={starIndex}
-                  sx={{
-                    color: starIndex < testimonial.rating ? "#fbbf24" : "#e2e8f0",
-                    fontSize: "1.5rem",
-                  }}
-                >
-                  ★
-                </Box>
-              ))}
-            </Box>
-
-            {/* User Info */}
-            <Box sx={{ textAlign: "center" }}>
-              <Box
-                sx={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  bgcolor: "#1e3a8a",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mx: "auto",
-                  mb: 2,
-                  fontSize: "1.5rem",
-                  color: "white",
-                  fontWeight: 600,
-                  border: "3px solid #e0f2fe",
-                }}
-              >
-                {testimonial.avatar}
-              </Box>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "1.1rem",
-                  color: "#1a202c",
-                  mb: 0.5,
-                }}
-              >
-                {testimonial.name}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#64748b",
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
-                }}
-              >
-                {testimonial.role}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#1e3a8a",
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                }}
-              >
-                {testimonial.company}
-              </Typography>
-            </Box>
-          </Card>
-        ))}
-      </Box>
-
-      {/* Gradient Overlays for Better UX */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100px",
-          height: "100%",
-          background: "linear-gradient(90deg, white 0%, transparent 100%)",
-          zIndex: 2,
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "100px",
-          height: "100%",
-          background: "linear-gradient(270deg, white 0%, transparent 100%)",
-          zIndex: 2,
-        }}
-      />
-    </Box>
-
-   
-  </Container>
-</Box>
-{/* Footer Section */}
-<Box sx={{ bgcolor: "#1a202c", color: "white" }}>
-  <Container maxWidth="lg">
-    {/* Main Footer Content */}
-    <Box sx={{ py: 8 }}>
-      <Grid container spacing={6}>
-        {/* Company Info */}
-        <Grid item xs={12} md={4}>
-          <Box sx={{ mb: 3 }}>
-            <Typography
-              variant="h4"
+              variant="h2"
               sx={{
                 fontWeight: 700,
-                fontSize: "1.8rem",
-                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
+                fontSize: { xs: "2rem", md: "2.5rem" },
+                color: colors.blue,
                 mb: 2,
               }}
             >
-              Job Chashiye
+              What Employers Are Saying
             </Typography>
             <Typography
-              variant="body1"
+              variant="h6"
               sx={{
-                color: "#cbd5e0",
+                color: colors.blue,
+                fontWeight: 400,
+                fontSize: "1.1rem",
+                maxWidth: "600px",
+                mx: "auto",
                 lineHeight: 1.6,
-                mb: 3,
               }}
             >
-              Connecting talent with opportunity. Job Chashiye is India's leading job portal helping millions of job seekers find their dream careers and employers find the perfect candidates.
+              Join thousands of companies that have transformed their hiring process
             </Typography>
           </Box>
 
-          {/* Social Links */}
-          <Box sx={{ display: "flex", gap: 2 }}>
-            {[
-              { icon: "📘", label: "Facebook", color: "#1877f2" },
-              { icon: "🐦", label: "Twitter", color: "#1da1f2" },
-              { icon: "💼", label: "LinkedIn", color: "#0077b5" },
-              { icon: "📷", label: "Instagram", color: "#e4405f" },
-            ].map((social) => (
-              <Box
-                key={social.label}
-                sx={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 2,
-                  bgcolor: "#2d3748",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  fontSize: "1.2rem",
-                  "&:hover": {
-                    bgcolor: social.color,
-                    transform: "translateY(-2px)",
-                    boxShadow: `0 4px 12px ${social.color}40`,
-                  },
-                }}
-              >
-                {social.icon}
-              </Box>
-            ))}
-          </Box>
-        </Grid>
-
-        {/* Quick Links */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: "1.1rem",
-              color: "white",
-              mb: 3,
-            }}
-          >
-            Job Seekers
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {[
-              "Browse Jobs",
-              "Create Resume",
-              "Career Advice",
-              "Job Alerts",
-              "Saved Jobs",
-              "Application History",
-            ].map((link) => (
-              <Typography
-                key={link}
-                variant="body2"
-                sx={{
-                  color: "#cbd5e0",
-                  cursor: "pointer",
-                  transition: "color 0.3s ease",
-                  "&:hover": {
-                    color: "#3b82f6",
-                  },
-                }}
-              >
-                {link}
-              </Typography>
-            ))}
-          </Box>
-        </Grid>
-
-        {/* Employers */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: "1.1rem",
-              color: "white",
-              mb: 3,
-            }}
-          >
-            Employers
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {[
-              "Post a Job",
-              "Browse Candidates",
-              "Pricing Plans",
-              "Employer Login",
-              "HR Solutions",
-              "Recruitment Services",
-            ].map((link) => (
-              <Typography
-                key={link}
-                variant="body2"
-                sx={{
-                  color: "#cbd5e0",
-                  cursor: "pointer",
-                  transition: "color 0.3s ease",
-                  "&:hover": {
-                    color: "#3b82f6",
-                  },
-                }}
-              >
-                {link}
-              </Typography>
-            ))}
-          </Box>
-        </Grid>
-
-        {/* Resources */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: "1.1rem",
-              color: "white",
-              mb: 3,
-            }}
-          >
-            Resources
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {[
-              "Career Blog",
-              "Resume Templates",
-              "Interview Tips",
-              "Salary Guide",
-              "Company Reviews",
-              "Webinars",
-            ].map((link) => (
-              <Typography
-                key={link}
-                variant="body2"
-                sx={{
-                  color: "#cbd5e0",
-                  cursor: "pointer",
-                  transition: "color 0.3s ease",
-                  "&:hover": {
-                    color: "#3b82f6",
-                  },
-                }}
-              >
-                {link}
-              </Typography>
-            ))}
-          </Box>
-        </Grid>
-
-        {/* Support */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: "1.1rem",
-              color: "white",
-              mb: 3,
-            }}
-          >
-            Support
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {[
-              "Help Center",
-              "Contact Us",
-              "FAQ",
-              "Privacy Policy",
-              "Terms of Service",
-              "Cookie Policy",
-            ].map((link) => (
-              <Typography
-                key={link}
-                variant="body2"
-                sx={{
-                  color: "#cbd5e0",
-                  cursor: "pointer",
-                  transition: "color 0.3s ease",
-                  "&:hover": {
-                    color: "#3b82f6",
-                  },
-                }}
-              >
-                {link}
-              </Typography>
-            ))}
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
-
-    {/* Newsletter Subscription */}
-    <Box
-      sx={{
-        py: 4,
-        borderTop: "1px solid #2d3748",
-        borderBottom: "1px solid #2d3748",
-      }}
-    >
-      <Grid container spacing={4} alignItems="center">
-        <Grid item xs={12} md={6}>
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 600,
-              color: "white",
-              mb: 1,
-            }}
-          >
-            Stay Updated
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#cbd5e0",
-            }}
-          >
-            Get the latest job alerts and career tips delivered to your inbox
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box sx={{ display: "flex", gap: 1 }}>
+          {/* Testimonials Slider */}
+          <Box sx={{ position: "relative", overflow: "hidden" }}>
             <Box
-              component="input"
-              placeholder="Enter your email address"
               sx={{
-                flex: 1,
-                px: 3,
-                py: 1.5,
-                borderRadius: 2,
-                border: "1px solid #4a5568",
-                bgcolor: "#2d3748",
-                color: "white",
-                fontSize: "0.95rem",
-                "&::placeholder": {
-                  color: "#a0aec0",
+                display: "flex",
+                gap: 3,
+                animation: "slideInfinite 40s linear infinite",
+                "&:hover": {
+                  animationPlayState: "paused",
                 },
-                "&:focus": {
-                  outline: "none",
-                  borderColor: "#3b82f6",
-                  boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)",
+                "@keyframes slideInfinite": {
+                  "0%": {
+                    transform: "translateX(0)",
+                  },
+                  "100%": {
+                    transform: "translateX(-50%)",
+                  },
                 },
+              }}
+            >
+              {[
+                {
+                  id: 1,
+                  name: "Rajesh Kumar",
+                  role: "HR Director",
+                  company: "TechMahindra",
+                  rating: 5,
+                  text: "The quality of candidates is outstanding! We filled 15 positions in just 2 weeks with perfect cultural fits.",
+                  avatar: "👨‍💼",
+                  highlight: "15 positions in 2 weeks"
+                },
+                {
+                  id: 2,
+                  name: "Priya Sharma",
+                  role: "Talent Acquisition Head",
+                  company: "Infosys",
+                  rating: 5,
+                  text: "Our hiring time reduced by 70%. The AI matching is incredibly accurate - every candidate was interview-ready!",
+                  avatar: "👩‍💼",
+                  highlight: "70% faster hiring"
+                },
+                {
+                  id: 3,
+                  name: "Amit Patel",
+                  role: "Startup Founder",
+                  company: "FinTech Innovations",
+                  rating: 5,
+                  text: "As a startup, every hire matters. This platform helped us find exceptional talent we couldn't find elsewhere.",
+                  avatar: "🚀",
+                  highlight: "Exceptional talent found"
+                },
+                {
+                  id: 4,
+                  name: "Neha Gupta",
+                  role: "HR Manager",
+                  company: "HDFC Bank",
+                  rating: 5,
+                  text: "The verified profiles saved us hundreds of screening hours. 9/10 candidates were perfect for the role!",
+                  avatar: "👩‍🎓",
+                  highlight: "9/10 perfect matches"
+                },
+                {
+                  id: 5,
+                  name: "Sanjay Mehta",
+                  role: "CTO",
+                  company: "EcomGiant",
+                  rating: 5,
+                  text: "Found senior developers in 3 days! The platform understands tech roles better than any other we've used.",
+                  avatar: "👨‍💻",
+                  highlight: "Senior hires in 3 days"
+                },
+                {
+                  id: 6,
+                  name: "Ananya Reddy",
+                  role: "VP Talent",
+                  company: "Global Solutions",
+                  rating: 5,
+                  text: "International hiring made easy! We sourced candidates from 5 different countries seamlessly through this platform.",
+                  avatar: "🌍",
+                  highlight: "Global hiring simplified"
+                },
+              ].map((testimonial) => (
+                <Card
+                  key={testimonial.id}
+                  sx={{
+                    flex: "0 0 380px",
+                    background: `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
+                    borderRadius: 3,
+                    p: 4,
+                    border: `2px solid ${colors.saffron}`,
+                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-8px)",
+                      boxShadow: `0 25px 50px -12px ${colors.saffron}30`,
+                      borderColor: colors.green,
+                    },
+                  }}
+                >
+                  {/* Quote Icon */}
+                  <Box sx={{ textAlign: "center", mb: 3 }}>
+                    <Box
+                      sx={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: "50%",
+                        bgcolor: `${colors.saffron}20`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mx: "auto",
+                        fontSize: "1.5rem",
+                        color: colors.saffron,
+                        border: `2px solid ${colors.saffron}40`,
+                      }}
+                    >
+                      "
+                    </Box>
+                  </Box>
+
+                  {/* Highlight Badge */}
+                  <Box sx={{ textAlign: "center", mb: 2 }}>
+                    <Chip
+                      label={testimonial.highlight}
+                      sx={{
+                        bgcolor: `${colors.green}20`,
+                        color: colors.green,
+                        fontWeight: 600,
+                        fontSize: "0.75rem",
+                        py: 1,
+                      }}
+                    />
+                  </Box>
+
+                  {/* Testimonial Text */}
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: colors.blue,
+                      lineHeight: 1.7,
+                      mb: 4,
+                      textAlign: "center",
+                      fontStyle: "italic",
+                      fontSize: "1rem",
+                      minHeight: "120px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    "{testimonial.text}"
+                  </Typography>
+
+                  {/* Rating Stars */}
+                  <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5, mb: 3 }}>
+                    {[...Array(5)].map((_, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          color: index < testimonial.rating ? colors.saffron : "#e2e8f0",
+                          fontSize: "1.5rem",
+                        }}
+                      >
+                        ★
+                      </Box>
+                    ))}
+                  </Box>
+
+                  {/* User Info */}
+                  <Box sx={{ textAlign: "center" }}>
+                    <Box
+                      sx={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: "50%",
+                        bgcolor: colors.green,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mx: "auto",
+                        mb: 2,
+                        fontSize: "1.5rem",
+                        color: colors.white,
+                        fontWeight: 600,
+                        border: `3px solid ${colors.saffron}40`,
+                      }}
+                    >
+                      {testimonial.avatar}
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: "1.1rem",
+                        color: colors.blue,
+                        mb: 0.5,
+                      }}
+                    >
+                      {testimonial.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: colors.blue,
+                        fontWeight: 500,
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      {testimonial.role}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: colors.green,
+                        fontWeight: 600,
+                        fontSize: "0.85rem",
+                      }}
+                    >
+                      {testimonial.company}
+                    </Typography>
+                  </Box>
+                </Card>
+              ))}
+              
+              {/* Duplicate for seamless loop */}
+              {[
+                {
+                  id: 1,
+                  name: "Rajesh Kumar",
+                  role: "HR Director",
+                  company: "TechMahindra",
+                  rating: 5,
+                  text: "The quality of candidates is outstanding! We filled 15 positions in just 2 weeks with perfect cultural fits.",
+                  avatar: "👨‍💼",
+                  highlight: "15 positions in 2 weeks"
+                },
+                {
+                  id: 2,
+                  name: "Priya Sharma",
+                  role: "Talent Acquisition Head",
+                  company: "Infosys",
+                  rating: 5,
+                  text: "Our hiring time reduced by 70%. The AI matching is incredibly accurate - every candidate was interview-ready!",
+                  avatar: "👩‍💼",
+                  highlight: "70% faster hiring"
+                },
+                {
+                  id: 3,
+                  name: "Amit Patel",
+                  role: "Startup Founder",
+                  company: "FinTech Innovations",
+                  rating: 5,
+                  text: "As a startup, every hire matters. This platform helped us find exceptional talent we couldn't find elsewhere.",
+                  avatar: "🚀",
+                  highlight: "Exceptional talent found"
+                },
+                {
+                  id: 4,
+                  name: "Neha Gupta",
+                  role: "HR Manager",
+                  company: "HDFC Bank",
+                  rating: 5,
+                  text: "The verified profiles saved us hundreds of screening hours. 9/10 candidates were perfect for the role!",
+                  avatar: "👩‍🎓",
+                  highlight: "9/10 perfect matches"
+                },
+                {
+                  id: 5,
+                  name: "Sanjay Mehta",
+                  role: "CTO",
+                  company: "EcomGiant",
+                  rating: 5,
+                  text: "Found senior developers in 3 days! The platform understands tech roles better than any other we've used.",
+                  avatar: "👨‍💻",
+                  highlight: "Senior hires in 3 days"
+                },
+                {
+                  id: 6,
+                  name: "Ananya Reddy",
+                  role: "VP Talent",
+                  company: "Global Solutions",
+                  rating: 5,
+                  text: "International hiring made easy! We sourced candidates from 5 different countries seamlessly through this platform.",
+                  avatar: "🌍",
+                  highlight: "Global hiring simplified"
+                },
+              ].map((testimonial, index) => (
+                <Card
+                  key={`duplicate-${testimonial.id}-${index}`}
+                  sx={{
+                    flex: "0 0 380px",
+                    background: `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
+                    borderRadius: 3,
+                    p: 4,
+                    border: `2px solid ${colors.saffron}`,
+                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-8px)",
+                      boxShadow: `0 25px 50px -12px ${colors.saffron}30`,
+                      borderColor: colors.green,
+                    },
+                  }}
+                >
+                  {/* Quote Icon */}
+                  <Box sx={{ textAlign: "center", mb: 3 }}>
+                    <Box
+                      sx={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: "50%",
+                        bgcolor: `${colors.saffron}20`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mx: "auto",
+                        fontSize: "1.5rem",
+                        color: colors.saffron,
+                        border: `2px solid ${colors.saffron}40`,
+                      }}
+                    >
+                      "
+                    </Box>
+                  </Box>
+
+                  {/* Highlight Badge */}
+                  <Box sx={{ textAlign: "center", mb: 2 }}>
+                    <Chip
+                      label={testimonial.highlight}
+                      sx={{
+                        bgcolor: `${colors.green}20`,
+                        color: colors.green,
+                        fontWeight: 600,
+                        fontSize: "0.75rem",
+                        py: 1,
+                      }}
+                    />
+                  </Box>
+
+                  {/* Testimonial Text */}
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: colors.blue,
+                      lineHeight: 1.7,
+                      mb: 4,
+                      textAlign: "center",
+                      fontStyle: "italic",
+                      fontSize: "1rem",
+                      minHeight: "120px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    "{testimonial.text}"
+                  </Typography>
+
+                  {/* Rating Stars */}
+                  <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5, mb: 3 }}>
+                    {[...Array(5)].map((_, starIndex) => (
+                      <Box
+                        key={starIndex}
+                        sx={{
+                          color: starIndex < testimonial.rating ? colors.saffron : "#e2e8f0",
+                          fontSize: "1.5rem",
+                        }}
+                      >
+                        ★
+                      </Box>
+                    ))}
+                  </Box>
+
+                  {/* User Info */}
+                  <Box sx={{ textAlign: "center" }}>
+                    <Box
+                      sx={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: "50%",
+                        bgcolor: colors.green,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mx: "auto",
+                        mb: 2,
+                        fontSize: "1.5rem",
+                        color: colors.white,
+                        fontWeight: 600,
+                        border: `3px solid ${colors.saffron}40`,
+                      }}
+                    >
+                      {testimonial.avatar}
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: "1.1rem",
+                        color: colors.blue,
+                        mb: 0.5,
+                      }}
+                    >
+                      {testimonial.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: colors.blue,
+                        fontWeight: 500,
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      {testimonial.role}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: colors.green,
+                        fontWeight: 600,
+                        fontSize: "0.85rem",
+                      }}
+                    >
+                      {testimonial.company}
+                    </Typography>
+                  </Box>
+                </Card>
+              ))}
+            </Box>
+
+            {/* Gradient Overlays for Better UX */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100px",
+                height: "100%",
+                background: `linear-gradient(90deg, ${colors.white} 0%, transparent 100%)`,
+                zIndex: 2,
               }}
             />
-            <Button
-              variant="contained"
+            <Box
               sx={{
-                borderRadius: 2,
-                px: 4,
-                py: 1.5,
-                fontWeight: 600,
-                textTransform: "none",
-                fontSize: "0.95rem",
-                bgcolor: "#3b82f6",
-                "&:hover": {
-                  bgcolor: "#2563eb",
-                  transform: "translateY(-1px)",
-                },
-                transition: "all 0.3s ease",
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: "100px",
+                height: "100%",
+                background: `linear-gradient(270deg, ${colors.white} 0%, transparent 100%)`,
+                zIndex: 2,
               }}
-            >
-              Subscribe
-            </Button>
+            />
           </Box>
-        </Grid>
-      </Grid>
-    </Box>
-
-    {/* Mobile Apps */}
-    <Box sx={{ py: 6 }}>
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: 600,
-          color: "white",
-          mb: 3,
-          textAlign: "center",
-        }}
-      >
-        Download Our Mobile App
-      </Typography>
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 3, flexWrap: "wrap" }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-            bgcolor: "#2d3748",
-            borderRadius: 3,
-            px: 3,
-            py: 2,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              bgcolor: "#3b82f6",
-              transform: "translateY(-2px)",
-            },
-          }}
-        >
-          <Box sx={{ fontSize: "2rem" }}>📱</Box>
-          <Box>
-            <Typography variant="body2" sx={{ color: "#cbd5e0", fontSize: "0.8rem" }}>
-              Download on the
-            </Typography>
-            <Typography variant="h6" sx={{ color: "white", fontSize: "1.1rem", fontWeight: 600 }}>
-              App Store
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-            bgcolor: "#2d3748",
-            borderRadius: 3,
-            px: 3,
-            py: 2,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              bgcolor: "#3b82f6",
-              transform: "translateY(-2px)",
-            },
-          }}
-        >
-          <Box sx={{ fontSize: "2rem" }}>🤖</Box>
-          <Box>
-            <Typography variant="body2" sx={{ color: "#cbd5e0", fontSize: "0.8rem" }}>
-              Get it on
-            </Typography>
-            <Typography variant="h6" sx={{ color: "white", fontSize: "1.1rem", fontWeight: 600 }}>
-              Google Play
-            </Typography>
-          </Box>
-        </Box>
+        </Container>
       </Box>
-    </Box>
 
-    {/* Bottom Footer */}
-    <Box
-      sx={{
-        py: 4,
-        borderTop: "1px solid #2d3748",
-      }}
-    >
-      <Grid container spacing={3} alignItems="center">
-        <Grid item xs={12} md={6}>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#a0aec0",
-              textAlign: { xs: "center", md: "left" },
-            }}
-          >
-            © 2024 Job Chashiye. All rights reserved.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6}>
+      {/* Footer Section */}
+      <Box sx={{ bgcolor: colors.blue, color: colors.white }}>
+        <Container maxWidth="lg">
+          {/* Main Footer Content */}
+          <Box sx={{ py: 8 }}>
+            <Grid container spacing={6}>
+              {/* Company Info */}
+              <Grid item xs={12} md={4}>
+                <Box sx={{ mb: 3 }}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: "1.8rem",
+                      background: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.green} 100%)`,
+                      backgroundClip: "text",
+                      WebkitBackgroundClip: "text",
+                      color: "transparent",
+                      mb: 2,
+                    }}
+                  >
+                    Job Chashiye
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "#cbd5e0",
+                      lineHeight: 1.6,
+                      mb: 3,
+                    }}
+                  >
+                    Connecting talent with opportunity. Job Chashiye is India's leading job portal helping millions of job seekers find their dream careers and employers find the perfect candidates.
+                  </Typography>
+                </Box>
+
+                {/* Social Links */}
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  {[
+                    { icon: "📘", label: "Facebook", color: colors.saffron },
+                    { icon: "🐦", label: "Twitter", color: colors.saffron },
+                    { icon: "💼", label: "LinkedIn", color: colors.saffron },
+                    { icon: "📷", label: "Instagram", color: colors.saffron },
+                  ].map((social) => (
+                    <Box
+                      key={social.label}
+                      sx={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: 2,
+                        bgcolor: `${colors.saffron}20`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        fontSize: "1.2rem",
+                        "&:hover": {
+                          bgcolor: colors.saffron,
+                          transform: "translateY(-2px)",
+                          boxShadow: `0 4px 12px ${colors.saffron}40`,
+                        },
+                      }}
+                    >
+                      {social.icon}
+                    </Box>
+                  ))}
+                </Box>
+              </Grid>
+
+              {/* Quick Links */}
+              <Grid item xs={12} sm={6} md={2}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: "1.1rem",
+                    color: colors.white,
+                    mb: 3,
+                  }}
+                >
+                  Job Seekers
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  {[
+                    "Browse Jobs",
+                    "Create Resume",
+                    "Career Advice",
+                    "Job Alerts",
+                    "Saved Jobs",
+                    "Application History",
+                  ].map((link) => (
+                    <Typography
+                      key={link}
+                      variant="body2"
+                      sx={{
+                        color: "#cbd5e0",
+                        cursor: "pointer",
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: colors.saffron,
+                        },
+                      }}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+
+              {/* Employers */}
+              <Grid item xs={12} sm={6} md={2}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: "1.1rem",
+                    color: colors.white,
+                    mb: 3,
+                  }}
+                >
+                  Employers
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  {[
+                    "Post a Job",
+                    "Browse Candidates",
+                    "Pricing Plans",
+                    "Employer Login",
+                    "HR Solutions",
+                    "Recruitment Services",
+                  ].map((link) => (
+                    <Typography
+                      key={link}
+                      variant="body2"
+                      sx={{
+                        color: "#cbd5e0",
+                        cursor: "pointer",
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: colors.saffron,
+                        },
+                      }}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+
+              {/* Resources */}
+              <Grid item xs={12} sm={6} md={2}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: "1.1rem",
+                    color: colors.white,
+                    mb: 3,
+                  }}
+                >
+                  Resources
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  {[
+                    "Career Blog",
+                    "Resume Templates",
+                    "Interview Tips",
+                    "Salary Guide",
+                    "Company Reviews",
+                    "Webinars",
+                  ].map((link) => (
+                    <Typography
+                      key={link}
+                      variant="body2"
+                      sx={{
+                        color: "#cbd5e0",
+                        cursor: "pointer",
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: colors.saffron,
+                        },
+                      }}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+
+              {/* Support */}
+              <Grid item xs={12} sm={6} md={2}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: "1.1rem",
+                    color: colors.white,
+                    mb: 3,
+                  }}
+                >
+                  Support
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  {[
+                    "Help Center",
+                    "Contact Us",
+                    "FAQ",
+                    "Privacy Policy",
+                    "Terms of Service",
+                    "Cookie Policy",
+                  ].map((link) => (
+                    <Typography
+                      key={link}
+                      variant="body2"
+                      sx={{
+                        color: "#cbd5e0",
+                        cursor: "pointer",
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: colors.saffron,
+                        },
+                      }}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+
+          {/* Newsletter Subscription */}
           <Box
             sx={{
-              display: "flex",
-              gap: 3,
-              justifyContent: { xs: "center", md: "flex-end" },
-              flexWrap: "wrap",
+              py: 4,
+              borderTop: `1px solid ${colors.saffron}`,
+              borderBottom: `1px solid ${colors.saffron}`,
             }}
           >
-            {[
-              "Privacy Policy",
-              "Terms of Service",
-              "Cookie Policy",
-              "Sitemap",
-              "Accessibility",
-            ].map((link) => (
-              <Typography
-                key={link}
-                variant="body2"
+            <Grid container spacing={4} alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                    color: colors.white,
+                    mb: 1,
+                  }}
+                >
+                  Stay Updated
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#cbd5e0",
+                  }}
+                >
+                  Get the latest job alerts and career tips delivered to your inbox
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box
+                    component="input"
+                    placeholder="Enter your email address"
+                    sx={{
+                      flex: 1,
+                      px: 3,
+                      py: 1.5,
+                      borderRadius: 2,
+                      border: `1px solid ${colors.saffron}`,
+                      bgcolor: "rgba(255, 255, 255, 0.1)",
+                      color: colors.white,
+                      fontSize: "0.95rem",
+                      "&::placeholder": {
+                        color: "#a0aec0",
+                      },
+                      "&:focus": {
+                        outline: "none",
+                        borderColor: colors.saffron,
+                        boxShadow: `0 0 0 3px ${colors.saffron}20`,
+                      },
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    sx={{
+                      borderRadius: 2,
+                      px: 4,
+                      py: 1.5,
+                      fontWeight: 600,
+                      textTransform: "none",
+                      fontSize: "0.95rem",
+                      bgcolor: colors.saffron,
+                      color: colors.blue,
+                      "&:hover": {
+                        bgcolor: colors.darkSaffron,
+                        transform: "translateY(-1px)",
+                      },
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    Subscribe
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+
+          {/* Mobile Apps */}
+          <Box sx={{ py: 6 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                color: colors.white,
+                mb: 3,
+                textAlign: "center",
+              }}
+            >
+              Download Our Mobile App
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 3, flexWrap: "wrap" }}>
+              <Box
                 sx={{
-                  color: "#a0aec0",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
+                  borderRadius: 3,
+                  px: 3,
+                  py: 2,
                   cursor: "pointer",
-                  transition: "color 0.3s ease",
+                  transition: "all 0.3s ease",
+                  border: `1px solid ${colors.saffron}`,
                   "&:hover": {
-                    color: "#3b82f6",
+                    bgcolor: colors.saffron,
+                    transform: "translateY(-2px)",
                   },
                 }}
               >
-                {link}
-              </Typography>
-            ))}
-          </Box>
-        </Grid>
-      </Grid>
+                <Box sx={{ fontSize: "2rem" }}>📱</Box>
+                <Box>
+                  <Typography variant="body2" sx={{ color: "#cbd5e0", fontSize: "0.8rem" }}>
+                    Download on the
+                  </Typography>
+                  <Typography variant="h6" sx={{ color: colors.white, fontSize: "1.1rem", fontWeight: 600 }}>
+                    App Store
+                  </Typography>
+                </Box>
+              </Box>
 
-      {/* Trust Badges */}
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 4, mt: 3, flexWrap: "wrap" }}>
-        {[
-          { text: "🔒 SSL Secured", label: "Secure" },
-          { text: "✅ Trusted by 10K+ Companies", label: "Trusted" },
-          { text: "⭐ 4.8/5 Rating", label: "Rated" },
-        ].map((badge) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
+                  borderRadius: 3,
+                  px: 3,
+                  py: 2,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  border: `1px solid ${colors.saffron}`,
+                  "&:hover": {
+                    bgcolor: colors.saffron,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              >
+                <Box sx={{ fontSize: "2rem" }}>🤖</Box>
+                <Box>
+                  <Typography variant="body2" sx={{ color: "#cbd5e0", fontSize: "0.8rem" }}>
+                    Get it on
+                  </Typography>
+                  <Typography variant="h6" sx={{ color: colors.white, fontSize: "1.1rem", fontWeight: 600 }}>
+                    Google Play
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Bottom Footer */}
           <Box
-            key={badge.label}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              color: "#a0aec0",
-              fontSize: "0.9rem",
+              py: 4,
+              borderTop: `1px solid ${colors.saffron}`,
             }}
           >
-            {badge.text}
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#a0aec0",
+                    textAlign: { xs: "center", md: "left" },
+                  }}
+                >
+                  © 2024 Job Chashiye. All rights reserved.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 3,
+                    justifyContent: { xs: "center", md: "flex-end" },
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {[
+                    "Privacy Policy",
+                    "Terms of Service",
+                    "Cookie Policy",
+                    "Sitemap",
+                    "Accessibility",
+                  ].map((link) => (
+                    <Typography
+                      key={link}
+                      variant="body2"
+                      sx={{
+                        color: "#a0aec0",
+                        cursor: "pointer",
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: colors.saffron,
+                        },
+                      }}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+            </Grid>
+
+            {/* Trust Badges */}
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 4, mt: 3, flexWrap: "wrap" }}>
+              {[
+                { text: "🔒 SSL Secured", label: "Secure" },
+                { text: "✅ Trusted by 10K+ Companies", label: "Trusted" },
+                { text: "⭐ 4.8/5 Rating", label: "Rated" },
+              ].map((badge) => (
+                <Box
+                  key={badge.label}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    color: colors.saffron,
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                  }}
+                >
+                  {badge.text}
+                </Box>
+              ))}
+            </Box>
           </Box>
-        ))}
+        </Container>
       </Box>
-    </Box>
-  </Container>
-</Box>
     </Box>
   );
 };
 
-export default JobPortalLanding;
+export default EmployeeLanding;
