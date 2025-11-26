@@ -1,0 +1,18 @@
+/* index.css */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+  color: #0b2236;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* small utility for toolbar spacing if you need */
+.MuiToolbar-root {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
