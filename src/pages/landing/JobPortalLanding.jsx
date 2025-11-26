@@ -787,7 +787,7 @@ const JobPortalLanding = () => {
 marginLeft: 0,
         }}
       >
-        <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
           <Grid container spacing={3}>
             {/* Main Title Card */}
             <Grid

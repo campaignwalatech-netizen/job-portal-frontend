@@ -153,19 +153,16 @@ const Header = () => {
         borderBottom: `2px solid ${colors.saffron}`
       }}
     >
-      <Container maxWidth="xl">
-        <Toolbar 
-  sx={{ 
-    justifyContent: 'space-between', 
-    py: { xs: 0.5, sm: 1 } 
-  }}
->
+      <Container maxWidth="lg" disableGutters>
+        <Toolbar sx={{ justifyContent: 'space-between', py: { xs: 0.5, sm: 1 }, minHeight: { xs: 56, sm: 64 } }}>
           {/* Left Section: Logo + Navigation Items */}
           <Box sx={{ 
   display: 'flex', 
   alignItems: 'center', 
-  gap: { xs: 1.5, sm: 2, md: 4 } ,
+  gap: { xs: 1.5, sm: 2, md: 2.5, lg: 4 },
   flex: 1,
+  flexShrink: 1,
+  minWidth: 0
 }}>
 
             {/* Logo */}
@@ -174,7 +171,7 @@ const Header = () => {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: { xs: 1, md: 1 },
-                transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
+                transform: { xs: 'scale(0.9)', sm: 'scale(1)', md: 'scale(0.95)', lg: 'scale(1)' },
                 cursor: 'pointer' 
               }} 
               onClick={() => navigate('/')}
@@ -617,7 +614,7 @@ const Header = () => {
           </Box>
 
           {/* Mobile Menu Button */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent:"flex-end", flexShrink:0 }}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
