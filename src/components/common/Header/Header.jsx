@@ -154,15 +154,27 @@ const Header = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+        <Toolbar 
+  sx={{ 
+    justifyContent: 'space-between', 
+    py: { xs: 0.5, sm: 1 } 
+  }}
+>
           {/* Left Section: Logo + Navigation Items */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <Box sx={{ 
+  display: 'flex', 
+  alignItems: 'center', 
+  gap: { xs: 1.5, sm: 2, md: 4 } ,
+  flex: 1,
+}}>
+
             {/* Logo */}
             <Box 
               sx={{ 
                 display: 'flex', 
                 alignItems: 'center', 
-                gap: 1, 
+                gap: { xs: 1, md: 1 },
+                transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
                 cursor: 'pointer' 
               }} 
               onClick={() => navigate('/')}
@@ -637,7 +649,7 @@ const Header = () => {
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { 
             boxSizing: 'border-box', 
-            width: 280,
+            width: { xs: 240, sm: 280 },
             bgcolor: colors.white
           },
         }}

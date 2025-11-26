@@ -783,8 +783,8 @@ const JobPortalLanding = () => {
         sx={{
           py: 8,
           bgcolor: colors.white,
-          width: "100vw",
-          marginLeft: "calc(-50vw + 50%)",
+          width: "100%",
+marginLeft: 0,
         }}
       >
         <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
@@ -830,10 +830,14 @@ const JobPortalLanding = () => {
             </Grid>
 
             {/* Part time Jobs - TRENDING AT #3 */}
-            <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
               <Card
                 sx={{
                   height: "100%",
+                  display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "100%",
                   background: `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
                   color: colors.blue,
                   borderRadius: 3,
@@ -905,7 +909,7 @@ const JobPortalLanding = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         mb: 3,
-                        minWidth: 250,
+                        minWidth: "100%",
                         minHeight: 120,
                       }}
                     >
@@ -931,6 +935,9 @@ const JobPortalLanding = () => {
                         color: colors.blue,
                         textAlign: "center",
                         lineHeight: 1.3,
+                        whiteSpace: "nowrap",
+overflow: "hidden",
+textOverflow: "ellipsis",
                       }}
                     >
                       Part time Jobs
@@ -979,10 +986,14 @@ const JobPortalLanding = () => {
             </Grid>
 
             {/* Jobs for Freshers - TRENDING AT #1 */}
-            <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
               <Card
                 sx={{
                   height: "100%",
+                  display: "flex",
+flexDirection: "column",
+justifyContent: "space-between",
+width: "100%",
                   background: `linear-gradient(135deg, ${colors.white} 0%, #f0f9ff 100%)`,
                   color: colors.blue,
                   borderRadius: 3,
@@ -1051,7 +1062,7 @@ const JobPortalLanding = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         mb: 3,
-                        minWidth: 250,
+                        minWidth: "100%",
                         minHeight: 120,
                       }}
                     >
@@ -1076,6 +1087,9 @@ const JobPortalLanding = () => {
                         color: colors.blue,
                         textAlign: "center",
                         lineHeight: 1.3,
+                        whiteSpace: "nowrap",
+overflow: "hidden",
+textOverflow: "ellipsis"
                       }}
                     >
                       Jobs for Freshers
@@ -1123,10 +1137,15 @@ const JobPortalLanding = () => {
             </Grid>
 
             {/* Jobs for Women - TRENDING AT #4 */}
-            <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
               <Card
                 sx={{
                   height: "100%",
+                  display: "flex",
+flexDirection: "column",
+justifyContent: "space-between",
+width: "100%",
+
                   background: `linear-gradient(135deg, ${colors.white} 0%, #fdf2f8 100%)`,
                   color: colors.blue,
                   borderRadius: 3,
@@ -1195,7 +1214,7 @@ const JobPortalLanding = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         mb: 3,
-                        minWidth: 250,
+                        minWidth: "100%",
                         minHeight: 120,
                       }}
                     >
@@ -1220,6 +1239,10 @@ const JobPortalLanding = () => {
                         color: colors.blue,
                         textAlign: "center",
                         lineHeight: 1.3,
+                        whiteSpace: "nowrap",
+overflow: "hidden",
+textOverflow: "ellipsis",
+
                       }}
                     >
                       Jobs for Women
@@ -1267,10 +1290,14 @@ const JobPortalLanding = () => {
             </Grid>
 
             {/* Work from home Jobs - TRENDING AT #2 */}
-            <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
               <Card
                 sx={{
                   height: "100%",
+                  display: "flex",
+flexDirection: "column",
+justifyContent: "space-between",
+width: "100%",
                   background: `linear-gradient(135deg, ${colors.white} 0%, #f0fdf4 100%)`,
                   color: colors.blue,
                   borderRadius: 3,
@@ -1339,7 +1366,7 @@ const JobPortalLanding = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         mb: 3,
-                        minWidth: 250,
+                        minWidth: "100%",
                         minHeight: 120,
                       }}
                     >
@@ -1364,6 +1391,10 @@ const JobPortalLanding = () => {
                         color: colors.blue,
                         textAlign: "center",
                         lineHeight: 1.3,
+                        whiteSpace: "nowrap",
+overflow: "hidden",
+textOverflow: "ellipsis",
+
                       }}
                     >
                       Work from home Jobs
@@ -1411,10 +1442,14 @@ const JobPortalLanding = () => {
             </Grid>
 
             {/* International Jobs - TRENDING AT #5 */}
-            <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
               <Card
                 sx={{
                   height: "100%",
+                  display: "flex",
+flexDirection: "column",
+justifyContent: "space-between",
+width: "100%",
                   background: `linear-gradient(135deg, ${colors.white} 0%, #fef3c7 100%)`,
                   color: colors.blue,
                   borderRadius: 3,
@@ -1483,7 +1518,7 @@ const JobPortalLanding = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         mb: 3,
-                        minWidth: 250,
+                        minWidth: "100%",
                         minHeight: 120,
                       }}
                     >
@@ -1508,6 +1543,10 @@ const JobPortalLanding = () => {
                         color: colors.blue,
                         textAlign: "center",
                         lineHeight: 1.3,
+                        whiteSpace: "nowrap",
+overflow: "hidden",
+textOverflow: "ellipsis",
+
                       }}
                     >
                       International Jobs
@@ -1664,6 +1703,10 @@ const JobPortalLanding = () => {
                 <Card
                   sx={{
                     height: "100%",
+                    display: "flex",
+flexDirection: "column",
+justifyContent: "space-between",
+width: "100%",
                     background: colors.white,
                     borderRadius: 3,
                     cursor: "pointer",
