@@ -63,21 +63,21 @@ export default function WantToHire() {
           </Typography>
 
           <Button
-            variant="contained"
-            sx={{
-              background: "#1e63d6",
-              paddingY: 1.3,
-              paddingX: 5,
-              borderRadius: "12px",
-              fontSize: "16px",
-              textTransform: "none",
-              "&:hover": {
-                background: "#1856b8",
-              },
-            }}
-          >
-            Post a Job
-          </Button>
+  variant="contained"
+  onClick={() => window.open("/employer", "_blank")}
+  sx={{
+    background: "#1e63d6",
+    textTransform: "none",
+    px: 4,
+    py: 1.5,
+    borderRadius: "12px",
+    fontSize: "18px",
+    "&:hover": { background: "#1856b8" },
+  }}
+>
+  Post a Job
+</Button>
+
         </Box>
       </Box>
     </Box>

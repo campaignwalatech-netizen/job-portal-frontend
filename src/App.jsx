@@ -1,10 +1,11 @@
-// App.jsx (RESET & CLEAN)
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box } from "@mui/material";
-import Header from "./components/common/Header/Header";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import JobPortalLanding from "./pages/Home/JobPortalLanding";
+import EmployerLanding from "./pages/Employer/EmployerLanding";
+import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 
 const theme = createTheme({
   palette: {
@@ -21,11 +22,15 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* Main Layout */}
-      <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
-        <Header />
-        <JobPortalLanding />
-      </Box>
+      <BrowserRouter>
+        <Routes>
+
+          <Route path="/" element={<JobPortalLanding />} />
+          <Route path="/employer" element={<EmployerLanding />} />
+          <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

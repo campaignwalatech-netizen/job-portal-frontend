@@ -75,6 +75,7 @@ export default function Header() {
           {!isMobile && (
             <Button
               variant="outlined"
+              onClick={() => window.open("/employer", "_blank")}
               sx={{
                 borderRadius: "10px",
                 paddingX: 2,
