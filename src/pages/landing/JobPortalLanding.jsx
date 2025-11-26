@@ -788,810 +788,639 @@ marginLeft: 0,
         }}
       >
         <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
-          <Grid container spacing={3}>
+          
             {/* Main Title Card */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={4}
-              lg={4}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 700,
-                  fontSize: { xs: "2rem", md: "3rem" },
-                  color: colors.blue,
-                  mb: 1,
-                  lineHeight: 1.2,
-                  textAlign: "center",
-                }}
-              >
-                Popular Searches on
-                <Box
-                  component="span"
-                  sx={{
-                    display: "block",
-                    background: `linear-gradient(135deg, ${colors.saffron} 0%, ${colors.green} 100%)`,
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  Job Chahiye
-                </Box>
-              </Typography>
-            </Grid>
+          <Grid item xs={12}>
+  <Box sx={{ textAlign: "center", mb: 4 }}>
+    <Typography
+      variant="h3"
+      sx={{
+        fontWeight: 700,
+        fontSize: { xs: "2rem", md: "3rem" },
+        color: colors.blue,
+        lineHeight: 1.2,
+      }}
+    >
+      Popular Searches on
+    </Typography>
+
+    <Typography
+      variant="h3"
+      sx={{
+        fontWeight: 700,
+        background: `linear-gradient(135deg, ${colors.saffron}, ${colors.green})`,
+        WebkitBackgroundClip: "text",
+        color: "transparent",
+        fontSize: { xs: "2rem", md: "3rem" },
+        lineHeight: 1.2,
+      }}
+    >
+      Job Chahiye
+    </Typography>
+  </Box>
+</Grid>
+          <Grid container spacing={3} justifyContent="center">
+            
+            
 
             {/* Part time Jobs - TRENDING AT #3 */}
-            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    width: "100%",
-                  background: `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
-                  color: colors.blue,
-                  borderRadius: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: `2px solid ${colors.saffron}`,
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: `0 20px 25px -5px ${colors.saffron}40`,
-                    borderColor: colors.darkSaffron,
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    p: 3,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  {/* Trend Badge */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      mb: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        bgcolor: colors.white,
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1,
-                        border: `1px solid ${colors.saffron}`,
-                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-                      }}
-                    >
-                      <TrendingUp sx={{ fontSize: 18, color: colors.saffron }} />
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "0.75rem",
-                          color: colors.blue,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        TRENDING AT #3
-                      </Typography>
-                    </Box>
-                  </Box>
+<Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
+  <Card
+    sx={{
+      height: "100%",             // card fills its grid cell
+      minHeight: 350,             // ⭐ SAME HEIGHT for all cards
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      width: "100%",
+      alignItems: "stretch",
 
-                  {/* Content Area */}
-                  <Box
-                    sx={{ flex: 1, display: "flex", flexDirection: "column" }}
-                  >
-                    {/* Image */}
-                    <Box
-                      sx={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mb: 3,
-                        minWidth: "100%",
-                        minHeight: 120,
-                      }}
-                    >
-                      <img
-                        src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/freshers-jobs.png"
-                        alt="Part time Jobs"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: 120,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </Box>
+      background: `linear-gradient(135deg, ${colors.white} 0%, #f8fafc 100%)`,
+      color: colors.blue,
+      borderRadius: 3,
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      border: `2px solid ${colors.saffron}`,
+      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
 
-                    {/* Title */}
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "1.4rem",
-                        mb: 3,
-                        color: colors.blue,
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        whiteSpace: "nowrap",
-overflow: "hidden",
-textOverflow: "ellipsis",
-                      }}
-                    >
-                      Part time Jobs
-                    </Typography>
-                  </Box>
+      "&:hover": {
+        transform: "translateY(-6px)",
+        boxShadow: `0 20px 25px -5px ${colors.saffron}40`,
+        borderColor: colors.darkSaffron,
+      },
+    }}
+  >
+    <CardContent
+      sx={{
+        p: 3,
+        flex: 1,                     // ⭐ make content stretch
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      {/* Top badge */}
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            bgcolor: colors.white,
+            borderRadius: 2,
+            px: 2,
+            py: 1,
+            border: `1px solid ${colors.saffron}`,
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <TrendingUp sx={{ fontSize: 18, color: colors.saffron }} />
+          <Typography
+            variant="caption"
+            sx={{
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              color: colors.blue,
+            }}
+          >
+            TRENDING AT #3
+          </Typography>
+        </Box>
+      </Box>
 
-                  {/* View All Button */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      pt: 3,
-                      borderTop: `1px solid ${colors.saffron}`,
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "0.95rem",
-                        color: colors.blue,
-                      }}
-                    >
-                      View all jobs
-                    </Typography>
-                    <IconButton
-                      sx={{
-                        color: colors.white,
-                        bgcolor: colors.green,
-                        "&:hover": {
-                          bgcolor: colors.darkGreen,
-                          transform: "translateX(4px)",
-                        },
-                        transition: "all 0.2s ease",
-                        width: 36,
-                        height: 36,
-                        boxShadow: `0 2px 4px ${colors.green}40`,
-                      }}
-                    >
-                      <ArrowForward sx={{ fontSize: 20 }} />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+      {/* Middle content */}
+      <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        {/* Image */}
+        <Box
+          sx={{
+            flex: 1,
+            minHeight: 120,
+            maxHeight: 140,           // ⭐ prevent image from making card tall
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            mb: 3,
+          }}
+        >
+          <img
+            src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/freshers-jobs.png"
+            alt="Part time Jobs"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </Box>
+
+        {/* Title */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 700,
+            mb: 2,
+            textAlign: "center",
+            color: colors.blue,
+            lineHeight: 1.3,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          Part time Jobs
+        </Typography>
+      </Box>
+
+      {/* Bottom button */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          pt: 3,
+          borderTop: `1px solid ${colors.saffron}`,
+        }}
+      >
+        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+          View all jobs
+        </Typography>
+
+        <IconButton
+          sx={{
+            color: colors.white,
+            bgcolor: colors.green,
+            "&:hover": { bgcolor: colors.darkGreen, transform: "translateX(4px)" },
+            transition: "all 0.2s ease",
+            width: 36,
+            height: 36,
+            boxShadow: `0 2px 4px ${colors.green}40`,
+          }}
+        >
+          <ArrowForward sx={{ fontSize: 20 }} />
+        </IconButton>
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
+
 
             {/* Jobs for Freshers - TRENDING AT #1 */}
-            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-flexDirection: "column",
-justifyContent: "space-between",
-width: "100%",
-                  background: `linear-gradient(135deg, ${colors.white} 0%, #f0f9ff 100%)`,
-                  color: colors.blue,
-                  borderRadius: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: `2px solid ${colors.green}`,
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: `0 20px 25px -5px ${colors.green}40`,
-                    borderColor: colors.darkGreen,
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    p: 3,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      mb: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        bgcolor: colors.white,
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1,
-                        border: `1px solid ${colors.green}`,
-                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-                      }}
-                    >
-                      <TrendingUp sx={{ fontSize: 18, color: colors.green }} />
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "0.75rem",
-                          color: colors.blue,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        TRENDING AT #1
-                      </Typography>
-                    </Box>
-                  </Box>
+<Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
+  <Card
+    sx={{
+      height: "100%",
+      minHeight: 350,                // ⭐ same height like card 1
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      width: "100%",
+      alignItems: "stretch",
 
-                  <Box
-                    sx={{ flex: 1, display: "flex", flexDirection: "column" }}
-                  >
-                    <Box
-                      sx={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mb: 3,
-                        minWidth: "100%",
-                        minHeight: 120,
-                      }}
-                    >
-                      <img
-                        src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/work-from-home-jobs.png"
-                        alt="Jobs for Freshers"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: 120,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </Box>
+      background: `linear-gradient(135deg, ${colors.white} 0%, #f0f9ff 100%)`,
+      color: colors.blue,
+      borderRadius: 3,
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      border: `2px solid ${colors.green}`,
+      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
 
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "1.4rem",
-                        mb: 3,
-                        color: colors.blue,
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        whiteSpace: "nowrap",
-overflow: "hidden",
-textOverflow: "ellipsis"
-                      }}
-                    >
-                      Jobs for Freshers
-                    </Typography>
-                  </Box>
+      "&:hover": {
+        transform: "translateY(-6px)",
+        boxShadow: `0 20px 25px -5px ${colors.green}40`,
+        borderColor: colors.darkGreen,
+      },
+    }}
+  >
+    <CardContent
+      sx={{
+        p: 3,
+        flex: 1,                       // ⭐ stretch content
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      {/* Top badge */}
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            bgcolor: colors.white,
+            borderRadius: 2,
+            px: 2,
+            py: 1,
+            border: `1px solid ${colors.green}`,
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <TrendingUp sx={{ fontSize: 18, color: colors.green }} />
+          <Typography
+            variant="caption"
+            sx={{
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              color: colors.blue,
+            }}
+          >
+            TRENDING AT #1
+          </Typography>
+        </Box>
+      </Box>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      pt: 3,
-                      borderTop: `1px solid ${colors.green}`,
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "0.95rem",
-                        color: colors.blue,
-                      }}
-                    >
-                      View all jobs
-                    </Typography>
-                    <IconButton
-                      sx={{
-                        color: colors.white,
-                        bgcolor: colors.green,
-                        "&:hover": {
-                          bgcolor: colors.darkGreen,
-                          transform: "translateX(4px)",
-                        },
-                        transition: "all 0.2s ease",
-                        width: 36,
-                        height: 36,
-                        boxShadow: `0 2px 4px ${colors.green}40`,
-                      }}
-                    >
-                      <ArrowForward sx={{ fontSize: 20 }} />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+      {/* Middle content */}
+      <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        {/* Image */}
+        <Box
+          sx={{
+            flex: 1,
+            minHeight: 120,
+            maxHeight: 140,               // ⭐ consistent image height
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            mb: 3,
+          }}
+        >
+          <img
+            src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/freshers-jobs.png"
+            alt="Jobs for Freshers"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </Box>
+
+        {/* Title */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 700,
+            mb: 2,
+            textAlign: "center",
+            color: colors.blue,
+            lineHeight: 1.3,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          Jobs for Freshers
+        </Typography>
+      </Box>
+
+      {/* Bottom button */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          pt: 3,
+          borderTop: `1px solid ${colors.green}`,
+        }}
+      >
+        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+          View all jobs
+        </Typography>
+
+        <IconButton
+          sx={{
+            color: colors.white,
+            bgcolor: colors.green,
+            "&:hover": { bgcolor: colors.darkGreen, transform: "translateX(4px)" },
+            transition: "all 0.2s ease",
+            width: 36,
+            height: 36,
+            boxShadow: `0 2px 4px ${colors.green}40`,
+          }}
+        >
+          <ArrowForward sx={{ fontSize: 20 }} />
+        </IconButton>
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
+
 
             {/* Jobs for Women - TRENDING AT #4 */}
             <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-flexDirection: "column",
-justifyContent: "space-between",
-width: "100%",
+  <Card
+    sx={{
+      height: "100%",
+      minHeight: 350,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      width: "100%",
+      alignItems: "stretch",
+      background: `linear-gradient(135deg, ${colors.white} 0%, #fdf2f8 100%)`,
+      color: colors.blue,
+      borderRadius: 3,
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      border: `2px solid ${colors.saffron}`,
+      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      "&:hover": {
+        transform: "translateY(-6px)",
+        boxShadow: `0 20px 25px -5px ${colors.saffron}40`,
+        borderColor: colors.darkSaffron,
+      },
+    }}
+  >
+    <CardContent
+      sx={{
+        p: 3,
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      {/* Top badge */}
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            bgcolor: colors.white,
+            borderRadius: 2,
+            px: 2,
+            py: 1,
+            border: `1px solid ${colors.saffron}`,
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <TrendingUp sx={{ fontSize: 18, color: colors.saffron }} />
+          <Typography variant="caption" sx={{ fontWeight: 700, fontSize: "0.75rem", color: colors.blue }}>
+            TRENDING AT #4
+          </Typography>
+        </Box>
+      </Box>
 
-                  background: `linear-gradient(135deg, ${colors.white} 0%, #fdf2f8 100%)`,
-                  color: colors.blue,
-                  borderRadius: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: `2px solid ${colors.saffron}`,
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: `0 20px 25px -5px ${colors.saffron}40`,
-                    borderColor: colors.darkSaffron,
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    p: 3,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      mb: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        bgcolor: colors.white,
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1,
-                        border: `1px solid ${colors.saffron}`,
-                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-                      }}
-                    >
-                      <TrendingUp sx={{ fontSize: 18, color: colors.saffron }} />
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "0.75rem",
-                          color: colors.blue,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        TRENDING AT #4
-                      </Typography>
-                    </Box>
-                  </Box>
+      {/* Image */}
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 120,
+          maxHeight: 140,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          mb: 3,
+        }}
+      >
+        <img
+          src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/part-time-jobs.png"
+          alt="Jobs for Women"
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
+      </Box>
 
-                  <Box
-                    sx={{ flex: 1, display: "flex", flexDirection: "column" }}
-                  >
-                    <Box
-                      sx={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mb: 3,
-                        minWidth: "100%",
-                        minHeight: 120,
-                      }}
-                    >
-                      <img
-                        src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/part-time-jobs.png"
-                        alt="Jobs for Women"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: 120,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </Box>
+      {/* Title */}
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 700,
+          mb: 2,
+          textAlign: "center",
+          color: colors.blue,
+          lineHeight: 1.3,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        Jobs for Women
+      </Typography>
 
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "1.4rem",
-                        mb: 3,
-                        color: colors.blue,
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        whiteSpace: "nowrap",
-overflow: "hidden",
-textOverflow: "ellipsis",
+      {/* Bottom */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", pt: 3, borderTop: `1px solid ${colors.saffron}` }}>
+        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+          View all jobs
+        </Typography>
+        <IconButton
+          sx={{
+            color: colors.white,
+            bgcolor: colors.green,
+            "&:hover": { bgcolor: colors.darkGreen, transform: "translateX(4px)" },
+            transition: "all 0.2s ease",
+            width: 36,
+            height: 36,
+            boxShadow: `0 2px 4px ${colors.green}40`,
+          }}
+        >
+          <ArrowForward sx={{ fontSize: 20 }} />
+        </IconButton>
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
 
-                      }}
-                    >
-                      Jobs for Women
-                    </Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      pt: 3,
-                      borderTop: `1px solid ${colors.saffron}`,
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "0.95rem",
-                        color: colors.blue,
-                      }}
-                    >
-                      View all jobs
-                    </Typography>
-                    <IconButton
-                      sx={{
-                        color: colors.white,
-                        bgcolor: colors.green,
-                        "&:hover": {
-                          bgcolor: colors.darkGreen,
-                          transform: "translateX(4px)",
-                        },
-                        transition: "all 0.2s ease",
-                        width: 36,
-                        height: 36,
-                        boxShadow: `0 2px 4px ${colors.green}40`,
-                      }}
-                    >
-                      <ArrowForward sx={{ fontSize: 20 }} />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
 
             {/* Work from home Jobs - TRENDING AT #2 */}
-            <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-flexDirection: "column",
-justifyContent: "space-between",
-width: "100%",
-                  background: `linear-gradient(135deg, ${colors.white} 0%, #f0fdf4 100%)`,
-                  color: colors.blue,
-                  borderRadius: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: `2px solid ${colors.green}`,
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: `0 20px 25px -5px ${colors.green}40`,
-                    borderColor: colors.darkGreen,
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    p: 3,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      mb: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        bgcolor: colors.white,
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1,
-                        border: `1px solid ${colors.green}`,
-                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-                      }}
-                    >
-                      <TrendingUp sx={{ fontSize: 18, color: colors.green }} />
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "0.75rem",
-                          color: colors.blue,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        TRENDING AT #2
-                      </Typography>
-                    </Box>
-                  </Box>
+<Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
+  <Card
+    sx={{
+      height: "100%",
+      minHeight: 350,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      width: "100%",
+      background: `linear-gradient(135deg, ${colors.white} 0%, #f0fdf4 100%)`,
+      color: colors.blue,
+      borderRadius: 3,
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      border: `2px solid ${colors.green}`,
+      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      "&:hover": {
+        transform: "translateY(-6px)",
+        boxShadow: `0 20px 25px -5px ${colors.green}40`,
+        borderColor: colors.darkGreen,
+      },
+    }}
+  >
+    <CardContent
+      sx={{
+        p: 3,
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            bgcolor: colors.white,
+            borderRadius: 2,
+            px: 2,
+            py: 1,
+            border: `1px solid ${colors.green}`,
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <TrendingUp sx={{ fontSize: 18, color: colors.green }} />
+          <Typography variant="caption" sx={{ fontWeight: 700, fontSize: "0.75rem", color: colors.blue }}>
+            TRENDING AT #2
+          </Typography>
+        </Box>
+      </Box>
 
-                  <Box
-                    sx={{ flex: 1, display: "flex", flexDirection: "column" }}
-                  >
-                    <Box
-                      sx={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mb: 3,
-                        minWidth: "100%",
-                        minHeight: 120,
-                      }}
-                    >
-                      <img
-                        src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/women-jobs.png"
-                        alt="Work from home Jobs"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: 120,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </Box>
+      <Box
+        sx={{ flex: 1, minHeight: 120, maxHeight: 140, display: "flex", alignItems: "center", justifyContent: "center", mb: 3 }}
+      >
+        <img
+          src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/women-jobs.png"
+          alt="Work From Home"
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
+      </Box>
 
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "1.4rem",
-                        mb: 3,
-                        color: colors.blue,
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        whiteSpace: "nowrap",
-overflow: "hidden",
-textOverflow: "ellipsis",
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 700,
+          mb: 2,
+          textAlign: "center",
+          color: colors.blue,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        Work From Home Jobs
+      </Typography>
 
-                      }}
-                    >
-                      Work from home Jobs
-                    </Typography>
-                  </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between", pt: 3, borderTop: `1px solid ${colors.green}` }}>
+        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+          View all jobs
+        </Typography>
+        <IconButton
+          sx={{
+            color: colors.white,
+            bgcolor: colors.green,
+            "&:hover": { bgcolor: colors.darkGreen, transform: "translateX(4px)" },
+            transition: "all 0.2s ease",
+            width: 36,
+            height: 36,
+          }}
+        >
+          <ArrowForward sx={{ fontSize: 20 }} />
+        </IconButton>
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      pt: 3,
-                      borderTop: `1px solid ${colors.green}`,
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "0.95rem",
-                        color: colors.blue,
-                      }}
-                    >
-                      View all jobs
-                    </Typography>
-                    <IconButton
-                      sx={{
-                        color: colors.white,
-                        bgcolor: colors.green,
-                        "&:hover": {
-                          bgcolor: colors.darkGreen,
-                          transform: "translateX(4px)",
-                        },
-                        transition: "all 0.2s ease",
-                        width: 36,
-                        height: 36,
-                        boxShadow: `0 2px 4px ${colors.green}40`,
-                      }}
-                    >
-                      <ArrowForward sx={{ fontSize: 20 }} />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+
 
             {/* International Jobs - TRENDING AT #5 */}
             <Grid item xs={12} sm={6} md={4} lg={4} sx={{ display: "flex" }}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-flexDirection: "column",
-justifyContent: "space-between",
-width: "100%",
-                  background: `linear-gradient(135deg, ${colors.white} 0%, #fef3c7 100%)`,
-                  color: colors.blue,
-                  borderRadius: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: `2px solid ${colors.saffron}`,
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: `0 20px 25px -5px ${colors.saffron}40`,
-                    borderColor: colors.darkSaffron,
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    p: 3,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      mb: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        bgcolor: colors.white,
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1,
-                        border: `1px solid ${colors.saffron}`,
-                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-                      }}
-                    >
-                      <TrendingUp sx={{ fontSize: 18, color: colors.saffron }} />
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "0.75rem",
-                          color: colors.blue,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        TRENDING AT #5
-                      </Typography>
-                    </Box>
-                  </Box>
+  <Card
+    sx={{
+      height: "100%",
+      minHeight: 350,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      width: "100%",
+      background: `linear-gradient(135deg, ${colors.white} 0%, #fef3c7 100%)`,
+      color: colors.blue,
+      borderRadius: 3,
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      border: `2px solid ${colors.saffron}`,
+      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      "&:hover": {
+        transform: "translateY(-6px)",
+        boxShadow: `0 20px 25px -5px ${colors.saffron}40`,
+        borderColor: colors.darkSaffron,
+      },
+    }}
+  >
+    <CardContent
+      sx={{
+        p: 3,
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            bgcolor: colors.white,
+            borderRadius: 2,
+            px: 2,
+            py: 1,
+            border: `1px solid ${colors.saffron}`,
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <TrendingUp sx={{ fontSize: 18, color: colors.saffron }} />
+          <Typography variant="caption" sx={{ fontWeight: 700, fontSize: "0.75rem", color: colors.blue }}>
+            TRENDING AT #5
+          </Typography>
+        </Box>
+      </Box>
 
-                  <Box
-                    sx={{ flex: 1, display: "flex", flexDirection: "column" }}
-                  >
-                    <Box
-                      sx={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mb: 3,
-                        minWidth: "100%",
-                        minHeight: 120,
-                      }}
-                    >
-                      <img
-                        src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/international-jobs.png"
-                        alt="International Jobs"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: 120,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </Box>
+      <Box
+        sx={{ flex: 1, minHeight: 120, maxHeight: 140, display: "flex", alignItems: "center", justifyContent: "center", mb: 3 }}
+      >
+        <img
+          src="https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/international-jobs.png"
+          alt="International Jobs"
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
+      </Box>
 
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "1.4rem",
-                        mb: 3,
-                        color: colors.blue,
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        whiteSpace: "nowrap",
-overflow: "hidden",
-textOverflow: "ellipsis",
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 700,
+          mb: 2,
+          textAlign: "center",
+          color: colors.blue,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        International Jobs
+      </Typography>
 
-                      }}
-                    >
-                      International Jobs
-                    </Typography>
-                  </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between", pt: 3, borderTop: `1px solid ${colors.saffron}` }}>
+        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+          View all jobs
+        </Typography>
+        <IconButton
+          sx={{
+            color: colors.white,
+            bgcolor: colors.green,
+            "&:hover": { bgcolor: colors.darkGreen, transform: "translateX(4px)" },
+            transition: "all 0.2s ease",
+            width: 36,
+            height: 36,
+          }}
+        >
+          <ArrowForward sx={{ fontSize: 20 }} />
+        </IconButton>
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      pt: 3,
-                      borderTop: `1px solid ${colors.saffron}`,
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "0.95rem",
-                        color: colors.blue,
-                      }}
-                    >
-                      View all jobs
-                    </Typography>
-                    <IconButton
-                      sx={{
-                        color: colors.white,
-                        bgcolor: colors.green,
-                        "&:hover": {
-                          bgcolor: colors.darkGreen,
-                          transform: "translateX(4px)",
-                        },
-                        transition: "all 0.2s ease",
-                        width: 36,
-                        height: 36,
-                        boxShadow: `0 2px 4px ${colors.green}40`,
-                      }}
-                    >
-                      <ArrowForward sx={{ fontSize: 20 }} />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
           </Grid>
         </Container>
       </Box>
@@ -1697,7 +1526,7 @@ textOverflow: "ellipsis",
           </Box>
 
           {/* Job Cards Grid */}
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justifyContent="center">
             {filteredJobs.map((job, index) => (
               <Grid item xs={12} sm={6} md={4} key={job.id}>
                 <Card
@@ -3360,7 +3189,7 @@ width: "100%",
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
-                  © 2024 Job Chashiye. All rights reserved.
+                  © 2024 Job Chahiye. All rights reserved.
                 </Typography>
               </Grid>
               <Grid item xs={12} md={6}>
