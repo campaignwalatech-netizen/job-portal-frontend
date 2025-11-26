@@ -48,7 +48,7 @@ export default function Header() {
           <img
             src="/logo.svg"
             alt="logo"
-            style={{ width: 50, height: "auto", display: "block" }}
+            style={{ width: 50, height: "auto", display: "block", borderRadius: "8px" }}
           />
 
           {/* Navigation (Hidden on mobile) */}

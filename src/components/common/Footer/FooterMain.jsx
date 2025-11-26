@@ -22,7 +22,7 @@ export default function FooterMain() {
       >
         {/* LEFT */}
         <Box>
-          <img src="/logo.svg" width={120} alt="logo" />
+          <img src="/logo.svg" width={120} alt="logo" style={{ borderRadius: "30px" }} />
           <Typography sx={{ mt: 2, fontSize: "16px" }}>
             Follow us on social media
           </Typography>
@@ -37,40 +37,50 @@ export default function FooterMain() {
         </Box>
 
         {/* RIGHT BOX */}
-        <Box
-          sx={{
-            background: "#fff",
-            color: "#000",
-            px: 4,
-            py: 4,
-            borderRadius: "14px",
-            textAlign: "center",
-            width: { xs: "100%", sm: "auto" },
-          }}
-        >
-          <Typography sx={{ fontWeight: 700, mb: 1, fontSize: "20px" }}>
-            Apply on the go
-          </Typography>
+        {/* RIGHT BOX */}
+<Box
+  sx={{
+    background: "#fff",
+    color: "#000",
+    px: 4,
+    py: 4,
+    borderRadius: "14px",
+    width: { xs: "100%", sm: "auto" },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 4,
+  }}
+>
+  {/* LEFT SIDE → TEXT + GOOGLE PLAY */}
+  <Box>
+    <Typography sx={{ fontWeight: 700, mb: 1, fontSize: "20px" }}>
+      Apply on the go
+    </Typography>
 
-          <Typography sx={{ mb: 2, fontSize: "14px" }}>
-            Get real-time job updates on our App
-          </Typography>
+    <Typography sx={{ mb: 2, fontSize: "14px" }}>
+      Get real-time job updates on our App
+    </Typography>
 
-          {/* Fake QR Code */}
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=JobChaahiye"
-            width={120}
-            alt="QR"
-            style={{ borderRadius: "8px", marginBottom: "10px" }}
-          />
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+      width={150}
+      alt="Google Play"
+      style={{ cursor: "pointer" }}
+    />
+  </Box>
 
-          {/* Google Play Button */}
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-            width={150}
-            alt="Google Play"
-          />
-        </Box>
+  {/* RIGHT SIDE → QR CODE */}
+  <Box>
+    <img
+      src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=JobChaahiye"
+      width={120}
+      alt="QR"
+      style={{ borderRadius: "8px" }}
+    />
+  </Box>
+</Box>
+
       </Box>
 
       {/* COPYRIGHT */}
