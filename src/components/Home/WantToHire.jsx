@@ -2,52 +2,80 @@ import { Box, Typography, Button } from "@mui/material";
 
 export default function WantToHire() {
   return (
-    <Box sx={{ paddingY: 10, paddingX: 2 }}>
-      <Box
-        sx={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          background: "#e8f1ff",
-          borderRadius: "24px",
-          padding: { xs: 8, md: 8 },
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: { xs: 4, md: 2 },
-        }}
-      >
+    <Box 
+  sx={{ 
+    paddingY: 10, 
+    display: "flex",
+    justifyContent: "center"
+  }}
+>
+
+<Box
+  sx={{
+    width: "999px",
+    height: "500px",
+    background: "#e8f1ff",
+    borderRadius: "24px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    overflow: "hidden"
+  }}
+>
+
         {/* LEFT IMAGE */}
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <img
-            src="https://www.jobchaahiye.com/images/cta/bg-cta.png"
-            alt="Hire"
-            style={{
-              width: "100%",
-              maxWidth: "420px",
-              objectFit: "contain",
-            }}
-          />
-        </Box>
+<Box
+  sx={{
+    width: "495px",
+    height: "500px",
+    display: "flex",
+    alignItems: "center",
+    padding: 0,
+    margin: 0
+  }}
+>
+  <img
+    src="https://www.jobchaahiye.com/images/cta/bg-cta.png"
+    alt="Hire"
+    style={{
+      width: "495px",
+      height: "500px",
+      objectFit: "cover",
+      display: "block",
+      padding: 0,
+      margin: 0
+    }}
+  />
+</Box>
+
 
         {/* RIGHT CONTENT */}
-        <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
+        <Box
+  sx={{
+    width: "408px",
+    height: "264px",
+    paddingLeft: "40px",
+    paddingRight: "100px",   // you said 0 right padding
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
+  }}
+>
+
+
           <Typography
-            sx={{
-              fontSize: { xs: "26px", md: "34px" },
-              fontWeight: 700,
-              color: "#1a2b48",
-              marginBottom: 2,
-            }}
-          >
-            Want To Hire
-          </Typography>
+  sx={{
+    width: "235px",
+    height: "64px",
+    fontSize: "34px",
+    fontWeight: 700,
+    color: "#1967d2",   // updated color
+    marginBottom: "16px"
+  }}
+>
+  Want To Hire
+</Typography>
+
 
           <Typography
             sx={{
