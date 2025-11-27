@@ -1,4 +1,4 @@
-// src/components/Hero/Hero.jsx
+
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { ReactTyped } from "react-typed";
 
