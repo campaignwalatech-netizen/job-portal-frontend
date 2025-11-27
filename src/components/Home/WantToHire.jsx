@@ -9,7 +9,7 @@ export default function WantToHire() {
           margin: "0 auto",
           background: "#e8f1ff",
           borderRadius: "24px",
-          padding: { xs: 4, md: 8 },
+          padding: { xs: 8, md: 8 },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
