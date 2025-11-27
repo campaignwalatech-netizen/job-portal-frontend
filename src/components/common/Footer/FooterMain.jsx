@@ -85,7 +85,7 @@ export default function FooterMain() {
 
       {/* COPYRIGHT */}
       <Typography sx={{ textAlign: "center", mt: 5, color: "#cbd5e1" }}>
-        © 2024 Job Chaahiye | All rights reserved
+        © 2024 Naukri Chaahiye | All rights reserved
       </Typography>
     </Box>
   );

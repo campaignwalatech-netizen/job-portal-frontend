@@ -1,4 +1,4 @@
-Job Chaahiye – Full Job Portal (Employer + Candidate)
+Naukri Chaahiye – Full Job Portal (Employer + Candidate)
 
 A modern, scalable job portal built with React + MUI + Vite.
 
@@ -9,8 +9,7 @@ Software Engineer / QA Analyst
 GitHub: https://github.com/afridaasad
 
 📌 Project Overview
-
-Job Chaahiye is a two-panel job portal consisting of:
+Naukri Chaahiye is a two-panel job portal consisting of:
 
 ✅ Employer Panel
 

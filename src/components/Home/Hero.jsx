@@ -24,7 +24,7 @@ export default function Hero() {
         }}
       >
         {/* LEFT SIDE  ------------------------------------------------------- */}
-        <Box sx={{ flex: 1, maxWidth: "580px" }}>
+        <Box sx={{ flex: 1, maxWidth: "700px" }}>
           {/* Subheading 1 */}
           <Typography
             sx={{
