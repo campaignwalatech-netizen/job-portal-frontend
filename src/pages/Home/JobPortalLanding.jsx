@@ -7,6 +7,7 @@ import FeaturedJobs from "../../components/Home/FeaturedJobs";
 import PopularJobCategories from "../../components/Home/PopularJobCategories";
 import Footer from "../../components/common/Footer/Footer.jsx";
 import WantToHire from "../../components/Home/WantToHire.jsx";
+import Testimonials from "../../components/Home/Testimonials.jsx";
 
 
 
@@ -19,6 +20,7 @@ export default function JobPortalLanding(){
       <PopularSearches />
       <FeaturedJobs />
       <PopularJobCategories />
+      <Testimonials />
       <WantToHire />
       <Footer />
     </>

@@ -113,31 +113,46 @@ export default function PopularJobCategories() {
 /* CARD COMPONENT */
 function Card({ title, positions, icon }) {
   return (
-    <Box
-      sx={{
-        padding: 3,
-        minWidth: "260px",
-        borderRadius: "14px",
-        border: "2px solid #e5e7eb",
-        background: "#fff",
-        transition: "0.3s ease",
-        cursor: "pointer",
+<Box
+  sx={{
+    display: "flex",              // ← IMPORTANT
+    alignItems: "center",         // vertical alignment
+    gap: 2,                       // space between icon + text
+    padding: 2.2,
+    minWidth: "300px",
+    minHeight: "80px",
+    borderRadius: "12px",
+    border: "2px solid #e5e7eb",
+    background: "#fff",
+    transition: "0.3s ease",
+    cursor: "pointer",
 
-        "&:hover": {
-          borderColor: "#1e63d6",
-          boxShadow: "0 8px 18px rgba(0,0,0,0.08)",
-        },
-      }}
-    >
-      <img src={icon} alt="" style={{ width: "45px", opacity: 0.8, marginBottom: 10 }} />
+    "&:hover": {
+      borderColor: "#1e63d6",
+      boxShadow: "0 8px 18px rgba(0,0,0,0.08)",
+    },
+  }}
+>
+  <img
+    src={icon}
+    alt=""
+    style={{
+      width: "36px",
+      opacity: 0.8,
+      marginBottom: 8,
+    }}
+  />
 
-      <Typography sx={{ fontSize: "18px", fontWeight: 600, color: "#1a2b48" }}>
-        {title}
-      </Typography>
+<Box>
+  <Typography sx={{ fontSize: "20px", fontWeight: 600, color: "#1a2b48" }}>
+    {title}
+  </Typography>
 
-      <Typography sx={{ color: "#6b7280", marginTop: 0.5, fontSize: "14px" }}>
-        {positions} open positions
-      </Typography>
-    </Box>
+  <Typography sx={{ fontSize: "16px", color: "#6b7280", marginTop: 0.3 }}>
+    {positions} open positions
+  </Typography>
+</Box>
+</Box>
+
   );
 }
