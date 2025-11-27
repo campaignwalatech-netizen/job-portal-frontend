@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import JobPortalLanding from "./pages/Home/JobPortalLanding";
 import EmployerLanding from "./pages/Employer/EmployerLanding";
 import EmployerDashboard from "./pages/Employer/EmployerDashboard";
+import EmployerRegister from "./pages/Employer/Register";
 
 const theme = createTheme({
   palette: {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/" element={<JobPortalLanding />} />
           <Route path="/employer" element={<EmployerLanding />} />
           <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+          <Route path="/employer/register" element={<EmployerRegister />} />
 
         </Routes>
       </BrowserRouter>
