@@ -4,7 +4,7 @@ const articles = [
   {
     img: "https://cdn.apna.co/employerDashboard_FE/jobs-success.jpeg",
     title:
-      "SMBs emerge as the leading job creators in India: Job chaahiye.co",
+      "SMBs emerge as the leading job creators in India: Naukri chaahiye.co",
   },
   {
     img: "https://cdn.apna.co/employerDashboard_FE/handshake.webp",
