@@ -82,51 +82,163 @@ const extended = [
 
 
 export default function Testimonials() {
-  const CARD_WIDTH = 360 + 32; // card + gap
-  const infiniteList = [...testimonials, ...testimonials, ...testimonials];
+  const [index, setIndex] = useState(1);
 
-  const middleStart = testimonials.length; 
-  const [translate, setTranslate] = useState(-middleStart * CARD_WIDTH);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTranslate((prev) => prev - CARD_WIDTH);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, []);
+  // Auto slide
+useEffect(() => {
+  const timer = setInterval(() => {
+    setIndex((prev) => prev + 1);
+  }, 3500);
+  return () => clearInterval(timer);
+}, []);
 
-  // When translate goes too far left, push it back to middle without animation
-  useEffect(() => {
-    const limit = -infiniteList.length * CARD_WIDTH + CARD_WIDTH * testimonials.length;
+useEffect(() => {
+  if (index === extended.length - 1) {
+    // Reached cloned-first → jump to real first
+    setTimeout(() => {
+      setIndex(1);
+    }, 700); // SAME as your transition time
+  }
 
-    if (translate < limit) {
-      setTimeout(() => {
-        setTranslate(-middleStart * CARD_WIDTH);
-      }, 700); // wait for animation to finish
-    }
-  }, [translate]);
+  if (index === 0) {
+    // Reached cloned-last → jump to last real
+    setTimeout(() => {
+      setIndex(testimonials.length);
+    }, 700);
+  }
+}, [index]);
+
 
   return (
-    <Box sx={{ paddingY: 10 }}>
+    <Box sx={{ paddingY: 10, background: "#ffffff" }}>
+      
+      {/* Heading */}
+      <Typography
+        sx={{
+          textAlign: "center",
+          fontSize: { xs: "26px", md: "36px" },
+          fontWeight: 700,
+          color: "#1a2b48",
+        }}
+      >
+        Testimonials From Our Customers
+      </Typography>
 
-      <Box sx={{ overflow: "hidden", display: "flex", justifyContent: "center" }}>
+      <Typography
+        sx={{
+          textAlign: "center",
+          color: "#64748b",
+          marginTop: 1,
+          marginBottom: 6,
+        }}
+      >
+        Don't trust us right away, see what our customers have to say!
+      </Typography>
+
+      {/* SLIDER */}
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
             gap: 4,
             transition: "transform 0.7s ease",
-            transform: `translateX(calc(${translate}px + 50% - 180px))`,
+            transform: `translateX(calc( -${index * 360}px + 50% - 180px ))`,
+transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
+
           }}
         >
-          {infiniteList.map((t, i) => (
-            <Box key={i} sx={{ width: 360, padding: 4, borderRadius: "16px" }}>
-              {/** CARD CONTENT SAME **/}
-              <Typography sx={{ fontSize: 19, fontWeight: 700, color: "#1e63d6" }}>
+          {extended.map((t, i) => (
+            <Box
+              key={i}
+              sx={{
+                width: "360px",
+                background: "#fff",
+                padding: 4,
+                borderRadius: "16px",
+                boxShadow:
+                  i === index
+                    ? "0px 12px 30px rgba(30, 99, 214, 0.25)"
+                    : "0px 6px 16px rgba(0,0,0,0.06)",
+                borderBottom: i === index ? "4px solid #1e63d6" : "4px solid transparent",
+                opacity: i === index ? 1 : 0.5,
+                transition: "0.3s ease",
+                position: "relative",
+              }}
+            >
+              {/* Quote icon */}
+              <Typography
+                sx={{
+                  position: "absolute",
+                  top: 20,
+                  right: 20,
+                  fontSize: "40px",
+                  color: "#e0e6f2",
+                  fontWeight: 700,
+                }}
+              >
+                ”
+              </Typography>
+
+              {/* Title */}
+              <Typography sx={{ fontSize: "19px", fontWeight: 700, color: "#1e63d6" }}>
                 {t.title}
               </Typography>
+
+              {/* Text */}
+              <Typography sx={{ marginTop: 2, color: "#4b5563", lineHeight: 1.65 }}>
+                {t.text}
+              </Typography>
+
+              {/* USER */}
+              <Box sx={{ display: "flex", alignItems: "center", marginTop: 4 }}>
+                <img
+                  src={t.photo}
+                  alt=""
+                  style={{
+                    width: "55px",
+                    height: "55px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    marginRight: "16px",
+                  }}
+                />
+                <Box>
+                  <Typography sx={{ fontWeight: 700 }}>{t.name}</Typography>
+                  <Typography sx={{ fontSize: "13px", color: "#6b7280" }}>
+                    {t.role}
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
           ))}
         </Box>
+      </Box>
+
+      {/* DOTS */}
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3, gap: 1.3 }}>
+        {testimonials.map((_, i) => (
+          <Box
+            key={i}
+            onClick={() => setIndex(i)}
+            sx={{
+              width: i === index ? 14 : 8,
+              height: 8,
+              borderRadius: 10,
+              background: i === index ? "#1e63d6" : "#d1d9e6",
+              cursor: "pointer",
+              transition: "0.3s ease",
+            }}
+          />
+        ))}
       </Box>
     </Box>
   );
