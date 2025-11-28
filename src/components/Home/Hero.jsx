@@ -26,7 +26,7 @@ export default function Hero() {
         pb: { xs: 10, md: 14 }, // ⬅️ more bottom so cards stay lower
         mt: "-2px",
         position: "relative",
-        overflow: "hidden",  
+        overflow: "hidden",        
       }}
     >
       <Box

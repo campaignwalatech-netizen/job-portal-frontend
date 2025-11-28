@@ -2,15 +2,12 @@ import { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 
 export default function EmployerHero() {
-  const [step, setStep] = useState("phone"); // "phone" or "otp"
+  const [step, setStep] = useState("phone");
   const [phone, setPhone] = useState("");
 
   const handlePhoneSubmit = () => {
-    if (phone.length === 10) {
-      setStep("otp"); // switch box to OTP UI
-    } else {
-      alert("Enter a valid number");
-    }
+    if (phone.length === 10) setStep("otp");
+    else alert("Enter a valid number");
   };
 
   const handleOtpVerify = () => {
@@ -22,39 +19,59 @@ export default function EmployerHero() {
       sx={{
         maxWidth: "1200px",
         mx: "auto",
-        py: 10,
-        px: 2,
+        py: 8,
+        px: { xs: 2, md: 4 },
         display: "flex",
+        flexDirection: { xs: "column", md: "row" },
         justifyContent: "space-between",
         alignItems: "flex-start",
+        gap: { xs: 4, md: 0 },
       }}
     >
       {/* LEFT TEXT */}
-      <Box sx={{ width: "50%" }}>
-        <Typography sx={{ color: "#0f766e", fontWeight: 700, fontSize: "34px" }}>
-          INDIA’S #1 HIRING PLATFORM
-        </Typography>
+      <Box sx={{ width: { xs: "100%", md: "55%" }, pr: { md: 4 } }}>
+        <Typography
+  sx={{
+    color: "#1F8268",
+    fontWeight: 700,
+    fontSize: { xs: "26px", md: "36px" },
+  }}
+>
+  INDIA’S #1 HIRING PLATFORM
+</Typography>
 
-        <Typography sx={{ fontWeight: 700, mt: 2, fontSize: "55px", lineHeight: 1.1 }}>
-          Find the right candidate. Fast.
-        </Typography>
 
-        <Typography sx={{ mt: 2, fontSize: "18px", color: "#475569" }}>
-          Trusted by 5 Cr+ Candidates | 7 Lakh+ Employers
-        </Typography>
+        <Typography
+  sx={{
+    color: "#363636",
+    fontWeight: 800,
+    mt: 2,
+    fontSize: { xs: "38px", md: "60px" },
+    lineHeight: 1.1
+  }}
+>
+  Find the right candidate. Fast.
+</Typography>
+
+
+<Typography sx={{ mt: 2, fontSize: "18px", color: "#5B5E76", fontWeight: 500 }}>
+  Trusted by 5 Cr+ Candidates | 7 Lakh+ Employers
+</Typography>
+
       </Box>
 
-      {/* RIGHT LOGIN/OTP BOX */}
+      {/* RIGHT LOGIN BOX */}
       <Box
-        sx={{
-          background: "#fff",
-          width: "380px",
-          p: 4,
-          borderRadius: "14px",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.1)",
-          textAlign: "center",
-        }}
-      >
+  sx={{
+    background: "#fff",
+    width: { xs: "100%", sm: "448px" },
+    p: "48px 20px",
+    borderRadius: "14px",
+    boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+    textAlign: "center",
+  }}
+>
+
         {step === "phone" && (
           <>
             <Typography sx={{ fontWeight: 700, fontSize: "24px", mb: 3 }}>
@@ -72,13 +89,20 @@ export default function EmployerHero() {
             </Box>
 
             <Button
-              variant="contained"
-              fullWidth
-              sx={{ textTransform: "none", py: 1.2, fontSize: "16px", borderRadius: "10px" }}
-              onClick={handlePhoneSubmit}
-            >
-              Login
-            </Button>
+  variant="contained"
+  fullWidth
+  sx={{
+    backgroundColor: "#3B82F6",
+    "&:hover": { backgroundColor: "#5A99FF" },
+    textTransform: "none",
+    py: 1.2,
+    fontSize: "16px",
+    borderRadius: "10px",
+  }}
+>
+  Login
+</Button>
+
           </>
         )}
 
@@ -89,8 +113,7 @@ export default function EmployerHero() {
             </Typography>
 
             <Typography sx={{ mb: 2, color: "#475569" }}>
-              OTP sent to{" "}
-              <span style={{ fontWeight: 600 }}>{phone}</span>
+              OTP sent to <b>{phone}</b>
               <span
                 style={{
                   color: "#2563eb",
@@ -104,7 +127,6 @@ export default function EmployerHero() {
               </span>
             </Typography>
 
-            {/* OTP Inputs */}
             <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
               {[1, 2, 3, 4].map((_, i) => (
                 <TextField
@@ -129,7 +151,12 @@ export default function EmployerHero() {
             <Button
               variant="contained"
               fullWidth
-              sx={{ textTransform: "none", py: 1.2, fontSize: "16px", borderRadius: "10px" }}
+              sx={{
+                textTransform: "none",
+                py: 1.2,
+                fontSize: "16px",
+                borderRadius: "10px",
+              }}
               onClick={handleOtpVerify}
             >
               Verify & Continue

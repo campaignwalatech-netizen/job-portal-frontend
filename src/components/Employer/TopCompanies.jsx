@@ -17,17 +17,18 @@ const companiesRow2 = [
 
 const scrollLeft = {
   display: "flex",
-  gap: 4,
-  animation: "slide-left 18s linear infinite",
-  "&:hover": { animationPlayState: "paused" }
+  gap: 3,
+  animation: "slide-left 15s linear infinite",
+  "&:hover": { animationPlayState: "paused" },
 };
 
 const scrollRight = {
   display: "flex",
-  gap: 4,
-  animation: "slide-right 18s linear infinite",
-  "&:hover": { animationPlayState: "paused" }
+  gap: 3,
+  animation: "slide-right 15s linear infinite",
+  "&:hover": { animationPlayState: "paused" },
 };
+
 
 export default function TopCompanies() {
   return (
@@ -60,7 +61,7 @@ export default function TopCompanies() {
       {/* ROW 1 */}
       <Box sx={{ overflow: "hidden", position: "relative", mb: 4 }}>
         <Box sx={scrollLeft}>
-          {[...companiesRow1, ...companiesRow1].map((logo, i) => (
+          {[...companiesRow1, ...companiesRow1, ...companiesRow1].map((logo, i) => (
             <CompanyCard logo={logo} key={i} />
           ))}
         </Box>
@@ -69,7 +70,7 @@ export default function TopCompanies() {
       {/* ROW 2 */}
       <Box sx={{ overflow: "hidden", position: "relative" }}>
         <Box sx={scrollRight}>
-          {[...companiesRow2, ...companiesRow2].map((logo, i) => (
+          {[...companiesRow2, ...companiesRow2, ...companiesRow2].map((logo, i) => (
             <CompanyCard logo={logo} key={i} />
           ))}
         </Box>
@@ -77,18 +78,18 @@ export default function TopCompanies() {
 
       {/* KEYFRAME ANIMATIONS */}
       <style>
-        {`
-          @keyframes slide-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
+{`
+  @keyframes slide-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.33%); }
+  }
 
-          @keyframes slide-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-          }
-        `}
-      </style>
+  @keyframes slide-right {
+    0% { transform: translateX(-33.33%); }
+    100% { transform: translateX(0); }
+  }
+`}
+</style>
     </Box>
   );
 }
@@ -97,30 +98,29 @@ export default function TopCompanies() {
 function CompanyCard({ logo }) {
   return (
     <Box
-  sx={{
-    width: 150,
-    height: 104,
-    bgcolor: "#fff",
-    borderRadius: "12px",
-    boxShadow: "0 0 15px rgba(0,0,0,0.05)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    mx: 1,
-  }}
->
-
+      sx={{
+        width: 190,
+        height: 130,
+        bgcolor: "#fff",
+        borderRadius: "14px",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        mx: 2,
+        flexShrink: 0,
+      }}
+    >
       <img
-  src={logo}
-  alt={logo}
-  style={{
-    width: "90px",
-    height: "auto",
-    objectFit: "contain",
-  }}
-/>
-
-
+        src={logo}
+        alt={logo}
+        style={{
+          width: "120px",
+          height: "auto",
+          objectFit: "contain",
+        }}
+      />
     </Box>
   );
 }
+

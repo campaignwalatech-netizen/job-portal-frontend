@@ -1,14 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 export default function EmployerHeader() {
   return (
     <Box
       sx={{
         width: "100%",
-        py: 2,
-        px: 4,
-        borderBottom: "1px solid #e5e7eb",
+        height: "70px",
+        px: { xs: 2, md: 12 },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -23,15 +21,15 @@ export default function EmployerHeader() {
         <img
           src="/logo.svg"
           alt="logo"
-          style={{ width: "65px", borderRadius: "14px" }}
+          style={{ width: "55px", borderRadius: "10px" }}
         />
       </Box>
 
-      {/* RIGHT: Link */}
+      {/* RIGHT: LINK */}
       <Typography
         sx={{
           fontSize: "16px",
-          color: "#2563eb",
+          color: "#1d4ed8",
           cursor: "pointer",
           fontWeight: 500,
           "&:hover": { textDecoration: "underline" },
