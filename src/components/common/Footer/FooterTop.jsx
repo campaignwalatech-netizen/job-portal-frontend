@@ -1,22 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 
-const sectionStyle = {
-  maxWidth: "1200px",
-  margin: "0 auto",
-  padding: "40px 16px",
-};
-
-const gridStyle = {
-  display: "grid",
-  gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" },
-  gap: 2,
-};
-
 export default function FooterTop() {
   return (
-    <Box sx={{ background: "#fff", mt: 10 }}>
-      <FooterSection
+    <Box sx={{ background: "#fff", pt: 8 }}>
+      <FooterBlock
         title="Popular Jobs"
         items={[
           "Delivery Person Jobs",
@@ -36,7 +24,7 @@ export default function FooterTop() {
 
       <Separator />
 
-      <FooterSection
+      <FooterBlock
         title="Jobs by Department"
         items={[
           "Admin / Back Office / Computer Operator Jobs",
@@ -56,7 +44,7 @@ export default function FooterTop() {
 
       <Separator />
 
-      <FooterSection
+      <FooterBlock
         title="Find Jobs"
         items={[
           "Jobs in Agra",
@@ -67,8 +55,7 @@ export default function FooterTop() {
           "Jobs in Aligarh",
           "Jobs in Aurangabad",
           "Jobs in Bengaluru",
-          "Jobs in Ahmednagar",
-          "Jobs in Amritsar",
+          "Jobs in Bhopal",
           "Jobs in Bareilly",
           "Jobs in Bhavnagar",
         ]}
@@ -76,7 +63,7 @@ export default function FooterTop() {
 
       <Separator />
 
-      <FooterSection
+      <FooterBlock
         title="Start Hiring"
         items={[
           "Hire in Agra",
@@ -87,8 +74,7 @@ export default function FooterTop() {
           "Hire in Aligarh",
           "Hire in Aurangabad",
           "Hire in Bengaluru",
-          "Hire in Ahmednagar",
-          "Hire in Amritsar",
+          "Hire in Bhopal",
           "Hire in Bareilly",
           "Hire in Bhavnagar",
         ]}
@@ -97,51 +83,95 @@ export default function FooterTop() {
   );
 }
 
-/* -------------------- REUSABLE SECTION -------------------- */
+/* -------------------------------------------------- */
+/*               EXACT MATCH BLOCK DESIGN             */
+/* -------------------------------------------------- */
 
-function FooterSection({ title, items }) {
+function FooterBlock({ title, items }) {
   const [expanded, setExpanded] = useState(false);
 
-  // Show only 6 items by default (2 rows * 3 columns)
-  const displayedItems = expanded ? items : items.slice(0, 6);
+  // 3 rows * 3 columns = 9 items visible by default (like screenshot)
+  const visibleCount = expanded ? items.length : 9;
+  const showItems = items.slice(0, visibleCount);
 
   return (
-    <Box sx={sectionStyle}>
-      <Typography sx={{ fontSize: "20px", fontWeight: 700, mb: 2 }}>
+    <Box
+      sx={{
+        maxWidth: "1200px",
+        mx: "auto",
+        px: 2,
+        pb: 6,
+      }}
+    >
+      {/* Title */}
+      <Typography
+        sx={{
+          fontSize: "18px",
+          fontWeight: 700,
+          mb: 3,
+          color: "#21286A",
+        }}
+      >
         {title}
       </Typography>
 
-      <Box sx={gridStyle}>
-        {displayedItems.map((text, i) => (
-          <Item key={i} text={text} />
+      {/* GRID EXACT LIKE SCREENSHOT */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" },
+          rowGap: 1,
+          columnGap: 4,
+        }}
+      >
+        {showItems.map((t, i) => (
+          <Typography
+            key={i}
+            sx={{
+              fontSize: "15px",
+              color: "#696969",
+              cursor: "pointer",
+              "&:hover": { color: "#1e63d6" },
+            }}
+          >
+            {t}
+          </Typography>
         ))}
       </Box>
 
-      <Typography
-        onClick={() => setExpanded(!expanded)}
-        sx={{
-          mt: 2,
-          color: "#1e63d6",
-          cursor: "pointer",
-          fontWeight: 600,
-        }}
-      >
-        {expanded ? "View Less ▲" : "View More ▼"}
-      </Typography>
+      {/* VIEW MORE BUTTON EXACT POSITION */}
+      {items.length > 9 && (
+        <Typography
+          onClick={() => setExpanded(!expanded)}
+          sx={{
+            mt: 3,
+            color: "#1e63d6",
+            fontSize: "15px",
+            fontWeight: 600,
+            cursor: "pointer",
+            textAlign: "center",
+          }}
+        >
+          {expanded ? "View Less ▲" : "View More ▼"}
+        </Typography>
+      )}
     </Box>
   );
 }
 
-/* -------------------- SMALL COMPONENTS -------------------- */
-
-function Item({ text }) {
-  return (
-    <Typography sx={{ color: "#1e3a8a", cursor: "pointer", mb: 1 }}>
-      {text}
-    </Typography>
-  );
-}
+/* -------------------------------------------------- */
+/*                      SEPARATOR                     */
+/* -------------------------------------------------- */
 
 function Separator() {
-  return <Box sx={{ borderBottom: "1px solid #e5e7eb", my: 5 }} />;
+  return (
+    <Box
+      sx={{
+        borderBottom: "1px solid #e5e7eb",
+        maxWidth: "1200px",
+        mx: "auto",
+        my: 2,
+      }}
+    />
+  );
 }

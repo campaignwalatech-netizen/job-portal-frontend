@@ -7,86 +7,102 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 
 export default function FooterMain() {
   return (
-    <Box sx={{ background: "#0f0a37", color: "#fff", py: 8, mt: 8 }}>
+    <Box sx={{ background: "#0f0a37", color: "#fff", pt: 5, pb: 4, mt: 6 }}>
+      
+      {/* WRAPPER */}
       <Box
         sx={{
           maxWidth: "1200px",
           mx: "auto",
           px: 2,
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
+          alignItems: { xs: "flex-start", md: "flex-start" },
           gap: 6,
         }}
       >
-        {/* LEFT */}
-        <Box>
-          <img src="/logo.svg" width={120} alt="logo" style={{ borderRadius: "30px" }} />
-          <Typography sx={{ mt: 2, fontSize: "16px" }}>
+        {/* ---------------- LEFT SECTION ---------------- */}
+        <Box sx={{ width: { xs: "100%", md: "260px" } }}>
+          <img
+            src="/logo.svg"
+            width={115}
+            alt="logo"
+            style={{ borderRadius: "14px" }}
+          />
+
+          <Typography sx={{ mt: 2, fontSize: "15px" }}>
             Follow us on social media
           </Typography>
 
           <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <FacebookIcon sx={{ fontSize: 30, color: "#3b82f6", cursor: "pointer" }} />
-            <LinkedInIcon sx={{ fontSize: 30, color: "#3b82f6", cursor: "pointer" }} />
-            <TwitterIcon sx={{ fontSize: 30, color: "#3b82f6", cursor: "pointer" }} />
-            <InstagramIcon sx={{ fontSize: 30, color: "#3b82f6", cursor: "pointer" }} />
-            <YouTubeIcon sx={{ fontSize: 30, color: "#3b82f6", cursor: "pointer" }} />
+            <FacebookIcon sx={{ fontSize: 26 }} />
+            <LinkedInIcon sx={{ fontSize: 26 }} />
+            <TwitterIcon sx={{ fontSize: 26 }} />
+            <InstagramIcon sx={{ fontSize: 26 }} />
+            <YouTubeIcon sx={{ fontSize: 26 }} />
           </Box>
         </Box>
 
-        {/* RIGHT BOX */}
-        {/* RIGHT BOX */}
-<Box
-  sx={{
-    background: "#fff",
-    color: "#000",
-    px: 4,
-    py: 4,
-    borderRadius: "14px",
-    width: { xs: "100%", sm: "auto" },
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 4,
-  }}
->
-  {/* LEFT SIDE → TEXT + GOOGLE PLAY */}
-  <Box>
-    <Typography sx={{ fontWeight: 700, mb: 1, fontSize: "20px" }}>
-      Apply on the go
-    </Typography>
+        {/* ---------------- RIGHT LINKS SECTION ---------------- */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
+            gap: 4,
+            flexGrow: 1,
+          }}
+        >
+          <FooterColumn
+            title="Company"
+            items={["About Us", "Careers", "Contact", "Blog"]}
+          />
 
-    <Typography sx={{ mb: 2, fontSize: "14px" }}>
-      Get real-time job updates on our App
-    </Typography>
+          <FooterColumn
+            title="Job Categories"
+            items={["IT Jobs", "Sales Jobs", "Marketing Jobs", "HR Jobs"]}
+          />
 
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-      width={150}
-      alt="Google Play"
-      style={{ cursor: "pointer" }}
-    />
-  </Box>
-
-  {/* RIGHT SIDE → QR CODE */}
-  <Box>
-    <img
-      src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=JobChaahiye"
-      width={120}
-      alt="QR"
-      style={{ borderRadius: "8px" }}
-    />
-  </Box>
-</Box>
-
+          <FooterColumn
+            title="Support"
+            items={["Help Center", "FAQs", "Privacy Policy", "Terms"]}
+          />
+        </Box>
       </Box>
 
       {/* COPYRIGHT */}
-      <Typography sx={{ textAlign: "center", mt: 5, color: "#cbd5e1" }}>
+      <Typography
+        sx={{ textAlign: "center", color: "#cbd5e1", mt: 4, fontSize: "13px" }}
+      >
         © 2024 Naukri Chaahiye | All rights reserved
       </Typography>
+    </Box>
+  );
+}
+
+/* ---------- REUSABLE COLUMN COMPONENT ---------- */
+
+function FooterColumn({ title, items }) {
+  return (
+    <Box>
+      <Typography sx={{ fontWeight: 700, fontSize: "16px", mb: 1.5 }}>
+        {title}
+      </Typography>
+
+      {items.map((el, i) => (
+        <Typography
+          key={i}
+          sx={{
+            color: "#d1d5db",
+            fontSize: "14px",
+            mb: 1,
+            cursor: "pointer",
+            "&:hover": { color: "#ffffff" },
+          }}
+        >
+          {el}
+        </Typography>
+      ))}
     </Box>
   );
 }
