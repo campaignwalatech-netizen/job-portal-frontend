@@ -22,11 +22,19 @@ export default function SuccessStories() {
 
         // Responsive vertical positioning
         top: {
-          xs: "-120px",   // mobile
-          sm: "-150px",   // tablets
-          md: "-200px",   // big screens
-          lg: "-220px",   // large desktops
-        },
+  xs: "-50px",
+  sm: "-70px",
+  md: "-180px",   // was -180
+  lg: "-100px",   // was -200
+},
+
+
+        marginBottom: {
+      xs: "-120px",
+      sm: "-150px",
+      md: "-200px",
+      lg: "-220px",
+    }, //
 
         zIndex: 10,
       }}

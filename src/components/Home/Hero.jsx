@@ -6,9 +6,11 @@ export default function Hero() {
     <Box
       sx={{
         width: "100%",
-        background: "linear-gradient(to bottom right, #f7f9ff, #e6eeff)",
+        background: "linear-gradient(to bottom, #ffffff, #bbcef8ff)",
         paddingTop: { xs: 4, md: 10 },
-        paddingBottom: { xs: 6, md: 14 },
+        paddingBottom: { xs: 0, md: 0 },
+        marginTop: "-2px"
+
       }}
     >
       <Box
@@ -217,7 +219,7 @@ export default function Hero() {
               maxWidth: "1050px",
               objectFit: "contain",
               marginTop: "60px",
-              marginRight: "-180px",
+              marginRight: "-150px",
             }}
           />
         </Box>

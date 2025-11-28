@@ -16,38 +16,36 @@ const categoriesRow2 = [
 
 const animationLeft = {
   display: "flex",
-  gap: 3,
-  animation: "scroll-left 14s linear infinite",
+  gap: 4,
+  animation: "scroll-left 16s linear infinite",
   "&:hover": { animationPlayState: "paused" },
 };
 
 const animationRight = {
   display: "flex",
-  gap: 3,
+  gap: 4,
   animation: "scroll-right 18s linear infinite",
   "&:hover": { animationPlayState: "paused" },
 };
 
-
-
 export default function PopularJobCategories() {
   return (
-    <Box sx={{ paddingY: 10, maxWidth: "1200px", margin: "0 auto", paddingX: 2 }}>
-      
-      {/* HEADING */}
+    <Box sx={{ paddingY: 10, maxWidth: "1200px", margin: "0 auto", paddingX: { xs: 2, md: 0 } }}>
+
       <Typography
         sx={{
-          fontSize: { xs: "28px", md: "38px" },
+          fontSize: { xs: "26px", md: "36px" },
           textAlign: "center",
           fontWeight: 700,
           marginBottom: 1,
           color: "#1a2b48",
+          fontFamily: "Poppins",
         }}
       >
         Popular Job Categories
       </Typography>
 
-      <Typography sx={{ textAlign: "center", color: "#64748b", marginBottom: 6 }}>
+      <Typography sx={{ textAlign: "center", color: "#64748b", marginBottom: 6, fontFamily: "Poppins" }}>
         2020 jobs live – 293 added today.
       </Typography>
 
@@ -55,7 +53,7 @@ export default function PopularJobCategories() {
       <Box sx={{ overflow: "hidden", marginBottom: 4 }}>
         <Box sx={animationLeft}>
           {[...categoriesRow1, ...categoriesRow1].map((cat, index) => (
-            <Card key={index} {...cat} index={index} />
+            <Card key={index} {...cat} />
           ))}
         </Box>
       </Box>
@@ -64,98 +62,116 @@ export default function PopularJobCategories() {
       <Box sx={{ overflow: "hidden", marginBottom: 6 }}>
         <Box sx={animationRight}>
           {[...categoriesRow2, ...categoriesRow2].map((cat, index) => (
-            <Card key={index} {...cat} index={index} />
+            <Card key={index} {...cat} />
           ))}
         </Box>
       </Box>
 
-      {/* VIEW ALL BUTTON */}
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          variant="outlined"
-          sx={{
-            borderRadius: "10px",
-            width: "210px",
-            hieght: "48px",
-            padding: "8px 64px",
-            textTransform: "none",
-            fontSize: "16px",
-            borderColor: "#4d76beff",
-            borderWidth: "4px",
-            borderStyle: "solid",
-            color: "#1e63d6",
-            "&:hover": {
-              background: "#1e63d6",
-              color: "#fff",
-            },
-          }}
-        >
-          View All 
-        </Button>
-      </Box>
+      {/* VIEW ALL */}
+<Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+  <Button
+    variant="outlined"
+    sx={{
+      borderRadius: "10px",
+      padding: "8px 64px",      // exact spacing on live site
+      textTransform: "none",
+      fontSize: "16px",
+      fontWeight: 600,
 
-      {/* KEYFRAMES */}
+      // TEXT COLOR when not hovered (EXACT: #21286A)
+      color: "#21286A",
+
+      // BORDER COLOR (EXACT: #1967D2)
+      borderColor: "#72a9f7ff",
+      borderWidth: "3px",
+
+      "&:hover": {
+        background: "#1967D2",
+        color: "#fff", },
+
+      // RESPONSIVE
+      minWidth: { xs: "160px", md: "210px" },
+      height: { xs: "44px", md: "48px" },
+    }}
+  >
+    View All
+  </Button>
+</Box>
+
+
       <style>
         {`
           @keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
 
-@keyframes scroll-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
+          @keyframes scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
         `}
       </style>
+
     </Box>
   );
 }
 
-/* CARD COMPONENT */
 function Card({ title, positions, icon }) {
   return (
-<Box
-  sx={{
-    display: "flex",              // ← IMPORTANT
-    alignItems: "center",         // vertical alignment
-    gap: 2,                       // space between icon + text
-    padding: 2.2,
-    minWidth: "300px",
-    minHeight: "80px",
-    borderRadius: "12px",
-    border: "2px solid #e5e7eb",
-    background: "#fff",
-    transition: "0.3s ease",
-    cursor: "pointer",
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 2.2,
+        padding: "20px 22px",
+        minWidth: "320px",
+        height: "110px",
+        borderRadius: "14px",
+        border: "2px solid #e5e7eb",
+        background: "#fff",
+        transition: "0.3s ease",
+        cursor: "pointer",
+        flexShrink: 0,
 
-    "&:hover": {
-      borderColor: "#1e63d6",
-      boxShadow: "0 8px 18px rgba(0,0,0,0.08)",
-    },
-  }}
->
-  <img
-    src={icon}
-    alt=""
-    style={{
-      width: "36px",
-      opacity: 0.8,
-      marginBottom: 8,
-    }}
-  />
+        "&:hover": {
+          borderColor: "#1e63d6",
+          background: "#e9f2ff",
+        },
+      }}
+    >
+      <img
+        src={icon}
+        alt=""
+        style={{
+          width: "40px",
+          opacity: 0.9,
+        }}
+      />
 
-<Box>
-  <Typography sx={{ fontSize: "20px", fontWeight: 600, color: "#1a2b48" }}>
-    {title}
-  </Typography>
+      <Box>
+        <Typography
+          sx={{
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "#1a2b48",
+            fontFamily: "Poppins",
+          }}
+        >
+          {title}
+        </Typography>
 
-  <Typography sx={{ fontSize: "16px", color: "#6b7280", marginTop: 0.3 }}>
-    {positions} open positions
-  </Typography>
-</Box>
-</Box>
-
+        <Typography
+          sx={{
+            fontSize: "14px",
+            color: "#696969",
+            marginTop: "4px",
+            fontFamily: "Poppins",
+          }}
+        >
+          {positions} open positions
+        </Typography>
+      </Box>
+    </Box>
   );
 }

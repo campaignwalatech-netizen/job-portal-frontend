@@ -26,7 +26,6 @@ export default function Header() {
       sx={{
         background: "#ffffff",
         color: "#0b2236",
-        borderBottom: "1px solid rgba(16,24,40,0.06)",
         boxShadow: "none"
       }}
     >

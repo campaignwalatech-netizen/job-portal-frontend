@@ -35,7 +35,7 @@ const items = [
 
 export default function PopularSearches() {
   return (
-    <Box sx={{ paddingY: 10, maxWidth: "1200px", margin: "0 auto", paddingX: 2 }}>
+    <Box sx={{ paddingY: 25, maxWidth: "1200px", margin: "0 auto", paddingX: 2 }}>
 
       {/* Heading */}
       <Typography
