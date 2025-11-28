@@ -16,9 +16,9 @@ export default function DatabaseSection() {
         gap: 6,
       }}
     >
-      {/* LEFT TEXT BLOCK */}
+      {/* LEFT SIDE TEXT */}
       <Box sx={{ width: { xs: "100%", md: "55%" } }}>
-        {/* SMALL TITLE */}
+        {/* Section label */}
         <Typography
           sx={{
             fontSize: "22px",
@@ -30,7 +30,7 @@ export default function DatabaseSection() {
           HIRE FASTER, HIRE BETTER
         </Typography>
 
-        {/* MAIN LARGE HEADING */}
+        {/* Main heading */}
         <Typography
           sx={{
             fontSize: { xs: "40px", md: "56px" },
@@ -40,12 +40,10 @@ export default function DatabaseSection() {
             mb: 2,
           }}
         >
-          Introducing Job <br />
-          ChaaHiye <br />
-          Database
+          Introducing Job <br /> ChaaHiye <br /> Database
         </Typography>
 
-        {/* PARAGRAPH */}
+        {/* Paragraph */}
         <Typography
           sx={{
             fontSize: "20px",
@@ -59,7 +57,7 @@ export default function DatabaseSection() {
           from India’s fastest growing talent pool.
         </Typography>
 
-        {/* BULLET LIST */}
+        {/* Bullet list */}
         <Box sx={{ mb: 4 }}>
           {[
             "5 Cr+ active job seekers",
@@ -84,7 +82,7 @@ export default function DatabaseSection() {
           ))}
         </Box>
 
-        {/* BUTTON */}
+        {/* Button */}
         <Button
           variant="contained"
           sx={{
@@ -102,18 +100,102 @@ export default function DatabaseSection() {
         </Button>
       </Box>
 
-      {/* RIGHT SIDE IMAGE PART (your floating cards) */}
+      {/* RIGHT SIDE FLOATING CARDS */}
       <Box
         sx={{
+          position: "relative",
           width: { xs: "100%", md: "45%" },
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          height: "520px",
         }}
       >
-        {/* Drop your JOB CARDS component or images here */}
-        {/** e.g., <JobCardsPreview /> */}
+        {/* Background panel */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "100%",
+            height: "100%",
+            background: "#f3f4f6",
+            borderRadius: "20px",
+          }}
+        />
+
+        {/* Floating cards */}
+        <FloatingCard
+          title="Graphic designer"
+          status="Active"
+          location="Narayana guda, Hyderabad"
+          date="Nov 30, 2022"
+          sx={{ top: "40px", right: "10px" }}
+        />
+
+        <FloatingCard
+          title="Executive manager operations"
+          status="Under review"
+          statusColor="#fbbf24"
+          location="Narayana guda, Hyderabad"
+          date="Nov 30, 2022"
+          sx={{ top: "180px", right: "80px" }}
+        />
+
+        <FloatingCard
+          title="Graphic designer"
+          status="Active"
+          location="Narayana guda, Hyderabad"
+          date="Nov 30, 2022"
+          sx={{ top: "330px", right: "20px" }}
+        />
       </Box>
+    </Box>
+  );
+}
+
+/* ===============================
+   FLOATING CARD COMPONENT
+=============================== */
+
+function FloatingCard({ title, status, statusColor = "#22c55e", location, date, sx }) {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        width: "300px",
+        background: "#fff",
+        boxShadow: "0 4px 25px rgba(0,0,0,0.08)",
+        borderRadius: "12px",
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 0.5,
+        ...sx,
+      }}
+    >
+      {/* Title + Status Badge */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Typography sx={{ fontWeight: 600, fontSize: "16px" }}>
+          {title}
+        </Typography>
+
+        <Box
+          sx={{
+            background: statusColor,
+            color: "#fff",
+            px: 1,
+            py: 0.3,
+            borderRadius: "8px",
+            fontSize: "11px",
+            fontWeight: 600,
+          }}
+        >
+          {status}
+        </Box>
+      </Box>
+
+      {/* Location + Date */}
+      <Typography sx={{ fontSize: "14px", color: "#6b7280" }}>
+        {location} | Posted on: {date}
+      </Typography>
     </Box>
   );
 }
