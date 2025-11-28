@@ -55,7 +55,7 @@ const jobs = [
 
 export default function FeaturedJobs() {
   return (
-    <Box sx={{ background: "#e8f1ff", paddingY: 10, marginTop: 8 }}>
+    <Box sx={{ background: "#e8f1ff", paddingY: 5, marginTop: -20 }}>
       <Box sx={{ maxWidth: "1200px", margin: "0 auto", paddingX: 2 }}>
 
         {/* HEADING */}
