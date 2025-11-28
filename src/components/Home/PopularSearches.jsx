@@ -61,114 +61,128 @@ export default function PopularSearches() {
       >
         {items.map((item, index) => (
           <Box
-            key={index}
-            sx={{
-              position: "relative",
-              borderRadius: "20px",
-              border: "1px solid #e5e7eb",
-              padding: 3,
-              minHeight: "250px",
-              overflow: "hidden",
-              transition: "0.3s ease",
-              cursor: "pointer",
+  key={index}
+  sx={{
+    position: "relative",
+    borderRadius: "20px",
+    border: "1px solid",
+    borderColor: "#e5e7eb",
+    padding: 3,
+    minHeight: "250px",
+    overflow: "hidden",
+    transition: "0.3s ease",
+    cursor: "pointer",
 
-              "&:hover": {
-                borderColor:
-                  index === 0
-                    ? "#d83500"
-                    : index === 1
-                    ? "#6b4bff"
-                    : index === 2
-                    ? "#cc1a1a"
-                    : index === 3
-                    ? "#0056ff"
-                    : "#0064d2",
-                boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
-              },
+    "&:hover": {
+      borderColor:
+        index === 0
+          ? "#d83500"
+          : index === 1
+          ? "#6b4bff"
+          : index === 2
+          ? "#cc1a1a"
+          : index === 3
+          ? "#0056ff"
+          : "#0064d2",
+      boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+    },
 
-              "&:hover img": {
-                transform: "scale(1.06)",
-              },
-            }}
-          >
-            {/* TRENDING TEXT */}
-            <Typography sx={{ fontSize: "13px", color: "#666" }}>
-              TRENDING AT {item.rank}
-            </Typography>
+    // Move background text on hover (slide right)
+    "&:hover .bgText": {
+      transform: "translateX(10px)",
+      opacity: 1,                      // stays full visible
+  letterSpacing: "1px"
+    },
 
-            {/* TITLE */}
-            <Typography
-              sx={{
-                fontSize: "18px",
-                fontWeight: 600,
-                color: "#1e63d6",
-                marginTop: 1,
-              }}
-            >
-              {item.title}
-            </Typography>
+    // Button hover when hovering ANYWHERE on card
+    "&:hover .viewBtn": {
+      background:
+        index === 0
+          ? "#d83500"
+          : index === 1
+          ? "#6b4bff"
+          : index === 2
+          ? "#cc1a1a"
+          : index === 3
+          ? "#0056ff"
+          : "#0064d2",
+      color: "#fff",
+    },
 
-            {/* BACKGROUND LIGHT TEXT */}
-            <Typography
-              sx={{
-                position: "absolute",
-                bottom: 70,
-                left: 25,
-                fontSize: "42px",
-                fontWeight: 800,
-                color: "#f2f2f2",
-                pointerEvents: "none",
-                userSelect: "none",
-              }}
-            >
-              {item.bgText}
-            </Typography>
+    "&:hover img": {
+      transform: "scale(1.06)",
+    },
+  }}
+>
+  {/* TRENDING */}
+  <Typography sx={{ fontSize: "13px", color: "#666" }}>
+    TRENDING AT {item.rank}
+  </Typography>
 
-            {/* IMAGE */}
-            <img
-              src={item.img}
-              alt=""
-              style={{
-                position: "absolute",
-                bottom: 10,
-                right: 10,
-                width: "130px",
-                transition: "0.3s ease",
-              }}
-            />
+  {/* TITLE */}
+  <Typography
+    sx={{
+      fontSize: "18px",
+      fontWeight: 600,
+      color: "#1e63d6",
+      marginTop: 1,
+    }}
+  >
+    {item.title}
+  </Typography>
 
-            {/* VIEW ALL BUTTON */}
-            <Typography
-              sx={{
-                position: "absolute",
-                bottom: 20,
-                left: 25,
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#1e63d6",
-                cursor: "pointer",
-                padding: "6px 18px",
-                borderRadius: "10px",
-                transition: "0.3s ease",
+  {/* BACKGROUND LIGHT TEXT */}
+  <Typography
+    className="bgText"
+    sx={{
+      position: "absolute",
+      bottom: 85,
+      left: 25,
+      fontSize: "36px",
+      fontWeight: 800,
+      color: "#f2f2f2",
+      pointerEvents: "none",
+      userSelect: "none",
+      transition: "0.4s ease",
+    }}
+  >
+    {item.bgText}
+  </Typography>
 
-                "&:hover": {
-                  background:
-                    index === 0
-                      ? "#d83500"
-                      : index === 1
-                      ? "#6b4bff"
-                      : index === 2
-                      ? "#cc1a1a"
-                      : index === 3
-                      ? "#0056ff"
-                      : "#0064d2",
-                  color: "#fff",
-                },
-              }}
-            >
-              View all
-            </Typography>
-          </Box>
+  {/* IMAGE */}
+  <img
+    src={item.img}
+    alt=""
+    style={{
+      position: "absolute",
+      bottom: 10,
+      right: 10,
+      width: "120px",
+      transition: "0.3s ease",
+    }}
+  />
+
+  {/* VIEW ALL BUTTON */}
+  <Typography
+    className="viewBtn"
+    sx={{
+      position: "absolute",
+      bottom: 20,
+      left: 25,
+      fontSize: "18px",
+      fontWeight: 600,
+      background: "transparent",
+      color: "#1e63d6",
+      cursor: "pointer",
+      padding: "6px 18px",
+      borderRadius: "10px",
+      transition: "0.3s ease",
+    }}
+  >
+    View all
+  </Typography>
+</Box>
+
         ))}
       </Box>
     </Box>
