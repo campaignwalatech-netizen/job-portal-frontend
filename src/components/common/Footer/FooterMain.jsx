@@ -74,7 +74,7 @@ export default function FooterMain() {
       <Typography
         sx={{ textAlign: "center", color: "#cbd5e1", mt: 4, fontSize: "13px" }}
       >
-        © 2024 Naukri Chaahiye | All rights reserved
+        © 2026 Naukri Chaahiye | All rights reserved
       </Typography>
     </Box>
   );

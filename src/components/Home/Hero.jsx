@@ -1,6 +1,10 @@
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { ReactTyped } from "react-typed";
 import { keyframes } from "@emotion/react";
+import SearchIcon from "@mui/icons-material/Search";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import InputAdornment from "@mui/material/InputAdornment";
+
 
 const slideInLeft = keyframes`
   from { opacity: 0; transform: translateY(50px); }
@@ -21,6 +25,7 @@ export default function Hero() {
         pt: { xs: 4, md: 10 },
         pb: { xs: 10, md: 14 }, // ⬅️ more bottom so cards stay lower
         mt: "-2px",
+        position: "relative",
       }}
     >
       <Box
@@ -140,54 +145,67 @@ export default function Hero() {
             }}
           >
             {/* FIELD 1 */}
-            <TextField
-              placeholder="Job title, keywords, or company"
-              fullWidth
-              sx={{
-                flex: 1,
-                minWidth: "180px",
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: "12px",
-                  height: "50px",
-                  pl: "40px",
-                  background: "#fff",
-                  border: "none",
-                  boxShadow: "none",
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "& input": {
-                  fontSize: "15px",
-                  fontFamily: "Poppins",
-                },
-              }}
-            />
+<TextField
+  placeholder="Job title, keywords, or company"
+  fullWidth
+  InputProps={{
+    startAdornment: (
+      <InputAdornment position="start">
+        <SearchIcon sx={{ color: "#8a8a8a", fontSize: "20px" }} />
+      </InputAdornment>
+    ),
+  }}
+  sx={{
+    flex: 1,
+    minWidth: "180px",
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "12px",
+      height: "50px",
+      background: "#fff",
+      pl: "10px", // icon spacing
+      border: "none",
+      boxShadow: "none",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& input": {
+      fontSize: "15px",
+      fontFamily: "Poppins",
+    },
+  }}
+/>
 
-            {/* FIELD 2 */}
-            <TextField
-              placeholder="City or postcode"
-              fullWidth
-              sx={{
-                flex: 1,
-                minWidth: "180px",
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: "12px",
-                  height: "50px",
-                  pl: "40px",
-                  background: "#fff",
-                  border: "none",
-                  boxShadow: "none",
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "& input": {
-                  fontSize: "15px",
-                  fontFamily: "Poppins",
-                },
-              }}
-            />
+<TextField
+  placeholder="City or postcode"
+  fullWidth
+  InputProps={{
+    startAdornment: (
+      <InputAdornment position="start">
+        <LocationOnIcon sx={{ color: "#8a8a8a", fontSize: "20px" }} />
+      </InputAdornment>
+    ),
+  }}
+  sx={{
+    flex: 1,
+    minWidth: "180px",
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "12px",
+      height: "50px",
+      background: "#fff",
+      pl: "10px",
+      border: "none",
+      boxShadow: "none",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& input": {
+      fontSize: "15px",
+      fontFamily: "Poppins",
+    },
+  }}
+/>
 
             {/* BUTTON */}
             <Button
@@ -212,28 +230,31 @@ export default function Hero() {
         </Box>
 
         {/* ---------------------------------- RIGHT IMAGE ---------------------------------- */}
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-            animation: `${slideInRight} 1s ease-out`,
-            width: "100%",
-          }}
-        >
-          <Box
-            component="img"
-            src="https://www.jobchaahiye.com/images/resource/banner-image.svg"
-            alt="hero"
-            sx={{
-              width: { xs: "100%", sm: "95%", md: "110%" }, // ⬅️ MATCH LIVE SIZE
-              maxWidth: "700px", // ⬅️ LIVE IMAGE WIDTH
-              objectFit: "contain",
-              mt: { xs: 4, md: 8 }, // ⬅️ pushes image lower — EXACT live spacing
-            }}
-          />
-        </Box>
+{/* RIGHT IMAGE FIXED TO RIGHT */}
+<Box
+  sx={{
+    position: "absolute",      // ⭐ FIXED POSITION
+    right: "-40px",            // ⭐ MATCHES LIVE SITE OFFSET
+    bottom: "0",               // ⭐ TOUCHES BOTTOM OF HERO so cards go on top
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    width: "50%",              // ⭐ KEEPS IMAGE RESPONSIVE
+    pointerEvents: "none",     // ⭐ Prevents blocking clicks
+  }}
+>
+  <Box
+    component="img"
+    src="/banner-image.svg"
+    alt="hero"
+    sx={{
+      width: "100%",
+      maxWidth: "750px",       // ⭐ LITTLE BIGGER, LIKE LIVE SITE
+      objectFit: "contain",
+    }}
+  />
+</Box>
+
       </Box>
     </Box>
   );
