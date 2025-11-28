@@ -26,6 +26,7 @@ export default function Hero() {
         pb: { xs: 10, md: 14 }, // ⬅️ more bottom so cards stay lower
         mt: "-2px",
         position: "relative",
+        overflow: "hidden",  
       }}
     >
       <Box
@@ -157,7 +158,7 @@ export default function Hero() {
   }}
   sx={{
     flex: 1,
-    minWidth: "180px",
+    minWidth: "200px",
     "& .MuiOutlinedInput-root": {
       borderRadius: "12px",
       height: "50px",
