@@ -84,6 +84,18 @@ export default function PopularSearches() {
           : index === 3
           ? "#0056ff"
           : "#0064d2",
+      background:
+        index === 0
+          ? "rgba(216, 53, 0, 0.05)"
+          : index === 1
+          ? "rgba(107, 75, 255, 0.05)"    
+          : index === 2
+          ? "rgba(204, 26, 26, 0.05)"
+          : index === 3
+          ? "rgba(0, 86, 255, 0.05)"
+          : "rgba(0, 100, 210, 0.05)",
+
+
       boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
     },
 
