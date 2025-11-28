@@ -6,6 +6,15 @@ const dataRow1 = [
   { number: "70%", label: "Connected Leads", bg: "#E9FFF2" },
   { number: "5 Cr+", label: "Active job seekers", bg: "#F3ECFF" },
   { number: "2.3 Cr", label: "Candidates in T1 cities", bg: "#E9FFF2" },
+  { number: "1.2 Cr", label: "Graduates", bg: "#F3ECFF" },
+  { number: "40 Lakh", label: "Post Graduate", bg: "#F3ECFF" },
+  { number: "68 Lakh", label: "BFSI", bg: "#E9FFF2" },
+  { number: "57 Lakh+", label: "BPO Call-center", bg: "#E9FFF2" },
+  { number: "2", label: "Experience", bg: "#F3ECFF" },
+  { number: "70%", label: "Connected Leads", bg: "#E9FFF2" },
+  { number: "2.3 Cr", label: "Candidates in T1 cities", bg: "#E9FFF2" },
+  { number: "1.2 Cr", label: "Graduates", bg: "#F3ECFF" },
+  
 ];
 
 const dataRow2 = [
@@ -18,6 +27,10 @@ const dataRow2 = [
   { number: "70%", label: "Connected Leads", bg: "#E9FFF2" },
   { number: "2.3 Cr", label: "Candidates in T1 cities", bg: "#E9FFF2" },
   { number: "1.2 Cr", label: "Graduates", bg: "#F3ECFF" },
+  { number: "40 Lakh", label: "Post Graduate", bg: "#F3ECFF" },
+  { number: "68 Lakh", label: "BFSI", bg: "#E9FFF2" },
+  { number: "57 Lakh+", label: "BPO Call-center", bg: "#E9FFF2" },
+  
 ];
 
 const boxStyle = {
@@ -46,10 +59,7 @@ export default function StatsScroller() {
   return (
     <Box sx={{ mt: 10, overflow: "hidden" }}>
 
-      {/* TOP HEADING */}
-      <Typography sx={{ textAlign: "center", fontSize: "32px", fontWeight: 700, color: "#0F254D" }}>
-        Top Company Hiring
-      </Typography>
+      
       <Typography sx={{ textAlign: "center", mt: 1, color: "#666", fontSize: "16px" }}>
         Our customers have gotten offers from awesome companies.
       </Typography>

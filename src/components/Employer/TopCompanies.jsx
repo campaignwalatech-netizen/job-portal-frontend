@@ -4,7 +4,7 @@ const companiesRow1 = [
   "/companies/amazon.png",
   "/companies/google.png",
   "/companies/microsoft.png",
-  "/companies/blackrock.png",
+  "/companies/blackrock.png", 
 ];
 
 const companiesRow2 = [
@@ -98,7 +98,7 @@ function CompanyCard({ logo }) {
   return (
     <Box
   sx={{
-    width: 130,
+    width: 150,
     height: 104,
     bgcolor: "#fff",
     borderRadius: "12px",

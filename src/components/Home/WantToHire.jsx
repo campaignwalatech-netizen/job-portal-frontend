@@ -1,113 +1,99 @@
-import { Box, Typography, Button } from "@mui/material";
-
 export default function WantToHire() {
   return (
-    <Box 
-  sx={{ 
-    paddingY: 10, 
-    display: "flex",
-    justifyContent: "center"
-  }}
->
+    <>
+      <style>{`
+        .hire-wrapper {
+          padding: 80px 0;
+          display: flex;
+          justify-content: center;
+        }
 
-<Box
-  sx={{
-    width: "999px",
-    height: "500px",
-    background: "#e8f1ff",
-    borderRadius: "24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    overflow: "hidden"
-  }}
->
+        .hire-box {
+          width: 999px;
+          height: 500px;
+          background: #D2E5FF;
+          border-radius: 24px;
+          display: flex;
+          overflow: hidden;
+        }
 
-        {/* LEFT IMAGE */}
-<Box
-  sx={{
-    width: "495px",
-    height: "500px",
-    display: "flex",
-    alignItems: "center",
-    padding: 0,
-    margin: 0
-  }}
->
-  <img
-    src="https://www.jobchaahiye.com/images/cta/bg-cta.png"
-    alt="Hire"
-    style={{
-      width: "495px",
-      height: "500px",
-      objectFit: "cover",
-      display: "block",
-      padding: 0,
-      margin: 0
-    }}
-  />
-</Box>
+        .hire-left img {
+          width: 495px;
+          height: 500px;
+          object-fit: cover;
+          display: block;
+        }
 
+        .hire-right {
+          width: 500px;
+          min-width: 330px;
+          height: 100%;
+          padding-left: 40px;
+          padding-right: 96px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
 
-        {/* RIGHT CONTENT */}
-        <Box
-  sx={{
-    width: "408px",
-    height: "264px",
-    paddingLeft: "40px",
-    paddingRight: "100px",   // you said 0 right padding
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
-  }}
->
+        .hire-title {
+          font-family: 'Poppins', sans-serif;
+          font-size: 36px;
+          font-weight: 700;
+          color: #1967d2;
+          margin-bottom: 20px;
+        }
 
+        .hire-desc {
+          font-family: 'Poppins', sans-serif;
+          max-width: 420px; 
+          font-size: 20px;
+          color: #21286A;
+          line-height: 1.6;
+          margin-bottom: 30px;
+          max-width: 430px;
+        }
 
-          <Typography
-  sx={{
-    width: "235px",
-    height: "64px",
-    fontSize: "34px",
-    fontWeight: 700,
-    color: "#1967d2",   // updated color
-    marginBottom: "16px"
-  }}
->
-  Want To Hire
-</Typography>
+        .hire-btn {
+          background: #1967d2;
+          color: #fff;
+          border: none;
+          font-size: 18px;
+          font-family: 'Poppins', sans-serif;
+          padding: 16px 40px;
+          border-radius: 12px;
+          cursor: pointer;
+        }
 
+        .hire-btn:hover {
+          background: #1559b8;
+        }
+      `}</style>
 
-          <Typography
-            sx={{
-              fontSize: "17px",
-              color: "#475569",
-              lineHeight: 1.7,
-              marginBottom: 4,
-              maxWidth: "430px",
-            }}
-          >
-            Advertise your jobs to millions of monthly users and search
-            15.8 million CVs in our database.
-          </Typography>
+      <div className="hire-wrapper">
+        <div className="hire-box">
 
-          <Button
-  variant="contained"
-  onClick={() => window.open("/employer", "_blank")}
-  sx={{
-    background: "#1e63d6",
-    textTransform: "none",
-    px: 4,
-    py: 1.5,
-    borderRadius: "12px",
-    fontSize: "18px",
-    "&:hover": { background: "#1856b8" },
-  }}
->
-  Post a Job
-</Button>
+          <div className="hire-left">
+            <img
+              src="https://www.jobchaahiye.com/images/cta/bg-cta.png"
+              alt="Hire"
+            />
+          </div>
 
-        </Box>
-      </Box>
-    </Box>
+          <div className="hire-right">
+            <h2 className="hire-title">Want To Hire</h2>
+
+            <p className="hire-desc">
+              Advertise your jobs to millions of monthly users and search
+              15.8 million CVs in our database.
+            </p>
+
+            <button className="hire-btn">Post a Job</button>
+          </div>
+
+        </div>
+      </div>
+    </>
   );
 }

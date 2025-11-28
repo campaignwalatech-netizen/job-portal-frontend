@@ -75,11 +75,14 @@ export default function PopularJobCategories() {
           variant="outlined"
           sx={{
             borderRadius: "10px",
-            paddingX: 4,
-            paddingY: 1,
+            width: "210px",
+            hieght: "48px",
+            padding: "8px 64px",
             textTransform: "none",
             fontSize: "16px",
-            borderColor: "#1e63d6",
+            borderColor: "#4d76beff",
+            borderWidth: "4px",
+            borderStyle: "solid",
             color: "#1e63d6",
             "&:hover": {
               background: "#1e63d6",

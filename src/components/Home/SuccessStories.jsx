@@ -8,7 +8,6 @@ const stories = [
   { name: "Suraj Pal", text: "has fixed an interview", img: "/user5.png" },
 ];
 
-// duplicate list for seamless infinite sliding
 const loopStories = [...stories, ...stories];
 
 export default function SuccessStories() {
@@ -16,19 +15,29 @@ export default function SuccessStories() {
     <Box
       sx={{
         width: "100%",
-        background: "linear-gradient(to right, #dce7ff, #f1f5ff)",
-        paddingY: 3,
-        overflow: "hidden", // IMPORTANT: hides overflow for smooth loop
+        background: "transparent",
+        paddingY: 0,
+        overflow: "hidden",
         position: "relative",
+
+        // Responsive vertical positioning
+        top: {
+          xs: "-120px",   // mobile
+          sm: "-150px",   // tablets
+          md: "-200px",   // big screens
+          lg: "-220px",   // large desktops
+        },
+
+        zIndex: 10,
       }}
     >
       <Box
         sx={{
           display: "flex",
-          gap: 2,
+          gap: { xs: 1.5, sm: 2 },
           width: "max-content",
-          paddingX: 2,
-          animation: "scrollStories 18s linear infinite", // animation applied here
+          paddingX: { xs: 1, sm: 2 },
+          animation: "scrollStories 18s linear infinite",
         }}
       >
         {loopStories.map((s, idx) => (
@@ -39,25 +48,38 @@ export default function SuccessStories() {
               alignItems: "center",
               gap: 1.5,
               background: "#fff",
-              paddingX: 2,
-              paddingY: 1.3,
+              paddingX: { xs: 1.5, sm: 2 },
+              paddingY: { xs: 1, sm: 1.3 },
               borderRadius: "30px",
               boxShadow: "0 2px 10px rgba(0,0,0,0.07)",
-              minWidth: "250px",
-              maxWidth: "250px",
-              whiteSpace: "normal",
+
+              // Card width responsive
+              minWidth: { xs: "200px", sm: "230px", md: "260px" },
+              maxWidth: { xs: "200px", sm: "230px", md: "260px" },
+
               flexShrink: 0,
+              whiteSpace: "normal",
             }}
           >
-            <Avatar src={s.img} sx={{ width: 32, height: 32 }} />
-            <Typography sx={{ fontSize: "14px" }}>
+            <Avatar
+              src={s.img}
+              sx={{
+                width: { xs: 28, sm: 32 },
+                height: { xs: 28, sm: 32 },
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: { xs: "13px", sm: "14px" },
+                lineHeight: "1.3",
+              }}
+            >
               <strong>{s.name}</strong> {s.text}
             </Typography>
           </Box>
         ))}
       </Box>
 
-      {/* KEYFRAMES */}
       <style>
         {`
           @keyframes scrollStories {

@@ -48,7 +48,7 @@ export default function PopularSearches() {
           lineHeight: 1.3,
         }}
       >
-        Popular Searches on Job <br /> Chaahiye
+        Popular Searches on Naukri <br /> Chaahiye
       </Typography>
 
       {/* Grid */}
