@@ -219,7 +219,7 @@ export default function Hero() {
               maxWidth: "1050px",
               objectFit: "contain",
               marginTop: "60px",
-              marginRight: "-150px",
+              marginRight: "-180px",
             }}
           />
         </Box>
