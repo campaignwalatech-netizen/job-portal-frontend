@@ -246,7 +246,7 @@ export default function Hero() {
 >
   <Box
     component="img"
-    src="/banner-image.svg"
+    src="/banner-image.webp"
     alt="hero"
     sx={{
       width: "100%",
