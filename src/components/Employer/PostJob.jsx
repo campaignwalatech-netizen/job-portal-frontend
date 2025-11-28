@@ -31,7 +31,7 @@ export default function PostJobSection() {
             mb: 1,
           }}
         >
-          GET STARTED WITH JOB CHAAHIYE
+          GET STARTED WITH NAUKRI CHAAHIYE
         </Typography>
 
         {/* Big Heading */}
