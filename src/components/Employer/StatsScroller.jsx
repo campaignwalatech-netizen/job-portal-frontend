@@ -23,13 +23,30 @@ const dataRow2 = [
   { number: "57 Lakh+", label: "BPO Call-center", bg: "#E9FFF2" },
   { number: "5 Cr+", label: "Active job seekers", bg: "#F3ECFF" },
   { number: "2.9 Cr", label: "Male", bg: "#E9FFF2" },
-  { number: "2", label: "Experience", bg: "#F3ECFF" },
+  { number: "2.1 Cr", label: "Experience", bg: "#F3ECFF" },
   { number: "70%", label: "Connected Leads", bg: "#E9FFF2" },
   { number: "2.3 Cr", label: "Candidates in T1 cities", bg: "#E9FFF2" },
   { number: "1.2 Cr", label: "Graduates", bg: "#F3ECFF" },
   { number: "40 Lakh", label: "Post Graduate", bg: "#F3ECFF" },
   { number: "68 Lakh", label: "BFSI", bg: "#E9FFF2" },
   { number: "57 Lakh+", label: "BPO Call-center", bg: "#E9FFF2" },
+  { number: "2.9 lakh", label: "Jaipur", bg: "#E9FFF2" },
+  { number: "1.2 Cr", label: "New Delhi", bg: "#F3ECFF" },
+  { number: "90 Lakh", label: "Bangalore", bg: "#E9FFF2" },
+  { number: "75 Lakh", label: "Mumbai", bg: "#F3ECFF" },
+  { number: "60 Lakh", label: "Pune", bg: "#E9FFF2" },
+  { number: "45 Lakh", label: "Hyderabad", bg: "#F3ECFF" },
+  { number: "30 Lakh", label: "Chennai", bg: "#E9FFF2" }, 
+  { number: "20 Lakh", label: "Kolkata", bg: "#F3ECFF" },
+  { number: "15 Lakh", label: "Ahmedabad", bg: "#E9FFF2" },
+  { number: "10 Lakh", label: "Lucknow", bg: "#F3ECFF" },
+  { number: "5 Lakh", label: "Noida", bg: "#E9FFF2" },
+  { number: "3 Lakh", label: "Gurgaon", bg: "#F3ECFF" },
+  { number: "2 Lakh", label: "Faridabad", bg: "#E9FFF2" },
+  { number: "1 Lakh", label: "Bhopal", bg: "#F3ECFF" },
+  
+
+
   
 ];
 
