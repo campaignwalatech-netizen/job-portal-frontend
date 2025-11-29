@@ -124,25 +124,38 @@ export default function Header() {
       </Toolbar>
 
       {/* Mobile Dropdown */}
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={handleClose}>Find Jobs</MenuItem>
-        <MenuItem onClick={handleClose}>Career Compass</MenuItem>
-        <MenuItem onClick={handleClose}>Blog</MenuItem>
+{/* Mobile Dropdown */}
+<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+  <MenuItem onClick={handleClose}>Find Jobs</MenuItem>
+  <MenuItem onClick={handleClose}>Career Compass</MenuItem>
+  <MenuItem onClick={handleClose}>Blog</MenuItem>
 
-        <Box sx={{ padding: 1, width: 240 }}>
-          <Button fullWidth variant="outlined" sx={{ mb: 1 }}>
-            Employer Login
-          </Button>
-          <Button
-  fullWidth
-  variant="contained"
-  onClick={() => window.open("/employee", "_blank")}
->
-  Login
-</Button>
+  <Box sx={{ padding: 1, width: 240 }}>
+    <Button
+      fullWidth
+      variant="outlined"
+      sx={{ mb: 1 }}
+      onClick={() => {
+        handleClose();
+        window.open("/employer", "_blank");
+      }}
+    >
+      Employer Login
+    </Button>
 
-        </Box>
-      </Menu>
+    <Button
+      fullWidth
+      variant="contained"
+      onClick={() => {
+        handleClose();
+        window.open("/employee", "_blank");
+      }}
+    >
+      Login
+    </Button>
+  </Box>
+</Menu>
+
       
     </AppBar>
   );
