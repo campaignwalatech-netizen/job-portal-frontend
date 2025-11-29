@@ -5,12 +5,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import JobPortalLanding from "./pages/Home/JobPortalLanding";
 
-import EmployerLanding from "./pages/Employer/EmployerLanding";
-import EmployerDashboard from "./pages/Employer/EmployerDashboard";
-import EmployerRegister from "./pages/Employer/Register";
-import PostJobWrapper from "./pages/Employer/PostJob/PostJobWrapper";
-import EmployeeDashboard from "./pages/Employee/EmployeeDashboard";
+import EmployerLanding from "./pages/employer/EmployerLanding";
+
+import EmployerDashboard from "./pages/employer/EmployerDashboard";
+import EmployerRegister from "./pages/employer/Register";
+import PostJobWrapper from "./pages/employer/PostJob/PostJobWrapper";
 import EmployeeLanding from "./pages/Employee/EmployeeLanding";
+import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
 
 
 
