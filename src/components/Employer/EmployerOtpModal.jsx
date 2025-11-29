@@ -1,6 +1,41 @@
+import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 
 export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [timer, setTimer] = useState(30);
+
+  const STATIC_OTP = "1234";
+
+  // TIMER COUNTDOWN
+  useEffect(() => {
+    if (timer === 0) return;
+    const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  // HANDLE OTP INPUT
+  const handleOtpChange = (value, index) => {
+    if (value.length > 1) return;
+
+    const copy = [...otp];
+    copy[index] = value;
+    setOtp(copy);
+
+    if (value && index < 3) {
+      document.getElementById(`otp-${index + 1}`).focus();
+    }
+  };
+
+  // VERIFY OTP
+  const verifyOtp = () => {
+    if (otp.join("") === STATIC_OTP) {
+      onSubmit();
+    } else {
+      alert("Incorrect OTP");
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -17,7 +52,6 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
         zIndex: 9999,
       }}
     >
-      {/* OTP BOX */}
       <Box
         sx={{
           width: "420px",
@@ -33,7 +67,7 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
         </Typography>
 
         <Typography sx={{ mb: 2, color: "#475569" }}>
-          OTP sent to <span style={{ fontWeight: 600 }}>{phone}</span>.{" "}
+          OTP sent to <b>{phone}</b>
           <span
             onClick={onClose}
             style={{
@@ -47,11 +81,14 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
           </span>
         </Typography>
 
-        {/* OTP Inputs */}
+        {/* OTP INPUTS */}
         <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
-          {[1, 2, 3, 4].map((_, i) => (
+          {otp.map((digit, i) => (
             <TextField
               key={i}
+              id={`otp-${i}`}
+              value={digit}
+              onChange={(e) => handleOtpChange(e.target.value, i)}
               inputProps={{
                 maxLength: 1,
                 style: {
@@ -65,12 +102,17 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
           ))}
         </Box>
 
-        {/* Countdown */}
+        {/* TIMER */}
         <Typography sx={{ color: "#2563eb", fontSize: "15px", mb: 2 }}>
-          Resend OTP in 28 seconds
+          {timer === 0 ? (
+            <span onClick={() => setTimer(30)} style={{ cursor: "pointer" }}>
+              Resend OTP
+            </span>
+          ) : (
+            <>Resend OTP in {timer} seconds</>
+          )}
         </Typography>
 
-        {/* Login Button */}
         <Button
           variant="contained"
           fullWidth
@@ -81,11 +123,12 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
             fontWeight: 600,
             borderRadius: "10px",
           }}
-          onClick={onSubmit}
+          onClick={verifyOtp}
         >
           Verify & Continue
         </Button>
       </Box>
     </Box>
   );
+  
 }

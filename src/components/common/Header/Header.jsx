@@ -11,11 +11,12 @@ import {
   useMediaQuery
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import EmployeeLoginModal from "../../Employee/EmployeeLoginModal";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMediaQuery("(max-width:900px)");
-
+  const [showEmployeeModal, setShowEmployeeModal] = useState(false);
   const handleOpen = (e) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
@@ -93,21 +94,23 @@ export default function Header() {
           {/* Login Button */}
           {!isMobile && (
             <Button
-              variant="contained"
-              sx={{
-                borderRadius: "12px",
-                paddingX: 2.2,
-                textTransform: "none",
-                fontSize: 14,
-                minWidth: 90,
-                background: "#1e63d6",
-                "&:hover": {
-                  background: "#1856b8",
-                },
-              }}
-            >
-              Login
-            </Button>
+  variant="contained"
+  onClick={() => setShowEmployeeModal(true)}
+  sx={{
+    borderRadius: "12px",
+    paddingX: 2.2,
+    textTransform: "none",
+    fontSize: 14,
+    minWidth: 90,
+    background: "#1e63d6",
+    "&:hover": {
+      background: "#1856b8",
+    },
+  }}
+>
+  Login
+</Button>
+
           )}
 
           {/* Mobile Hamburger */}
@@ -134,6 +137,12 @@ export default function Header() {
           </Button>
         </Box>
       </Menu>
+      {showEmployeeModal && (
+  <EmployeeLoginModal
+    open={showEmployeeModal}
+    onClose={() => setShowEmployeeModal(false)}
+  />
+)}
     </AppBar>
   );
 }

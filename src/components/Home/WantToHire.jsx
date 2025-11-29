@@ -89,7 +89,11 @@ export default function WantToHire() {
               15.8 million CVs in our database.
             </p>
 
-            <button className="hire-btn">Post a Job</button>
+<button className="hire-btn" onClick={() => (window.location.href = "/employer", "_blank")}>
+  Post a Job
+</button>
+
+
           </div>
 
         </div>
