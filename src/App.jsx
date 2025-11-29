@@ -10,6 +10,7 @@ import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import EmployerRegister from "./pages/Employer/Register";
 import PostJobWrapper from "./pages/Employer/PostJob/PostJobWrapper";
 import EmployeeDashboard from "./pages/Employee/EmployeeDashboard";
+import EmployeeLanding from "./pages/Employee/EmployeeLanding";
 
 
 
@@ -36,7 +37,7 @@ function App() {
           <Route path="/employer/dashboard" element={<EmployerDashboard />} />
           <Route path="/employer/register" element={<EmployerRegister />} />
           <Route path="/employer/post-job" element={<PostJobWrapper />} />
-
+          <Route path="/employee" element={<EmployeeLanding />} />
           <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
           <Route path="*" element={<JobPortalLanding />} />
 

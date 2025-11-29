@@ -1,115 +1,83 @@
-
-import { useState } from "react";
-import { Box, IconButton, TextField, Typography, Button } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import React, { useState } from "react";
+import { Box, Typography, TextField, Button, Modal } from "@mui/material";
 import EmployeeOtpModal from "./EmployeeOtpModal";
-import { useNavigate } from "react-router-dom";
 
-
-export default function EmployeeLoginModal({ open = true, onClose = () => {} }) {
+export default function EmployeeLoginModal({ open = false, onClose = () => {} }) {
   const [phone, setPhone] = useState("");
-  const [step, setStep] = useState("phone"); // 'phone' | 'otp'
-  const navigate = useNavigate();
+  const [step, setStep] = useState("phone"); // phone -> otp
+  const [showOtpInline, setShowOtpInline] = useState(false);
 
-  if (!open) return null;
-
-  const handleContinue = () => {
-    const digitsOnly = phone.replace(/\D/g, "");
-    if (digitsOnly.length !== 10) {
-      alert("Enter a valid 10-digit phone number");
+  const startOtp = () => {
+    if (phone.trim().length !== 10) {
+      alert("Enter a valid 10-digit mobile number");
       return;
     }
     setStep("otp");
+    setShowOtpInline(true);
   };
 
-  const handleVerified = () => {
-    // on success, navigate to dashboard
-    navigate("/employee/dashboard");
+  // inline verify handled inside EmployeeOtpModal (calls onSuccess callback)
+  const onVerified = () => {
+    onClose();
+    window.location.href = "/employee/dashboard";
   };
 
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        inset: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 2000,
-        // backdrop (doesn't close on click)
-        background: "rgba(0,0,0,0.15)",
-        backdropFilter: "blur(4px)",
-        px: 2,
-      }}
-    >
-      {/* centered card */}
+    <Modal open={open} onClose={onClose} closeAfterTransition>
       <Box
         sx={{
-          width: { xs: "100%", sm: 520 },
-          maxWidth: "100%",
-          bgcolor: "#fff",
-          borderRadius: 3,
-          p: { xs: 3, sm: 4 },
-          boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
-          position: "relative",
+          position: "fixed",
+          inset: 0,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1400,
         }}
-        // stopPropagation so clicks on card don't bubble to overlay (we don't use overlay click anyway)
-        onClick={(e) => e.stopPropagation()}
       >
-        {/* X button */}
-        <IconButton
-          onClick={onClose}
-          sx={{ position: "absolute", right: 8, top: 8, color: "#475569" }}
-          aria-label="close"
+        <Box
+          sx={{
+            width: { xs: "92%", sm: 480 },
+            bgcolor: "#fff",
+            borderRadius: 2,
+            boxShadow: "0 20px 60px rgba(3,18,64,0.16)",
+            p: 4,
+            textAlign: "center",
+            transformOrigin: "center",
+          }}
         >
-          <CloseIcon />
-        </IconButton>
-
-        {/* content area (phone OR otp) */}
-        <Box sx={{ mt: 1 }}>
           {step === "phone" && (
             <>
-              <Typography sx={{ fontSize: 22, fontWeight: 700, mb: 2 }}>
-                Employee Login / Sign up
+              <Typography sx={{ fontSize: 22, fontWeight: 700, mb: 1 }}>Enter Mobile Number</Typography>
+              <Typography sx={{ color: "#6b7280", mb: 2 }}>
+                We'll send an OTP to verify your number
               </Typography>
 
               <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-                <TextField value="+91" disabled sx={{ width: 84 }} />
+                <TextField value="+91" sx={{ width: "80px" }} disabled />
                 <TextField
                   placeholder="Mobile Number"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  sx={{ flexGrow: 1 }}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                  sx={{ flex: 1 }}
                 />
               </Box>
 
               <Button
                 variant="contained"
                 fullWidth
-                onClick={handleContinue}
-                sx={{
-                  textTransform: "none",
-                  background: "#3B82F6",
-                  "&:hover": { background: "#5A99FF" },
-                  py: 1.1,
-                  fontSize: 16,
-                  borderRadius: 2,
-                }}
+                onClick={startOtp}
+                sx={{ textTransform: "none", py: 1.2, borderRadius: 1.5 }}
               >
-                Continue
+                Get OTP
               </Button>
             </>
           )}
 
-          {step === "otp" && (
-            <EmployeeOtpModal
-              phone={phone}
-              onBack={() => setStep("phone")}
-              onVerified={handleVerified}
-            />
+          {step === "otp" && showOtpInline && (
+            <EmployeeOtpModal phone={phone} onClose={() => { setStep("phone"); setShowOtpInline(false); }} onVerified={onVerified}/>
           )}
         </Box>
       </Box>
-    </Box>
+    </Modal>
   );
 }

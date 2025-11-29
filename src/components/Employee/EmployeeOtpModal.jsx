@@ -1,42 +1,33 @@
-// EmployeeOtpModal.jsx
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 
-export default function EmployeeOtpModal({ phone, onBack, onVerified }) {
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const [seconds, setSeconds] = useState(30);
-  const inputsRef = useRef([]);
+/**
+ * Inline OTP panel used inside EmployeeLoginModal.
+ * Props:
+ * - phone (string)
+ * - onClose() -> go back to phone view
+ * - onVerified() -> success callback
+ */
 
+export default function EmployeeOtpModal({ phone = "", onClose = () => {}, onVerified = () => {} }) {
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [timer, setTimer] = useState(30);
   const STATIC_OTP = "1234";
 
   useEffect(() => {
-    // start countdown when component mounts
-    setSeconds(30);
-    const t = setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
+    setTimer(30);
+    const t = setInterval(() => setTimer((s) => (s > 0 ? s - 1 : 0)), 1000);
     return () => clearInterval(t);
   }, []);
 
-  useEffect(() => {
-    // autofocus first empty input when OTP view loads
-    const firstEmpty = otp.findIndex((d) => d === "");
-    const idx = firstEmpty === -1 ? 3 : firstEmpty;
-    inputsRef.current[idx]?.focus();
-  }, []); // run once on mount
-
-  const handleChange = (val, idx) => {
-    if (val.length > 1) val = val.slice(-1);
-    const next = [...otp];
-    next[idx] = val.replace(/\D/g, ""); // keep digits only
-    setOtp(next);
-
-    if (val && idx < 3) {
-      inputsRef.current[idx + 1]?.focus();
-    }
-  };
-
-  const handleKeyDown = (e, idx) => {
-    if (e.key === "Backspace" && !otp[idx] && idx > 0) {
-      inputsRef.current[idx - 1]?.focus();
+  const handleChange = (v, i) => {
+    if (v.length > 1) return;
+    const copy = [...otp];
+    copy[i] = v.replace(/\D/g, "");
+    setOtp(copy);
+    if (v && i < 3) {
+      const next = document.getElementById(`emp-otp-${i + 1}`);
+      if (next) next.focus();
     }
   };
 
@@ -44,58 +35,39 @@ export default function EmployeeOtpModal({ phone, onBack, onVerified }) {
     if (otp.join("") === STATIC_OTP) {
       onVerified();
     } else {
-      alert("Incorrect OTP");
+      alert("Incorrect OTP. Try 1234 for now.");
     }
   };
 
   return (
     <Box>
-      <Typography sx={{ fontSize: 24, fontWeight: 700, mb: 1 }}>
-        Enter OTP
+      <Typography sx={{ fontSize: 22, fontWeight: 700, mb: 1 }}>Enter OTP</Typography>
+      <Typography sx={{ color: "#6b7280", mb: 2 }}>
+        OTP sent to <strong>{phone || "your number"}</strong>
+        <span style={{ marginLeft: 12, color: "#2563eb", cursor: "pointer" }} onClick={onClose}>Edit</span>
       </Typography>
 
-      <Typography sx={{ mb: 2, color: "#475569" }}>
-        OTP sent to <b>{phone}</b>{" "}
-        <span
-          onClick={onBack}
-          style={{ color: "#2563eb", cursor: "pointer", marginLeft: 6, fontWeight: 600 }}
-        >
-          Edit
-        </span>
-      </Typography>
-
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 1.5, mb: 2 }}>
         {otp.map((d, i) => (
           <TextField
             key={i}
-            inputRef={(el) => (inputsRef.current[i] = el)}
+            id={`emp-otp-${i}`}
             value={d}
-            onChange={(e) => handleChange(e.target.value, i)}
-            onKeyDown={(e) => handleKeyDown(e, i)}
-            inputProps={{
-              maxLength: 1,
-              style: { textAlign: "center", fontSize: 20, width: 44, height: 44 },
-            }}
+            onChange={(e) => handleChange(e.target.value.slice(-1), i)}
+            inputProps={{ maxLength: 1, style: { textAlign: "center", width: 48, height: 48, fontSize: 18 } }}
           />
         ))}
       </Box>
 
-      <Typography sx={{ color: "#2563eb", fontSize: 14, mb: 2 }}>
-        {seconds === 0 ? (
-          <span style={{ cursor: "pointer" }} onClick={() => setSeconds(30)}>
-            Resend OTP
-          </span>
+      <Typography sx={{ color: "#2563eb", mb: 2, fontSize: 14 }}>
+        {timer === 0 ? (
+          <span style={{ cursor: "pointer" }} onClick={() => setTimer(30)}>Resend OTP</span>
         ) : (
-          <>Resend OTP in {seconds}s</>
+          <>Resend OTP in {timer}s</>
         )}
       </Typography>
 
-      <Button
-        variant="contained"
-        fullWidth
-        onClick={verify}
-        sx={{ textTransform: "none", py: 1.2, fontSize: 16, borderRadius: 10 }}
-      >
+      <Button variant="contained" fullWidth onClick={verify} sx={{ py: 1.2, borderRadius: 1.2 }}>
         Verify & Continue
       </Button>
     </Box>

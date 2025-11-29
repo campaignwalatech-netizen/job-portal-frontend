@@ -93,9 +93,9 @@ export default function Header() {
 
           {/* Login Button */}
           {!isMobile && (
-            <Button
+<Button
   variant="contained"
-  onClick={() => setShowEmployeeModal(true)}
+  onClick={() => window.open("/employee", "_blank")}
   sx={{
     borderRadius: "12px",
     paddingX: 2.2,
@@ -110,6 +110,7 @@ export default function Header() {
 >
   Login
 </Button>
+
 
           )}
 
@@ -132,17 +133,17 @@ export default function Header() {
           <Button fullWidth variant="outlined" sx={{ mb: 1 }}>
             Employer Login
           </Button>
-          <Button fullWidth variant="contained">
-            Login
-          </Button>
+          <Button
+  fullWidth
+  variant="contained"
+  onClick={() => window.open("/employee", "_blank")}
+>
+  Login
+</Button>
+
         </Box>
       </Menu>
-      {showEmployeeModal && (
-  <EmployeeLoginModal
-    open={showEmployeeModal}
-    onClose={() => setShowEmployeeModal(false)}
-  />
-)}
+      
     </AppBar>
   );
 }
