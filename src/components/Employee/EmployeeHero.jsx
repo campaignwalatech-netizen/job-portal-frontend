@@ -51,7 +51,8 @@ export default function EmployeeHero() {
     setOtp(copy);
 
     if (value && index < 3) {
-      document.getElementById(`otp-${index + 1}`).focus();
+      const el = document.getElementById(`otp-${index + 1}`);
+      if (el) el.focus();
     }
   };
 
@@ -72,18 +73,13 @@ export default function EmployeeHero() {
         background: "linear-gradient(90deg,#e7efff 0%,#f5f8ff 50%,#ffffff 100%)",
         display: "flex",
         justifyContent: "center",
-        gap: 60,
         alignItems: "flex-start",
         flexDirection: { xs: "column", md: "row" },
         gap: 6,
       }}
     >
-
       {/* LEFT SECTION */}
-      <Box
-        className="slide-left"
-        sx={{ width: { xs: "100%", md: "55%" }}}
-      >
+      <Box className="slide-left" sx={{ width: { xs: "100%", md: "55%" } }}>
         <Typography sx={{ fontSize: "22px", fontWeight: 700, color: "#155bd5" }}>
           India’s #1 Job Platform
         </Typography>
@@ -102,7 +98,7 @@ export default function EmployeeHero() {
         </Typography>
 
         <Typography sx={{ mt: 2, fontSize: "18px", color: "#475569" }}>
-          Find Jobs, Employment & Career Opportunities
+          Find Jobs, Explore Opportunities & Build Your Career
         </Typography>
 
         {/* COUNTERS */}
@@ -148,20 +144,15 @@ export default function EmployeeHero() {
             flexWrap: "wrap",
           }}
         >
-          <TextField
-            placeholder="Job title, keyword"
-            sx={{ flex: 1 }}
-          />
-          <TextField
-            placeholder="City or postcode"
-            sx={{ flex: 1 }}
-          />
+          <TextField placeholder="Job title, keyword" sx={{ flex: 1 }} />
+          <TextField placeholder="City or postcode" sx={{ flex: 1 }} />
           <Button
             variant="contained"
             sx={{
               background: "#1e63d6",
               borderRadius: "12px",
               px: 4,
+              textTransform: "none",
             }}
           >
             Find Jobs
@@ -208,6 +199,7 @@ export default function EmployeeHero() {
                 borderRadius: "10px",
                 fontSize: "16px",
                 py: 1.4,
+                textTransform: "none",
               }}
               onClick={() => {
                 if (phone.length === 10) {
@@ -274,6 +266,7 @@ export default function EmployeeHero() {
                 borderRadius: "10px",
                 py: 1.4,
                 fontSize: "16px",
+                textTransform: "none",
               }}
             >
               Verify & Continue

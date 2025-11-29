@@ -4,18 +4,17 @@ const dataRow1 = [
   { number: "50 Lakh+", label: "Jobs Available", bg: "#E9FFF2" },
   { number: "6 Lakh+", label: "Companies Hiring", bg: "#F3ECFF" },
   { number: "85%", label: "Profile Match Accuracy", bg: "#E9FFF2" },
-  { number: "1.8 Cr+", label: "Active Employees", bg: "#F3ECFF" },
+  { number: "1.8 Cr+", label: "Active Job Seekers", bg: "#F3ECFF" },
   { number: "40 Lakh+", label: "Freshers", bg: "#E9FFF2" },
   { number: "70 Lakh+", label: "Experienced", bg: "#F3ECFF" },
   { number: "65%", label: "Interview Conversion", bg: "#F3ECFF" },
-  { number: "30 Lakh", label: "IT Sector Jobs", bg: "#E9FFF2" },
+  { number: "30 Lakh+", label: "IT Sector Jobs", bg: "#E9FFF2" },
   { number: "25 Lakh+", label: "Marketing Jobs", bg: "#E9FFF2" },
   { number: "12 Lakh+", label: "Work From Home", bg: "#F3ECFF" },
   { number: "85%", label: "Verified Recruiters", bg: "#E9FFF2" },
   { number: "1.2 Cr+", label: "Female Job Seekers", bg: "#E9FFF2" },
   { number: "90 Lakh+", label: "Male Job Seekers", bg: "#F3ECFF" },
 ];
-
 
 const dataRow2 = [
   { number: "4.5 Cr+", label: "Total Applications", bg: "#F3ECFF" },
@@ -37,7 +36,6 @@ const dataRow2 = [
   { number: "2 Lakh", label: "Surat", bg: "#F3ECFF" },
   { number: "1 Lakh", label: "Indore", bg: "#E9FFF2" },
 ];
-
 
 const boxStyle = {
   minWidth: "240px",

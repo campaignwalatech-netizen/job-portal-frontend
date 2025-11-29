@@ -2,11 +2,36 @@ import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 
 export default function EmployerHero() {
-  const [step, setStep] = useState("phone");  
+  const [step, setStep] = useState("phone");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(30);
   const STATIC_OTP = "1234";
+
+  // ------------------ COUNTERS ------------------
+  const [count, setCount] = useState({
+    candidates: 0,
+    employers: 0,
+    speed: 0,
+  });
+
+  useEffect(() => {
+    const targets = { candidates: 50000000, employers: 700000, speed: 72 };
+    let frame = 0;
+    const totalFrames = 70;
+
+    const animate = setInterval(() => {
+      frame++;
+      setCount({
+        candidates: Math.floor((targets.candidates / totalFrames) * frame),
+        employers: Math.floor((targets.employers / totalFrames) * frame),
+        speed: Math.floor((targets.speed / totalFrames) * frame),
+      });
+      if (frame === totalFrames) clearInterval(animate);
+    }, 15);
+
+    return () => clearInterval(animate);
+  }, []);
 
   // TIMER
   useEffect(() => {
@@ -25,7 +50,8 @@ export default function EmployerHero() {
     setOtp(copy);
 
     if (value && index < 3) {
-      document.getElementById(`otp-${index + 1}`).focus();
+      const el = document.getElementById(`otp-${index + 1}`);
+      if (el) el.focus();
     }
   };
 
@@ -38,221 +64,212 @@ export default function EmployerHero() {
   };
 
   return (
-    <>
-      {/* MAIN CONTAINER */}
-      <Box
-        sx={{
-          maxWidth: "1200px",
-          mx: "auto",
-          py: 8,
-          px: { xs: 2, md: 4 },
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: { xs: 4, md: 0 },
-        }}
-      >
-        {/* LEFT TEXT */}
-        <Box
+    <Box
+      sx={{
+        width: "100%",
+        py: 8,
+        px: { xs: 2, md: 4 },
+        background: "linear-gradient(90deg,#e7efff 0%,#f5f8ff 50%,#ffffff 100%)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        flexDirection: { xs: "column", md: "row" },
+        gap: 6,
+      }}
+    >
+      {/* LEFT SECTION */}
+      <Box className="slide-left" sx={{ width: { xs: "100%", md: "55%" } }}>
+        <Typography sx={{ fontSize: "22px", fontWeight: 700, color: "#155bd5" }}>
+          India’s #1 Hiring Platform
+        </Typography>
+
+        <Typography
           sx={{
-            width: { xs: "100%", md: "55%" },
-            pr: { md: 4 },
-            animation: "smoothSlideFromRight 0.7s ease-out",
-            animationFillMode: "forwards",
+            fontSize: { xs: "40px", md: "65px" },
+            fontWeight: 800,
+            lineHeight: 1.1,
+            mt: 2,
+            animation: "zoomInOut 5s infinite ease-in-out",
           }}
         >
-          <Typography
-            sx={{
-              color: "#1F8268",
-              fontWeight: 700,
-              fontSize: { xs: "26px", md: "36px" },
-            }}
-          >
-            INDIA’S #1 HIRING PLATFORM
-          </Typography>
+          Your Candidate Search <br />
+          <span style={{ color: "#1e63d6" }}>Ends Here!</span>
+        </Typography>
 
-          <Typography
-            sx={{
-              color: "#363636",
-              fontWeight: 800,
-              mt: 2,
-              fontSize: { xs: "38px", md: "60px" },
-              lineHeight: 1.1,
-            }}
-          >
-            Find the right candidate. Fast.
-          </Typography>
+        <Typography sx={{ mt: 2, fontSize: "18px", color: "#475569" }}>
+          Hire Smarter, Faster & Better Talent
+        </Typography>
 
-          <Typography
-            sx={{
-              mt: 2,
-              fontSize: "18px",
-              color: "#5B5E76",
-              fontWeight: 500,
-            }}
-          >
-            Trusted by 5 Cr+ Candidates | 7 Lakh+ Employers
-          </Typography>
-        </Box>
+        {/* COUNTERS */}
+        <Box sx={{ display: "flex", gap: 6, mt: 4 }}>
+          <Box>
+            <Typography sx={{ fontSize: "32px", fontWeight: 800 }}>
+              {(count.candidates / 10000000).toFixed(0)}Cr+
+            </Typography>
+            <Typography sx={{ fontSize: "14px", color: "#475569" }}>
+              Verified Candidates
+            </Typography>
+          </Box>
 
-        {/* RIGHT BOX */}
-        <Box
-          sx={{
-            background: "#fff",
-            width: { xs: "100%", sm: "448px" },
-            p: "48px 20px",
-            borderRadius: "14px",
-            boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
-            textAlign: "center",
-            animation: "smoothSlideFromLeft 0.7s ease-out",
-            animationFillMode: "forwards",
-          }}
-        >
-          {/* PHONE STEP */}
-          {step === "phone" && (
-            <>
-              <Typography sx={{ fontWeight: 700, fontSize: "24px", mb: 3 }}>
-                Employer Login/Sign Up
-              </Typography>
+          <Box>
+            <Typography sx={{ fontSize: "32px", fontWeight: 800 }}>
+              {(count.employers / 100000).toFixed(0)}L+
+            </Typography>
+            <Typography sx={{ fontSize: "14px", color: "#475569" }}>
+              Employers
+            </Typography>
+          </Box>
 
-              <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-                <TextField value="+91" sx={{ width: "70px" }} disabled />
-                <TextField
-                  placeholder="Mobile Number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  sx={{ flexGrow: 1 }}
-                />
-              </Box>
-
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={() => {
-                  if (phone.length === 10) {
-                    setStep("otp");
-                    setTimer(30);
-                  } else {
-                    alert("Enter valid number");
-                  }
-                }}
-                sx={{
-                  backgroundColor: "#3B82F6",
-                  "&:hover": { backgroundColor: "#5A99FF" },
-                  textTransform: "none",
-                  py: 1.2,
-                  fontSize: "16px",
-                  borderRadius: "10px",
-                }}
-              >
-                Login
-              </Button>
-            </>
-          )}
-
-          {/* OTP STEP */}
-          {step === "otp" && (
-            <>
-              <Typography sx={{ fontWeight: 700, fontSize: "24px", mb: 1 }}>
-                Enter OTP
-              </Typography>
-
-              <Typography sx={{ mb: 2, color: "#475569" }}>
-                OTP sent to <b>{phone}</b>
-                <span
-                  onClick={() => setStep("phone")}
-                  style={{
-                    color: "#2563eb",
-                    cursor: "pointer",
-                    marginLeft: "5px",
-                    fontWeight: 600,
-                  }}
-                >
-                  Edit
-                </span>
-              </Typography>
-
-              <Box
-                sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}
-              >
-                {otp.map((digit, i) => (
-                  <TextField
-                    key={i}
-                    id={`otp-${i}`}
-                    value={digit}
-                    onChange={(e) => handleOtpChange(e.target.value, i)}
-                    inputProps={{
-                      maxLength: 1,
-                      style: {
-                        textAlign: "center",
-                        fontSize: "22px",
-                        width: "40px",
-                        height: "40px",
-                      },
-                    }}
-                  />
-                ))}
-              </Box>
-
-              <Typography sx={{ color: "#2563eb", mb: 2, fontSize: "14px" }}>
-                {timer === 0 ? (
-                  <span
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setTimer(30)}
-                  >
-                    Resend OTP
-                  </span>
-                ) : (
-                  <>Resend OTP in {timer}s</>
-                )}
-              </Typography>
-
-              <Button
-                variant="contained"
-                fullWidth
-                sx={{
-                  textTransform: "none",
-                  py: 1.2,
-                  fontSize: "16px",
-                  borderRadius: "10px",
-                }}
-                onClick={verifyOtp}
-              >
-                Verify & Continue
-              </Button>
-            </>
-          )}
+          <Box>
+            <Typography sx={{ fontSize: "32px", fontWeight: 800 }}>
+              {count.speed}%+
+            </Typography>
+            <Typography sx={{ fontSize: "14px", color: "#475569" }}>
+              Faster Hiring
+            </Typography>
+          </Box>
         </Box>
       </Box>
 
-      {/* KEYFRAME ANIMATIONS */}
-<style>
-{`
-@keyframes smoothSlideFromRight {
-  0% {
-    opacity: 0;
-    transform: translateX(60px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+      {/* RIGHT BOX (LOGIN CARD) */}
+      <Box
+        className="slide-right"
+        sx={{
+          width: { xs: "100%", md: "380px" },
+          background: "#fff",
+          p: 4,
+          borderRadius: "16px",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.10)",
+          textAlign: "center",
+        }}
+      >
+        {step === "phone" && (
+          <>
+            <Typography sx={{ fontWeight: 700, fontSize: "22px", mb: 3 }}>
+              Enter Mobile Number
+            </Typography>
 
-@keyframes smoothSlideFromLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-60px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-`}
-</style>
+            <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+              <TextField value="+91" sx={{ width: "70px" }} disabled />
+              <TextField
+                placeholder="Mobile Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                sx={{ flexGrow: 1 }}
+              />
+            </Box>
 
-    </>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={() => {
+                if (phone.length === 10) {
+                  setStep("otp");
+                  setTimer(30);
+                } else {
+                  alert("Enter valid number");
+                }
+              }}
+              sx={{
+                background: "#1e63d6",
+                borderRadius: "10px",
+                fontSize: "16px",
+                py: 1.4,
+                textTransform: "none",
+              }}
+            >
+              Login
+            </Button>
+          </>
+        )}
+
+        {step === "otp" && (
+          <>
+            <Typography sx={{ fontWeight: 700, fontSize: "22px", mb: 1 }}>
+              Enter OTP
+            </Typography>
+
+            <Typography sx={{ mb: 2, color: "#475569" }}>
+              OTP sent to <b>{phone}</b>{" "}
+              <span
+                style={{ color: "#1e63d6", cursor: "pointer", fontWeight: 600, marginLeft: 6 }}
+                onClick={() => setStep("phone")}
+              >
+                Edit
+              </span>
+            </Typography>
+
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
+              {otp.map((digit, i) => (
+                <TextField
+                  key={i}
+                  id={`otp-${i}`}
+                  value={digit}
+                  onChange={(e) => handleOtpChange(e.target.value, i)}
+                  inputProps={{
+                    maxLength: 1,
+                    style: { textAlign: "center", fontSize: "22px" },
+                  }}
+                  sx={{ width: "45px" }}
+                />
+              ))}
+            </Box>
+
+            <Typography sx={{ mb: 2 }}>
+              {timer === 0 ? (
+                <span onClick={() => setTimer(30)} style={{ color: "#1e63d6", cursor: "pointer" }}>
+                  Resend OTP
+                </span>
+              ) : (
+                <span style={{ color: "#1e63d6" }}>Resend OTP in {timer}s</span>
+              )}
+            </Typography>
+
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={verifyOtp}
+              sx={{
+                background: "#1e63d6",
+                borderRadius: "10px",
+                py: 1.4,
+                fontSize: "16px",
+                textTransform: "none",
+              }}
+            >
+              Verify & Continue
+            </Button>
+          </>
+        )}
+      </Box>
+
+      <style>{`
+        @keyframes zoomInOut {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.03); }
+          100% { transform: scale(1); }
+        }
+
+        .slide-left {
+          opacity: 0;
+          transform: translateX(-60px);
+          animation: slideInLeft 0.8s forwards ease-out;
+        }
+
+        @keyframes slideInLeft {
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-right {
+          opacity: 0;
+          transform: translateX(60px);
+          animation: slideInRight 0.8s forwards ease-out;
+        }
+
+        @keyframes slideInRight {
+          to { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
+    </Box>
   );
 }
