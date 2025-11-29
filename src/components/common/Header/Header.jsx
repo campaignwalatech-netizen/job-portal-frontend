@@ -43,7 +43,7 @@ export default function Header() {
         }}
       >
         {/* LEFT: Logo + Navigation */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3, ml: -5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3, ml: -2 }}>
           {/* Logo */}
           <img
             src="/logo.svg"
