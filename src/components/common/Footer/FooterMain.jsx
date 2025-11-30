@@ -8,8 +8,6 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 export default function FooterMain() {
   return (
     <Box sx={{ background: "#0f0a37", color: "#fff", pt: 5, pb: 4, mt: 6 }}>
-      
-      {/* WRAPPER */}
       <Box
         sx={{
           maxWidth: "1200px",
