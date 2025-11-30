@@ -10,7 +10,7 @@ export default function EmployeeHero() {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(30);
 
-  // ------------------ COUNTERS ------------------
+
   const [count, setCount] = useState({
     seekers: 0,
     companies: 0,
@@ -35,7 +35,7 @@ export default function EmployeeHero() {
     return () => clearInterval(animate);
   }, []);
 
-  // ------------------ OTP TIMER ------------------
+
   useEffect(() => {
     if (step !== "otp") return;
     if (timer === 0) return;
