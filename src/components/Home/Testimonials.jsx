@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
+import { ReactTyped } from "react-typed";
 
 
 const testimonials = [
@@ -85,12 +86,28 @@ const extended = [
 export default function Testimonials() {
   const [index, setIndex] = useState(1);
   const cardRef = useRef(null);
+  const GAP = 16; 
+
 const [cardWidth, setCardWidth] = useState(360);
 useEffect(() => {
   if (cardRef.current) {
     setCardWidth(cardRef.current.offsetWidth);
   }
 }, []);
+
+useEffect(() => {
+  const updateWidth = () => {
+    if (cardRef.current) {
+      setCardWidth(cardRef.current.offsetWidth);
+    }
+  };
+
+  window.addEventListener("resize", updateWidth);
+  updateWidth(); // run once on mount
+
+  return () => window.removeEventListener("resize", updateWidth);
+}, []);
+
 
 useEffect(() => {
   const timer = setInterval(() => {
@@ -153,7 +170,8 @@ useEffect(() => {
     display: "flex",
     gap: 4,
     transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
-    transform: `translateX(calc(-${index * cardWidth}px + 50% - ${cardWidth / 2}px))`,
+    transform: 'translateX(calc(-${index * (cardWidth + GAP)}px + 50% - ${cardWidth / 2}px))',
+
   }}
 >
           {extended.map((t, i) => (
@@ -161,7 +179,9 @@ useEffect(() => {
               key={i}
               ref={i === 0 ? cardRef : null}
               sx={{
-                width: "360px",
+                width: { xs: "85vw", sm: "360px" },
+maxWidth: "360px",
+
                 background: "#fff",
                 padding: 4,
                 borderRadius: "16px",
