@@ -14,31 +14,20 @@ Naukri Chaahiye is a two-panel job portal consisting of:
 ✅ Employer Panel
 
 Post jobs
-
 Manage jobs
-
 View applicants
-
 Dashboard insights
-
 Auto-scrolling hiring stats
-
 OTP-based login
-
 Multi-step posting workflow
 
 ✅ Candidate Panel
 
 Find jobs
-
 Apply to jobs
-
 View job details
-
 Save jobs
-
 Manage profile
-
 Auto-search & filters
 
 The project is built mobile-first and follows UI inspired by Naukri, JobChaahiye, and Indeed.
@@ -133,7 +122,6 @@ Mobile login modal
 Auto-scrolling company logos
 
 Auto-scrolling hiring stats
-
 /employer/login
 
 Static OTP-based login flow
