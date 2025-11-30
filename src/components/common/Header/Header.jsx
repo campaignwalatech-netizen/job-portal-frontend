@@ -42,16 +42,15 @@ export default function Header() {
           justifyContent: "space-between",
         }}
       >
-        {/* LEFT: Logo + Navigation */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 3, ml: -2 }}>
-          {/* Logo */}
+      
           <img
             src="/logo.svg"
             alt="logo"
             style={{ width: 70, height: "auto", display: "block", borderRadius: "8px" }}
           />
 
-          {/* Navigation (Hidden on mobile) */}
+    
           {!isMobile && (
             <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
               <Typography sx={{ cursor: "pointer", fontSize: 15 }}>
@@ -69,9 +68,9 @@ export default function Header() {
           )}
         </Box>
 
-        {/* RIGHT: Buttons */}
+
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          {/* Employer Login (hidden on mobile) */}
+   
           {!isMobile && (
             <Button
               variant="outlined"
@@ -91,7 +90,7 @@ export default function Header() {
             </Button>
           )}
 
-          {/* Login Button */}
+
           {!isMobile && (
 <Button
   variant="contained"
@@ -113,8 +112,6 @@ export default function Header() {
 
 
           )}
-
-          {/* Mobile Hamburger */}
           {isMobile && (
             <IconButton onClick={handleOpen}>
               <MenuIcon sx={{ color: "#0b2236" }} />
@@ -123,8 +120,6 @@ export default function Header() {
         </Box>
       </Toolbar>
 
-      {/* Mobile Dropdown */}
-{/* Mobile Dropdown */}
 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
   <MenuItem onClick={handleClose}>Find Jobs</MenuItem>
   <MenuItem onClick={handleClose}>Career Compass</MenuItem>
