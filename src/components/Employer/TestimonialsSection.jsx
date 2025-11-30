@@ -151,10 +151,8 @@ useEffect(() => {
           sx={{
             display: "flex",
             gap: 4,
-            transition: "transform 0.7s ease",
+            transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
             transform: `translateX(calc( -${index * 360}px + 50% - 180px ))`,
-transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
-
           }}
         >
           {extended.map((t, i) => (

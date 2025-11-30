@@ -96,7 +96,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (index === extended.length - 1) {
-    // Reached cloned-first → jump to real first
+
     setTimeout(() => {
       setIndex(1);
     }, 700); // SAME as your transition time
@@ -137,7 +137,7 @@ useEffect(() => {
         Don't trust us right away, see what our customers have to say!
       </Typography>
 
-      {/* SLIDER */}
+
       <Box
         sx={{
           width: "100%",
@@ -151,10 +151,9 @@ useEffect(() => {
           sx={{
             display: "flex",
             gap: 4,
-            transition: "transform 0.7s ease",
+         
+            transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
             transform: `translateX(calc( -${index * 360}px + 50% - 180px ))`,
-transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
-
           }}
         >
           {extended.map((t, i) => (
@@ -175,7 +174,7 @@ transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0
                 position: "relative",
               }}
             >
-              {/* Quote icon */}
+ 
               <Typography
                 sx={{
                   position: "absolute",

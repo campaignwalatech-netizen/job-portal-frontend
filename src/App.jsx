@@ -2,11 +2,13 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import JobPortalLanding from "./pages/Home/JobPortalLanding";
-import EmployeeLanding from "./pages/employee_temp/EmployeeLanding";
-import EmployeeDashboard from "./pages/employee_temp/EmployeeDashboard";
-import EmployerLanding from "./pages/employer_temp/EmployerLanding";
-import EmployerDashboard from "./pages/employer_temp/EmployerDashboard";
+import { Suspense, lazy } from 'react';
+
+const JobPortalLanding = lazy(() => import('./pages/Home/JobPortalLanding'));
+const EmployeeLanding = lazy(() => import('./pages/employee/EmployeeLanding'));
+const EmployeeDashboard = lazy(() => import('./pages/employee/EmployeeDashboard'));
+const EmployerLanding = lazy(() => import('./pages/employer/EmployerLanding'));
+const EmployerDashboard = lazy(() => import('./pages/employer/EmployerDashboard'));
 
 
 
@@ -27,16 +29,16 @@ function App() {
       <CssBaseline />
 
       <BrowserRouter>
-        <Routes>
-
-          <Route path="/" element={<JobPortalLanding />} />
-          <Route path="/employer" element={<EmployerLanding />} />
-          <Route path="/employer/dashboard" element={<EmployerDashboard />} />
-          <Route path="/employee" element={<EmployeeLanding />} />
-          <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
-          <Route path="*" element={<JobPortalLanding />} />
-
-        </Routes>
+        <Suspense fallback={<div style={{ padding: '4rem', textAlign: 'center' }}>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<JobPortalLanding />} />
+            <Route path="/employer" element={<EmployerLanding />} />
+            <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+            <Route path="/employee" element={<EmployeeLanding />} />
+            <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+            <Route path="*" element={<JobPortalLanding />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </ThemeProvider>
   );
