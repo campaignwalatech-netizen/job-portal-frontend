@@ -83,14 +83,10 @@ export default function FooterTop() {
   );
 }
 
-/* -------------------------------------------------- */
-/*               EXACT MATCH BLOCK DESIGN             */
-/* -------------------------------------------------- */
-
 function FooterBlock({ title, items }) {
   const [expanded, setExpanded] = useState(false);
 
-  // 3 rows * 3 columns = 9 items visible by default (like screenshot)
+
   const visibleCount = expanded ? items.length : 9;
   const showItems = items.slice(0, visibleCount);
 
@@ -115,7 +111,7 @@ function FooterBlock({ title, items }) {
         {title}
       </Typography>
 
-      {/* GRID EXACT LIKE SCREENSHOT */}
+
       <Box
         sx={{
           display: "grid",
@@ -138,8 +134,6 @@ function FooterBlock({ title, items }) {
           </Typography>
         ))}
       </Box>
-
-      {/* VIEW MORE BUTTON EXACT POSITION */}
       {items.length > 9 && (
         <Typography
           onClick={() => setExpanded(!expanded)}
@@ -158,10 +152,6 @@ function FooterBlock({ title, items }) {
     </Box>
   );
 }
-
-/* -------------------------------------------------- */
-/*                      SEPARATOR                     */
-/* -------------------------------------------------- */
 
 function Separator() {
   return (
