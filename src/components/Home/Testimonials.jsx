@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
+
 
 const testimonials = [
   {
@@ -83,9 +84,14 @@ const extended = [
 
 export default function Testimonials() {
   const [index, setIndex] = useState(1);
+  const cardRef = useRef(null);
+const [cardWidth, setCardWidth] = useState(360);
+useEffect(() => {
+  if (cardRef.current) {
+    setCardWidth(cardRef.current.offsetWidth);
+  }
+}, []);
 
-
-  
 useEffect(() => {
   const timer = setInterval(() => {
     setIndex((prev) => prev + 1);
@@ -143,16 +149,17 @@ useEffect(() => {
         }}
       >
         <Box
-          sx={{
-            display: "flex",
-            gap: 4,
-            transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
-            transform: `translateX(calc( -${index * 360}px + 50% - 180px ))`,
-          }}
-        >
+  sx={{
+    display: "flex",
+    gap: 4,
+    transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
+    transform: `translateX(calc(-${index * cardWidth}px + 50% - ${cardWidth / 2}px))`,
+  }}
+>
           {extended.map((t, i) => (
             <Box
               key={i}
+              ref={i === 0 ? cardRef : null}
               sx={{
                 width: "360px",
                 background: "#fff",

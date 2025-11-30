@@ -42,7 +42,7 @@ export default function Header() {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3, ml: -2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3, ml: { xs: 1.5, md: -1 } }}>
       
           <img
             src="/logo.svg"

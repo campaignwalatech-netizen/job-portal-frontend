@@ -1,9 +1,11 @@
+import { useState, useEffect, useRef } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { ReactTyped } from "react-typed";
 import { keyframes } from "@emotion/react";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import InputAdornment from "@mui/material/InputAdornment";
+
 
 
 const slideInLeft = keyframes`
@@ -50,45 +52,83 @@ export default function Hero() {
           }}
         >
           {/* Typography same */}
-          <Typography
-            sx={{
-              fontSize: { xs: 20, sm: 22, md: 27 },
-              fontWeight: 500,
-              mb: 1,
-              color: "#202124",
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "6px",
-              lineHeight: 1.4,
-              fontFamily: "Poppins",
-            }}
-          >
-            Deliberately chosen{" "}
-            <span
-              style={{
-                color: "#1e63d6",
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                fontFamily: "Poppins",
-              }}
-            >
-              <ReactTyped
-                strings={[
-                  "Backend Developer",
-                  "UI/UX Designer",
-                  "Blockchain Engineer",
-                  "Python Developer",
-                  "Frontend Developer",
-                ]}
-                typeSpeed={45}
-                backSpeed={30}
-                loop
-              />
-            </span>{" "}
-            Jobs
-          </Typography>
+<Typography
+  component="div"
+  sx={{
+    fontSize: { xs: 20, sm: 22, md: 27 },
+    fontWeight: 500,
+    mb: 1,
+    color: "#202124",
+    lineHeight: 1.4,
+    fontFamily: "Poppins",
+  }}
+>
+
+
+  {/* DESKTOP VERSION (same layout) */}
+  <Box sx={{ display: { xs: "none", md: "flex" }, gap: "6px", alignItems: "center", flexWrap: "wrap" }}>
+    Deliberately chosen{" "}
+    <span
+      style={{
+        color: "#1e63d6",
+        fontWeight: 600,
+        display: "flex",
+        alignItems: "center",
+        fontFamily: "Poppins",
+      }}
+    >
+      <ReactTyped
+        strings={[
+          "Backend Developer",
+          "UI/UX Designer",
+          "Blockchain Engineer",
+          "Python Developer",
+          "Frontend Developer",
+        ]}
+        typeSpeed={45}
+        backSpeed={30}
+        loop
+      />
+    </span>{" "}
+    Jobs
+  </Box>
+
+  {/* MOBILE VERSION (two-line layout) */}
+  <Box sx={{ display: { xs: "block", md: "none" } }}>
+    <Box>Deliberately chosen</Box>
+
+    <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+      <span
+        style={{
+          color: "#1e63d6",
+          fontWeight: 600,
+          display: "inline-flex",
+          alignItems: "center",
+          fontFamily: "Poppins",
+          height: "24px",
+          overflow: "hidden",
+        }}
+      >
+        <ReactTyped
+          strings={[
+            "Backend Developer",
+            "UI/UX Designer",
+            "Blockchain Engineer",
+            "Python Developer",
+            "Frontend Developer",
+          ]}
+          typeSpeed={45}
+          backSpeed={30}
+          loop
+        />
+      </span>
+
+      <Box>Jobs</Box>
+    </Box>
+  </Box>
+
+</Typography>
+
 
           <Typography
             sx={{
