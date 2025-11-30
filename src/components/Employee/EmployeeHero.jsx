@@ -93,7 +93,7 @@ export default function EmployeeHero() {
             animation: "zoomInOut 5s infinite ease-in-out",
           }}
         >
-          Your Job Search <br />
+          Your Naukri Search <br />
           <span style={{ color: "#1e63d6" }}>Ends Here!</span>
         </Typography>
 

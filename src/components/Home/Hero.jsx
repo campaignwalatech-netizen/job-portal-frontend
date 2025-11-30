@@ -64,7 +64,7 @@ export default function Hero() {
               fontFamily: "Poppins",
             }}
           >
-            Meticulously Handpicked{" "}
+            Deliberately chosen{" "}
             <span
               style={{
                 color: "#1e63d6",
@@ -112,7 +112,7 @@ export default function Hero() {
               fontFamily: "Poppins",
             }}
           >
-            Your Job Search Ends{" "}
+            Your Naukri Search Ends{" "}
             <span style={{ color: "#1e63d6" }}>Here!</span>
           </Typography>
 

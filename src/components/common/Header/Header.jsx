@@ -64,6 +64,10 @@ export default function Header() {
               <Typography sx={{ cursor: "pointer", fontSize: 15 }}>
                 Blog
               </Typography>
+              <Typography sx={{ cursor: "pointer", fontSize: 15 }}>
+  Contact Us
+</Typography>
+
             </Box>
           )}
         </Box>
@@ -124,6 +128,7 @@ export default function Header() {
   <MenuItem onClick={handleClose}>Find Jobs</MenuItem>
   <MenuItem onClick={handleClose}>Career Compass</MenuItem>
   <MenuItem onClick={handleClose}>Blog</MenuItem>
+  <MenuItem onClick={handleClose}>Contact Us</MenuItem>
 
   <Box sx={{ padding: 1, width: 240 }}>
     <Button

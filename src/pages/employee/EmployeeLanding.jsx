@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import Header from "../../components/common/Header/Header"; 
+import Header from "../../components/Employee/EmployeeHeader";
 import Hero from "../../components/Employee/EmployeeHero";
 import TopCompanies from "../../components/Employee/TopCompanies";
 import StatsScroller from "../../components/Employee/StatsScroller";

@@ -5,13 +5,13 @@ const items = [
     rank: "#1",
     title: "Jobs for Freshers",
     img: "https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/freshers-jobs.png",
-    bgText: "Jobs for",
+    bgText: "Jobs for Freshers",
   },
   {
     rank: "#2",
     title: "Work from home Jobs",
     img: "https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/work-from-home-jobs.png",
-    bgText: "Work to",
+    bgText: "Work from Home",
   },
   {
     rank: "#3",
@@ -23,14 +23,21 @@ const items = [
     rank: "#4",
     title: "Jobs for Women",
     img: "https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/women-jobs.png",
-    bgText: "Jobs for",
+    bgText: "Women Jobs",
   },
-  {
-    rank: "#5",
-    title: "International Jobs",
-    img: "https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/international-jobs.png",
-    bgText: "International",
-  },
+{
+  rank: "#5",
+  title: "Full Time Jobs",
+  img: "https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/work-from-home-jobs.png",
+  bgText: "Full Time",
+},
+{
+  rank: "#6",
+  title: "High Salary Jobs",
+  img: "https://storage.googleapis.com/mumbai_apnatime_prod/apna-home/women-jobs.png",
+  bgText: "High Pay",
+},
+,
 ];
 
 export default function PopularSearches() {
@@ -83,6 +90,11 @@ export default function PopularSearches() {
           ? "#cc1a1a"
           : index === 3
           ? "#0056ff"
+          : index === 4 
+          ? "#00897b"
+          : index === 5
+          ? "#76a3d3ff"
+
           : "#0064d2",
       background:
         index === 0
@@ -93,6 +105,10 @@ export default function PopularSearches() {
           ? "rgba(204, 26, 26, 0.05)"
           : index === 3
           ? "rgba(0, 86, 255, 0.05)"
+           : index === 4 
+          ? "rgba(0, 137, 123, 0.05)"
+          : index === 5
+          ? "rgba(115, 110, 173, 0.05)"
           : "rgba(0, 100, 210, 0.05)",
 
 

@@ -34,9 +34,9 @@ export default function EmployerHeader() {
           fontWeight: 500,
           "&:hover": { textDecoration: "underline" },
         }}
-        onClick={() => (window.location.href = "/employee")}
+        onClick={() => (window.location.href = "/employer")}
       >
-        Looking for a job?
+        Looking for a candidate?
       </Typography>
     </Box>
   );
