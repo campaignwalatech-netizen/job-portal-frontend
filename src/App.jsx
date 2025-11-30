@@ -3,10 +3,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import JobPortalLanding from "./pages/Home/JobPortalLanding";
-import EmployeeLanding from "./pages/employee/EmployeeLanding";
-import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
-import EmployerLanding from "./pages/employer/EmployerLanding";
-import EmployerDashboard from "./pages/employer/EmployerDashboard";
+import EmployeeLanding from "./pages/employee_temp/EmployeeLanding";
+import EmployeeDashboard from "./pages/employee_temp/EmployeeDashboard";
+import EmployerLanding from "./pages/employer_temp/EmployerLanding";
+import EmployerDashboard from "./pages/employer_temp/EmployerDashboard";
 
 
 
