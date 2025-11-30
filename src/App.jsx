@@ -10,7 +10,7 @@ import EmployerLanding from "./pages/employer/EmployerLanding";
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
 import EmployerRegister from "./pages/employer/Register";
 import PostJobWrapper from "./pages/employer/PostJob/PostJobWrapper";
-import EmployeeLanding from "./pages/Employee/EmployeeLanding";
+import EmployeeLanding from "./pages/employee/EmployeeLanding";
 import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
 
 
