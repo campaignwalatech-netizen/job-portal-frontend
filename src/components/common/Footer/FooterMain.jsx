@@ -20,7 +20,7 @@ export default function FooterMain() {
           gap: 6,
         }}
       >
-        {/* ---------------- LEFT SECTION ---------------- */}
+   
         <Box sx={{ width: { xs: "100%", md: "260px" } }}>
           <img
             src="/logo.svg"
@@ -42,7 +42,7 @@ export default function FooterMain() {
           </Box>
         </Box>
 
-        {/* ---------------- RIGHT LINKS SECTION ---------------- */}
+
         <Box
           sx={{
             display: "grid",
@@ -68,7 +68,7 @@ export default function FooterMain() {
         </Box>
       </Box>
 
-      {/* COPYRIGHT */}
+
       <Typography
         sx={{ textAlign: "center", color: "#cbd5e1", mt: 4, fontSize: "13px" }}
       >
@@ -78,7 +78,7 @@ export default function FooterMain() {
   );
 }
 
-/* ---------- REUSABLE COLUMN COMPONENT ---------- */
+
 
 function FooterColumn({ title, items }) {
   return (
