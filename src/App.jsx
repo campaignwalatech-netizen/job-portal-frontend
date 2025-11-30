@@ -2,18 +2,14 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import JobPortalLanding from "./pages/Home/JobPortalLanding";
-
-import EmployerLanding from "./pages/employer/EmployerLanding";
-
-import EmployerDashboard from "./pages/employer/EmployerDashboard";
 import EmployerRegister from "./pages/employer/Register";
 import PostJobWrapper from "./pages/employer/PostJob/PostJobWrapper";
-
-
 import EmployeeLanding from "./pages/employee/EmployeeLanding";
 import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
+import EmployerLanding from "./pages/employer/EmployerLanding";
+import EmployerDashboard from "./pages/employer/EmployerDashboard";
+
 
 
 
