@@ -85,7 +85,7 @@ export default function Testimonials() {
   const [index, setIndex] = useState(1);
 
 
-  // Auto slide
+  
 useEffect(() => {
   const timer = setInterval(() => {
     setIndex((prev) => prev + 1);
@@ -95,14 +95,14 @@ useEffect(() => {
 
 useEffect(() => {
   if (index === extended.length - 1) {
-    // Reached cloned-first → jump to real first
+
     setTimeout(() => {
       setIndex(1);
     }, 700); // SAME as your transition time
   }
 
   if (index === 0) {
-    // Reached cloned-last → jump to last real
+
     setTimeout(() => {
       setIndex(testimonials.length);
     }, 700);
@@ -112,8 +112,6 @@ useEffect(() => {
 
   return (
     <Box sx={{ paddingY: 10, background: "#ffffff" }}>
-      
-      {/* Heading */}
       <Typography
         sx={{
           textAlign: "center",
@@ -135,8 +133,6 @@ useEffect(() => {
       >
         Don't trust us right away, see what our customers have to say!
       </Typography>
-
-      {/* SLIDER */}
       <Box
         sx={{
           width: "100%",
