@@ -31,18 +31,19 @@ export default function Header() {
       }}
     >
       <Toolbar
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          height: 68,
-          maxWidth: "1200px",
-          margin: "0 auto",
-          width: "100%",
-          paddingX: { xs: 2, md: 0 },
-          justifyContent: "space-between",
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3, ml: { xs: 1.5, md: -1 } }}>
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    height: 68,
+    width: "100%",
+    maxWidth: "1400px",
+    margin: "0 auto",
+    px: { xs: 2, sm: 3, md: 4 }, 
+    justifyContent: "space-between",
+  }}
+>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
       
           <img
             src="/logo.svg"
