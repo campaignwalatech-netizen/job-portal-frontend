@@ -21,12 +21,13 @@ export default function SuccessStories() {
         position: "relative",
 
         
-        top: {
-  xs: "-10px",
-  sm: "-70px",
-  md: "-180px",  
-  lg: "-100px",  
+top: {
+  xs: "30px",     // was -10
+  sm: "-30px",   // was -70
+  md: "-140px",  // was -180
+  lg: "-60px",   // was -100
 },
+
 
 
         marginBottom: {
@@ -34,7 +35,7 @@ export default function SuccessStories() {
       sm: "-150px",
       md: "-200px",
       lg: "-220px",
-    }, //
+    }, 
 
         zIndex: 10,
       }}
