@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 
 const categories = ["All", "Trending", "Design", "Marketing", "Health"];
@@ -10,6 +11,7 @@ const jobs = [
     type1: "Full Time",
     type2: "Urgent",
     logo: "https://cdn-icons-png.flaticon.com/512/3473/3473486.png",
+    category: "Trending",
   },
   {
     title: "Product Manager, Studio",
@@ -18,6 +20,7 @@ const jobs = [
     type1: "Part Time",
     type2: "Urgent",
     logo: "https://cdn-icons-png.flaticon.com/512/5968/5968705.png",
+    category: "Design",
   },
   {
     title: "Senior Product Designer",
@@ -26,6 +29,7 @@ const jobs = [
     type1: "Temporary",
     type2: "Urgent",
     logo: "https://cdn-icons-png.flaticon.com/512/732/732244.png",
+    category: "Design",
   },
   {
     title: "Product Manager, Risk",
@@ -34,6 +38,7 @@ const jobs = [
     type1: "Freelancer",
     type2: "Private",
     logo: "https://cdn-icons-png.flaticon.com/512/5968/5968520.png",
+    category: "Marketing",
   },
   {
     title: "Technical Architect",
@@ -42,6 +47,7 @@ const jobs = [
     type1: "Full Time",
     type2: "Private",
     logo: "https://cdn-icons-png.flaticon.com/512/5968/5968700.png",
+    category: "Trending",
   },
   {
     title: "Web Developer",
@@ -50,14 +56,22 @@ const jobs = [
     type1: "Part Time",
     type2: "Urgent",
     logo: "https://cdn-icons-png.flaticon.com/512/732/732212.png",
+    category: "Health",
   },
 ];
 
 export default function FeaturedJobs() {
+  const [activeCat, setActiveCat] = useState("All");
+
+  const filteredJobs =
+    activeCat === "All"
+      ? jobs
+      : jobs.filter((job) => job.category === activeCat);
+
   return (
     <Box sx={{ background: "#e8f1ff", paddingY: 5, marginTop: -20 }}>
       <Box sx={{ maxWidth: "1200px", margin: "0 auto", paddingX: 2 }}>
-
+        
         {/* HEADING */}
         <Typography
           sx={{
@@ -91,28 +105,32 @@ export default function FeaturedJobs() {
             flexWrap: "wrap",
           }}
         >
-          {categories.map((cat, i) => (
-            <Box
-              key={i}
-              sx={{
-                padding: "8px 20px",
-                borderRadius: "50px",
-                border: i === 1 ? "1px solid transparent" : "1px solid #c6d4ef",
-                background: i === 1 ? "#1e63d6" : "#fff",
-                color: i === 1 ? "#fff" : "#1a2b48",
-                fontWeight: 600,
-                cursor: "pointer",
-                transition: "0.3s ease",
-                "&:hover": {
-                  background: "#1e63d6",
-                  color: "#fff",
-                  borderColor: "#1e63d6",
-                },
-              }}
-            >
-              {cat}
-            </Box>
-          ))}
+          {categories.map((cat) => {
+            const active = activeCat === cat;
+            return (
+              <Box
+                key={cat}
+                onClick={() => setActiveCat(cat)}
+                sx={{
+                  padding: "8px 20px",
+                  borderRadius: "50px",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  border: active ? "1px solid transparent" : "1px solid #c6d4ef",
+                  background: active ? "#1e63d6" : "#fff",
+                  color: active ? "#fff" : "#1a2b48",
+                  transition: "0.3s ease",
+                  "&:hover": {
+                    background: "#1e63d6",
+                    color: "#fff",
+                    borderColor: "#1e63d6",
+                  },
+                }}
+              >
+                {cat}
+              </Box>
+            );
+          })}
         </Box>
 
         {/* JOB GRID */}
@@ -124,7 +142,7 @@ export default function FeaturedJobs() {
             marginTop: 6,
           }}
         >
-          {jobs.map((job, index) => (
+          {filteredJobs.map((job, index) => (
             <Box
               key={index}
               sx={{
@@ -138,11 +156,9 @@ export default function FeaturedJobs() {
                 },
               }}
             >
-              {/* Top row */}
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <img
                   src={job.logo}
-                  alt=""
                   style={{ width: "50px", height: "50px", borderRadius: "50%" }}
                 />
                 <Box>
@@ -156,7 +172,6 @@ export default function FeaturedJobs() {
                 </Box>
               </Box>
 
-              {/* TAGS */}
               <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
                 <Box
                   sx={{
@@ -187,24 +202,22 @@ export default function FeaturedJobs() {
             </Box>
           ))}
         </Box>
-
-        {/* LOAD MORE BUTTON */}
         <Box sx={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
-          <Button
-            variant="contained"
-            sx={{
-              background: "#1e63d6",
-              paddingX: 5,
-              paddingY: 1.5,
-              borderRadius: "10px",
-              fontSize: "16px",
-              textTransform: "none",
-              "&:hover": { background: "#1856b8" },
-            }}
-          >
-            Load More Listing
-          </Button>
-        </Box>
+  <Button
+    variant="contained"
+    sx={{
+      background: "#1e63d6",
+      paddingX: 5,
+      paddingY: 1.5,
+      borderRadius: "10px",
+      fontSize: "16px",
+      textTransform: "none",
+      "&:hover": { background: "#1856b8" },
+    }}
+  >
+    View More
+  </Button>
+  </Box>
       </Box>
     </Box>
   );
