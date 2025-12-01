@@ -22,10 +22,10 @@ export default function SuccessStories() {
 
         
 top: {
-  xs: "30px",     // was -10
-  sm: "-30px",   // was -70
-  md: "-140px",  // was -180
-  lg: "-60px",   // was -100
+  xs: "10px", 
+  sm: "10px",   // was -70
+  md: "10px",  // was -180
+  lg: "10px",   // was -100
 },
 
 
@@ -34,7 +34,7 @@ top: {
       xs: "-120px",
       sm: "-150px",
       md: "-200px",
-      lg: "-220px",
+      lg: "-180px",
     }, 
 
         zIndex: 10,

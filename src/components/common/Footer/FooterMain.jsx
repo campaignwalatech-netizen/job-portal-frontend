@@ -24,7 +24,7 @@ export default function FooterMain() {
         <Box sx={{ width: { xs: "100%", md: "260px" } }}>
           <img
             src="/logo.svg"
-            width={115}
+            width={80}
             alt="logo"
             style={{ borderRadius: "14px" }}
           />

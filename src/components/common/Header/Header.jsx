@@ -99,7 +99,7 @@ export default function Header() {
           {!isMobile && (
 <Button
   variant="contained"
-  onClick={() => window.open("/employee", "_blank")}
+  onClick={() => window.open("/employee")}
   sx={{
     borderRadius: "12px",
     paddingX: 2.2,
@@ -119,7 +119,7 @@ export default function Header() {
           )}
           {isMobile && (
             <IconButton onClick={handleOpen}>
-              <MenuIcon sx={{ color: "#0b2236" }} />
+              <MenuIcon sx={{ color: "#0b2236", fontSize: "40px" }} />
             </IconButton>
           )}
         </Box>
@@ -149,7 +149,7 @@ export default function Header() {
       variant="contained"
       onClick={() => {
         handleClose();
-        window.open("/employee", "_blank");
+        window.open("/employee");
       }}
     >
       Login
