@@ -73,23 +73,16 @@ export default function PopularJobCategories() {
     variant="outlined"
     sx={{
       borderRadius: "10px",
-      padding: "8px 64px",      // exact spacing on live site
+      padding: "8px 64px",   
       textTransform: "none",
       fontSize: "16px",
       fontWeight: 600,
-
-      // TEXT COLOR when not hovered (EXACT: #21286A)
       color: "#21286A",
-
-      // BORDER COLOR (EXACT: #1967D2)
       borderColor: "#72a9f7ff",
       borderWidth: "3px",
-
       "&:hover": {
         background: "#1967D2",
         color: "#fff", },
-
-      // RESPONSIVE
       minWidth: { xs: "160px", md: "210px" },
       height: { xs: "44px", md: "48px" },
     }}

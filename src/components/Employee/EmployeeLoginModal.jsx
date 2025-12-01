@@ -4,7 +4,7 @@ import EmployeeOtpModal from "./EmployeeOtpModal";
 
 export default function EmployeeLoginModal({ open = false, onClose = () => {} }) {
   const [phone, setPhone] = useState("");
-  const [step, setStep] = useState("phone"); // phone -> otp
+  const [step, setStep] = useState("phone"); 
   const [showOtpInline, setShowOtpInline] = useState(false);
 
   const startOtp = () => {
@@ -16,7 +16,7 @@ export default function EmployeeLoginModal({ open = false, onClose = () => {} })
     setShowOtpInline(true);
   };
 
-  // inline verify handled inside EmployeeOtpModal (calls onSuccess callback)
+
   const onVerified = () => {
     onClose();
     window.location.href = "/employee/dashboard";

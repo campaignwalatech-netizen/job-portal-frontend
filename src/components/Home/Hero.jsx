@@ -25,7 +25,7 @@ export default function Hero() {
         width: "100%",
         background: "linear-gradient(to bottom, #ffffff, #bbcef8ff)",
         pt: { xs: 4, md: 10 },
-        pb: { xs: 10, md: 14 }, // ⬅️ more bottom so cards stay lower
+        pb: { xs: 10, md: 14 },
         mt: "-2px",
         position: "relative",
         overflow: "hidden",        
@@ -183,7 +183,7 @@ export default function Hero() {
               gap: 2,
               boxShadow: "0 4px 18px rgba(0,0,0,0.08)",
               width: "100%",
-              maxWidth: "650px", // ⬅️ EXACT width of live site
+              maxWidth: "650px", 
             }}
           >
             {/* FIELD 1 */}
@@ -204,7 +204,7 @@ export default function Hero() {
       borderRadius: "12px",
       height: "50px",
       background: "#fff",
-      pl: "10px", // icon spacing
+      pl: "10px", 
       border: "none",
       boxShadow: "none",
     },
@@ -262,7 +262,7 @@ export default function Hero() {
                 fontSize: "15px",
                 fontFamily: "Poppins",
                 textTransform: "none",
-                alignSelf: "center", // ⬅️ FIXED PERFECT BASELINE ALIGNMENT
+                alignSelf: "center", 
                 display: "flex",
                 alignItems: "center",
                 "&:hover": { background: "#1856b8" },

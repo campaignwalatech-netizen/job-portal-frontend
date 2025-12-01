@@ -20,12 +20,12 @@ export default function SuccessStories() {
         overflow: "hidden",
         position: "relative",
 
-        // Responsive vertical positioning
+        
         top: {
   xs: "-10px",
   sm: "-70px",
-  md: "-180px",   // was -180
-  lg: "-100px",   // was -200
+  md: "-180px",  
+  lg: "-100px",  
 },
 
 
@@ -61,7 +61,6 @@ export default function SuccessStories() {
               borderRadius: "30px",
               boxShadow: "0 2px 10px rgba(0,0,0,0.07)",
 
-              // Card width responsive
               minWidth: { xs: "200px", sm: "230px", md: "260px" },
               maxWidth: { xs: "200px", sm: "230px", md: "260px" },
 

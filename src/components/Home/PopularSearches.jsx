@@ -115,14 +115,12 @@ export default function PopularSearches() {
       boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
     },
 
-    // Move background text on hover (slide right)
     "&:hover .bgText": {
       transform: "translateX(10px)",
-      opacity: 1,                      // stays full visible
+      opacity: 1,                
   letterSpacing: "1px"
     },
 
-    // Button hover when hovering ANYWHERE on card
     "&:hover .viewBtn": {
       background:
         index === 0

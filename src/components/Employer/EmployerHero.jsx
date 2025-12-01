@@ -8,7 +8,6 @@ export default function EmployerHero() {
   const [timer, setTimer] = useState(30);
   const STATIC_OTP = "1234";
 
-  // ------------------ COUNTERS ------------------
   const [count, setCount] = useState({
     candidates: 0,
     employers: 0,
@@ -33,7 +32,7 @@ export default function EmployerHero() {
     return () => clearInterval(animate);
   }, []);
 
-  // TIMER
+
   useEffect(() => {
     if (step !== "otp") return;
     if (timer === 0) return;

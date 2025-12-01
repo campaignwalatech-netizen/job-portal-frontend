@@ -7,14 +7,13 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
 
   const STATIC_OTP = "1234";
 
-  // TIMER COUNTDOWN
+
   useEffect(() => {
     if (timer === 0) return;
     const interval = setInterval(() => setTimer((t) => t - 1), 1000);
     return () => clearInterval(interval);
   }, [timer]);
 
-  // HANDLE OTP INPUT
   const handleOtpChange = (value, index) => {
     if (value.length > 1) return;
 
@@ -27,7 +26,7 @@ export default function EmployerOtpModal({ phone, onClose, onSubmit }) {
     }
   };
 
-  // VERIFY OTP
+
   const verifyOtp = () => {
     if (otp.join("") === STATIC_OTP) {
       onSubmit();

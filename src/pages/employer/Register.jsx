@@ -31,7 +31,6 @@ export default function EmployerRegister() {
       return;
     }
 
-    // TEMP: redirect to employer landing page after registration
     navigate("/employer");
   };
 

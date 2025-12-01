@@ -18,8 +18,8 @@ export default function EmployeeSuccessStories() {
         background: "transparent",
         overflow: "hidden",
         position: "relative",
-        mt: 3,     // clean spacing
-        mb: 6,     // no negative margins
+        mt: 3,    
+        mb: 6,     
       }}
     >
       <Box

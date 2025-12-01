@@ -76,31 +76,28 @@ const testimonials = [
 ];
 
 
-const GAP = 16; // px gap between cards
-const AUTOPLAY_MS = 2500; // user chose 2.5s
+const GAP = 16; 
+const AUTOPLAY_MS = 2500;
 
 export default function Testimonials() {
-  // build clones for infinite loop
   const extended = [
     testimonials[testimonials.length - 1],
     ...testimonials,
     testimonials[0],
   ];
 
-  const [index, setIndex] = useState(1); // start at first real slide
+  const [index, setIndex] = useState(1); 
   const [isTransitioning, setIsTransitioning] = useState(true);
-  const [cardWidth, setCardWidth] = useState(320); // measured px
-  const cardRef = useRef(null); // ref to measure one real card
+  const [cardWidth, setCardWidth] = useState(320);
+  const cardRef = useRef(null); 
   const autoplayRef = useRef(null);
   const transitionTimeoutRef = useRef(null);
 
-  // measure card width (responsive)
   useEffect(() => {
     const update = () => {
       if (cardRef.current) {
         setCardWidth(cardRef.current.offsetWidth);
       } else {
-        // fallback
         setCardWidth(window.innerWidth < 600 ? Math.round(window.innerWidth * 0.85) : 320);
       }
     };
@@ -109,11 +106,10 @@ export default function Testimonials() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // autoplay (respects user interactions)
+
   useEffect(() => {
     startAutoplay();
     return () => stopAutoplay();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startAutoplay = () => {
@@ -135,42 +131,33 @@ export default function Testimonials() {
     startAutoplay();
   };
 
-  // move to next slide (autoplay)
   const handleNext = () => {
     setIsTransitioning(true);
     setIndex((prev) => prev + 1);
   };
 
-  // clicking dots: "jump directly to that slide" (fast snap)
   const handleDotClick = (dotIdx) => {
-    const targetIndex = dotIdx + 1; // map dot 0..N-1 to extended index
+    const targetIndex = dotIdx + 1;
     if (targetIndex === index) return;
-    // fast snap: temporarily use a shorter transition
     setIsTransitioning(true);
     setIndex(targetIndex);
     resetAutoplay();
   };
 
-  // infinite loop correction: when we hit clones, jump without transition
   useEffect(() => {
-    // clear any previous helper timeout
     if (transitionTimeoutRef.current) {
       clearTimeout(transitionTimeoutRef.current);
     }
 
-    // if moved to end clone (last index of extended array)
     if (index === extended.length - 1) {
-      // wait for the transition to finish, then jump to real first (index = 1) without transition
-      const wait = 700; // desktop default transition time (ms)
+      const wait = 700;
       transitionTimeoutRef.current = setTimeout(() => {
         setIsTransitioning(false);
         setIndex(1);
-        // small tick to re-enable transitions
         setTimeout(() => setIsTransitioning(true), 20);
       }, wait);
     }
 
-    // if moved to start clone (index 0), jump to last real
     if (index === 0) {
       const wait = 700;
       transitionTimeoutRef.current = setTimeout(() => {
@@ -183,23 +170,16 @@ export default function Testimonials() {
     return () => {
       if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
-
-  // helper: produce transform CSS value to keep active slide centered
   const calcTransform = () => {
-    // index * (cardWidth + GAP) px to move left,
-    // then add 50% - cardWidth/2 to center the card
     return `translateX(calc(-${index * (cardWidth + GAP)}px + 50% - ${cardWidth / 2}px))`;
   };
 
-  // transition style: responsive (mobile softer)
   const transitionStyle = isTransitioning
     ? {
-        // MUI sx supports responsive values: xs / md
         transition: {
-          xs: "transform 0.5s ease-out", // mobile softer
-          md: "transform 0.7s ease", // desktop
+          xs: "transform 0.5s ease-out",
+          md: "transform 0.7s ease", 
         },
       }
     : { transition: "none" };
@@ -228,7 +208,6 @@ export default function Testimonials() {
         Don't trust us right away, see what our customers have to say!
       </Typography>
 
-      {/* Carousel viewport */}
       <Box
         onMouseEnter={() => stopAutoplay()}
         onMouseLeave={() => startAutoplay()}
@@ -241,21 +220,17 @@ export default function Testimonials() {
           px: 2,
         }}
       >
-        {/* Track */}
         <Box
           sx={{
             display: "flex",
             gap: `${GAP}px`,
             alignItems: "center",
-            // transform and transition handled below
             transform: calcTransform(),
             ...transitionStyle,
-            // allow GPU acceleration
             willChange: "transform",
           }}
         >
           {extended.map((t, i) => {
-            // attach ref to first real card (i === 1)
             const attachRef = i === 1 ? cardRef : null;
             const isActive = i === index;
 
@@ -327,14 +302,12 @@ export default function Testimonials() {
       {/* Dots (clickable) */}
       <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3, gap: 1.3 }}>
         {testimonials.map((_, i) => {
-          const visualIndex = i + 1; // map to extended index
+          const visualIndex = i + 1;
           const active = index === visualIndex;
           return (
             <Box
               key={i}
               onClick={() => {
-                // clicking dot should jump directly (fast)
-                // set a short transition for snap
                 setIsTransitioning(true);
                 setIndex(visualIndex);
                 resetAutoplay();
