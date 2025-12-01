@@ -36,7 +36,7 @@ export default function EmployerHeader() {
         }}
         onClick={() => (window.location.href = "/employee")}
       >
-        Looking for a job?
+        Looking for a Naukri?
       </Typography>
     </Box>
   );
