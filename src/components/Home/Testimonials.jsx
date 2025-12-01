@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
-import { ReactTyped } from "react-typed";
 
 
 const testimonials = [
@@ -76,62 +75,133 @@ const testimonials = [
   }
 ];
 
-const extended = [
-  testimonials[testimonials.length - 1],
-  ...testimonials,
-  testimonials[0],
-];
-
+const GAP = 16; // px gap between cards
+const AUTOPLAY_MS = 2500; // user chose 2.5s
 
 export default function Testimonials() {
-  const [index, setIndex] = useState(1);
-  const cardRef = useRef(null);
-  const GAP = 16; 
+  // build clones for infinite loop
+  const extended = [
+    testimonials[testimonials.length - 1],
+    ...testimonials,
+    testimonials[0],
+  ];
 
-const [cardWidth, setCardWidth] = useState(360);
-useEffect(() => {
-  if (cardRef.current) {
-    setCardWidth(cardRef.current.offsetWidth);
-  }
-}, []);
+  const [index, setIndex] = useState(1); // start at first real slide
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [cardWidth, setCardWidth] = useState(320); // measured px
+  const cardRef = useRef(null); // ref to measure one real card
+  const autoplayRef = useRef(null);
+  const transitionTimeoutRef = useRef(null);
 
-useEffect(() => {
-  const updateWidth = () => {
-    if (cardRef.current) {
-      setCardWidth(cardRef.current.offsetWidth);
+  // measure card width (responsive)
+  useEffect(() => {
+    const update = () => {
+      if (cardRef.current) {
+        setCardWidth(cardRef.current.offsetWidth);
+      } else {
+        // fallback
+        setCardWidth(window.innerWidth < 600 ? Math.round(window.innerWidth * 0.85) : 320);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // autoplay (respects user interactions)
+  useEffect(() => {
+    startAutoplay();
+    return () => stopAutoplay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const startAutoplay = () => {
+    stopAutoplay();
+    autoplayRef.current = setInterval(() => {
+      handleNext();
+    }, AUTOPLAY_MS);
+  };
+
+  const stopAutoplay = () => {
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
     }
   };
 
-  window.addEventListener("resize", updateWidth);
-  updateWidth(); // run once on mount
+  const resetAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
 
-  return () => window.removeEventListener("resize", updateWidth);
-}, []);
-
-
-useEffect(() => {
-  const timer = setInterval(() => {
+  // move to next slide (autoplay)
+  const handleNext = () => {
+    setIsTransitioning(true);
     setIndex((prev) => prev + 1);
-  }, 3500);
-  return () => clearInterval(timer);
-}, []);
+  };
 
-useEffect(() => {
-  if (index === extended.length - 1) {
+  // clicking dots: "jump directly to that slide" (fast snap)
+  const handleDotClick = (dotIdx) => {
+    const targetIndex = dotIdx + 1; // map dot 0..N-1 to extended index
+    if (targetIndex === index) return;
+    // fast snap: temporarily use a shorter transition
+    setIsTransitioning(true);
+    setIndex(targetIndex);
+    resetAutoplay();
+  };
 
-    setTimeout(() => {
-      setIndex(1);
-    }, 700); // SAME as your transition time
-  }
+  // infinite loop correction: when we hit clones, jump without transition
+  useEffect(() => {
+    // clear any previous helper timeout
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+    }
 
-  if (index === 0) {
+    // if moved to end clone (last index of extended array)
+    if (index === extended.length - 1) {
+      // wait for the transition to finish, then jump to real first (index = 1) without transition
+      const wait = 700; // desktop default transition time (ms)
+      transitionTimeoutRef.current = setTimeout(() => {
+        setIsTransitioning(false);
+        setIndex(1);
+        // small tick to re-enable transitions
+        setTimeout(() => setIsTransitioning(true), 20);
+      }, wait);
+    }
 
-    setTimeout(() => {
-      setIndex(testimonials.length);
-    }, 700);
-  }
-}, [index]);
+    // if moved to start clone (index 0), jump to last real
+    if (index === 0) {
+      const wait = 700;
+      transitionTimeoutRef.current = setTimeout(() => {
+        setIsTransitioning(false);
+        setIndex(testimonials.length);
+        setTimeout(() => setIsTransitioning(true), 20);
+      }, wait);
+    }
 
+    return () => {
+      if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index]);
+
+  // helper: produce transform CSS value to keep active slide centered
+  const calcTransform = () => {
+    // index * (cardWidth + GAP) px to move left,
+    // then add 50% - cardWidth/2 to center the card
+    return `translateX(calc(-${index * (cardWidth + GAP)}px + 50% - ${cardWidth / 2}px))`;
+  };
+
+  // transition style: responsive (mobile softer)
+  const transitionStyle = isTransitioning
+    ? {
+        // MUI sx supports responsive values: xs / md
+        transition: {
+          xs: "transform 0.5s ease-out", // mobile softer
+          md: "transform 0.7s ease", // desktop
+        },
+      }
+    : { transition: "none" };
 
   return (
     <Box sx={{ paddingY: 10, background: "#ffffff" }}>
@@ -156,110 +226,129 @@ useEffect(() => {
       >
         Don't trust us right away, see what our customers have to say!
       </Typography>
+
+      {/* Carousel viewport */}
       <Box
+        onMouseEnter={() => stopAutoplay()}
+        onMouseLeave={() => startAutoplay()}
         sx={{
           width: "100%",
           display: "flex",
           justifyContent: "center",
           overflow: "hidden",
           position: "relative",
+          px: 2,
         }}
       >
+        {/* Track */}
         <Box
-  sx={{
-    display: "flex",
-    gap: 4,
-    transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
-    transform: 'translateX(calc(-${index * (cardWidth + GAP)}px + 50% - ${cardWidth / 2}px))',
+          sx={{
+            display: "flex",
+            gap: `${GAP}px`,
+            alignItems: "center",
+            // transform and transition handled below
+            transform: calcTransform(),
+            ...transitionStyle,
+            // allow GPU acceleration
+            willChange: "transform",
+          }}
+        >
+          {extended.map((t, i) => {
+            // attach ref to first real card (i === 1)
+            const attachRef = i === 1 ? cardRef : null;
+            const isActive = i === index;
 
-  }}
->
-          {extended.map((t, i) => (
-            <Box
-              key={i}
-              ref={i === 0 ? cardRef : null}
-              sx={{
-                width: { xs: "85vw", sm: "360px" },
-maxWidth: "360px",
-
-                background: "#fff",
-                padding: 4,
-                borderRadius: "16px",
-                boxShadow:
-                  i === index
+            return (
+              <Box
+                key={i}
+                ref={attachRef}
+                sx={{
+                  width: { xs: "85vw", sm: `${320}px` },
+                  maxWidth: "360px",
+                  background: "#fff",
+                  padding: 4,
+                  borderRadius: "16px",
+                  boxShadow: isActive
                     ? "0px 12px 30px rgba(30, 99, 214, 0.25)"
                     : "0px 6px 16px rgba(0,0,0,0.06)",
-                borderBottom: i === index ? "4px solid #1e63d6" : "4px solid transparent",
-                opacity: i === index ? 1 : 0.5,
-                transition: "0.3s ease",
-                position: "relative",
-              }}
-            >
-              {/* Quote icon */}
-              <Typography
-                sx={{
-                  position: "absolute",
-                  top: 20,
-                  right: 20,
-                  fontSize: "40px",
-                  color: "#e0e6f2",
-                  fontWeight: 700,
+                  borderBottom: isActive ? "4px solid #1e63d6" : "4px solid transparent",
+                  opacity: isActive ? 1 : 0.55,
+                  transition: "box-shadow 0.3s ease, opacity 0.3s ease",
+                  position: "relative",
+                  flexShrink: 0,
                 }}
               >
-                ”
-              </Typography>
-
-              {/* Title */}
-              <Typography sx={{ fontSize: "19px", fontWeight: 700, color: "#1e63d6" }}>
-                {t.title}
-              </Typography>
-
-              {/* Text */}
-              <Typography sx={{ marginTop: 2, color: "#4b5563", lineHeight: 1.65 }}>
-                {t.text}
-              </Typography>
-
-              {/* USER */}
-              <Box sx={{ display: "flex", alignItems: "center", marginTop: 4 }}>
-                <img
-                  src={t.photo}
-                  alt=""
-                  style={{
-                    width: "55px",
-                    height: "55px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    marginRight: "16px",
+                <Typography
+                  sx={{
+                    position: "absolute",
+                    top: 20,
+                    right: 20,
+                    fontSize: "40px",
+                    color: "#e0e6f2",
+                    fontWeight: 700,
                   }}
-                />
-                <Box>
-                  <Typography sx={{ fontWeight: 700 }}>{t.name}</Typography>
-                  <Typography sx={{ fontSize: "13px", color: "#6b7280" }}>
-                    {t.role}
-                  </Typography>
+                >
+                  ”
+                </Typography>
+
+                <Typography sx={{ fontSize: "19px", fontWeight: 700, color: "#1e63d6" }}>
+                  {t.title}
+                </Typography>
+
+                <Typography sx={{ marginTop: 2, color: "#4b5563", lineHeight: 1.65 }}>
+                  {t.text}
+                </Typography>
+
+                <Box sx={{ display: "flex", alignItems: "center", marginTop: 4 }}>
+                  <Box
+                    component="img"
+                    src={t.photo}
+                    alt=""
+                    sx={{
+                      width: "55px",
+                      height: "55px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      marginRight: "16px",
+                    }}
+                  />
+                  <Box>
+                    <Typography sx={{ fontWeight: 700 }}>{t.name}</Typography>
+                    <Typography sx={{ fontSize: "13px", color: "#6b7280" }}>{t.role}</Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </Box>
       </Box>
 
-      {/* DOTS */}
+      {/* Dots (clickable) */}
       <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3, gap: 1.3 }}>
-        {testimonials.map((_, i) => (
-          <Box
-            key={i}
-            onClick={() => setIndex(i)}
-            sx={{
-              width: i === index ? 14 : 8,
-              height: 8,
-              borderRadius: 10,
-              background: i === index ? "#1e63d6" : "#d1d9e6",
-              cursor: "pointer",
-              transition: "0.3s ease",
-            }}
-          />
-        ))}
+        {testimonials.map((_, i) => {
+          const visualIndex = i + 1; // map to extended index
+          const active = index === visualIndex;
+          return (
+            <Box
+              key={i}
+              onClick={() => {
+                // clicking dot should jump directly (fast)
+                // set a short transition for snap
+                setIsTransitioning(true);
+                setIndex(visualIndex);
+                resetAutoplay();
+              }}
+              sx={{
+                width: active ? 14 : 8,
+                height: 8,
+                borderRadius: 10,
+                background: active ? "#1e63d6" : "#d1d9e6",
+                cursor: "pointer",
+                transition: "all 0.25s ease",
+              }}
+            />
+          );
+        })}
       </Box>
     </Box>
   );
