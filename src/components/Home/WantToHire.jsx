@@ -25,8 +25,8 @@ export default function WantToHire() {
         }
 
         .hire-right {
-          width: 500px;
-          min-width: 330px;
+          idth: 100%;
+          min-width: auto;
           height: 100%;
           padding-left: 40px;
           padding-right: 96px;
@@ -69,6 +69,19 @@ export default function WantToHire() {
         .hire-btn:hover {
           background: #1559b8;
         }
+
+        @media (max-width: 768px) {
+  .hire-box {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hire-left img {
+    width: 100%;
+    height: auto;
+  }
+}
+
       `}</style>
 
       <div className="hire-wrapper">
