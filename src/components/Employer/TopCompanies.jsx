@@ -18,14 +18,18 @@ const companiesRow2 = [
 const scrollLeft = {
   display: "flex",
   gap: 3,
-  animation: "slide-left 15s linear infinite",
+  animation: {
+    xs: "slide-left 4s linear infinite",   // mobile = fast
+    md: "slide-left 15s linear infinite",  // desktop = normal
+  },
   "&:hover": { animationPlayState: "paused" },
 };
 
 const scrollRight = {
   display: "flex",
   gap: 3,
-  animation: "slide-right 15s linear infinite",
+  animation: "slide-right 4s linear infinite",  // mobile fast
+  "&:hover": { animationPlayState: "paused" },
   "&:hover": { animationPlayState: "paused" },
 };
 

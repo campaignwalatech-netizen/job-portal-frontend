@@ -51,12 +51,18 @@ const boxStyle = {
 
 const scrollLeft = {
   display: "flex",
-  animation: "scroll-left 22s linear infinite",
+  animation: {
+    xs: "scroll-left 6s linear infinite",   // mobile faster
+    md: "scroll-left 22s linear infinite",   // desktop normal
+  },
 };
 
 const scrollRight = {
   display: "flex",
-  animation: "scroll-right 22s linear infinite",
+  animation: {
+    xs: "scroll-right 6s linear infinite",  // mobile faster
+    md: "scroll-right 22s linear infinite",  // desktop normal
+  },
 };
 
 export default function StatsScroller() {

@@ -51,12 +51,18 @@ const boxStyle = {
 
 const scrollLeft = {
   display: "flex",
-  animation: "scroll-left 22s linear infinite",
+  animation: {
+    xs: "scroll-left 6s linear infinite",
+    md: "scroll-left 22s linear infinite",
+  }
 };
 
 const scrollRight = {
   display: "flex",
-  animation: "scroll-right 22s linear infinite",
+  animation: {
+    xs: "scroll-right 6s linear infinite",
+    md: "scroll-right 22s linear infinite",
+  }
 };
 
 export default function StatsScroller() {
