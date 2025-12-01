@@ -49,6 +49,7 @@ export default function Hero() {
             flex: 1,
             width: "100%",
             animation: `${slideInLeft} 0.9s ease-out`,
+            pb: { xs: 10, sm: 20, md: 0 },
           }}
         >
           {/* Typography same */}
