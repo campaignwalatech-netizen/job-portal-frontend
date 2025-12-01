@@ -75,6 +75,7 @@ const testimonials = [
   }
 ];
 
+
 const GAP = 16; // px gap between cards
 const AUTOPLAY_MS = 2500; // user chose 2.5s
 

@@ -192,7 +192,7 @@ export default function Testimonials() {
         <Box
           sx={{
             display: "flex",
-            gap: `${GAP / 8}rem`, 
+            gap: `${GAP}px`,
             transform: transformValue,
             transition: isTransitioning
               ? {
@@ -205,7 +205,7 @@ export default function Testimonials() {
         >
           {extended.map((t, i) => {
             const isActive = i === index;
-            const attachRef = i === 1 ? cardRef : null; 
+            const attachRef = i === index ? cardRef : null;
 
             return (
               <Box

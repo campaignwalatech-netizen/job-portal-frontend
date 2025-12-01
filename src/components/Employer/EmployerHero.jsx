@@ -71,7 +71,7 @@ export default function EmployerHero() {
         px: { xs: 2, md: 4 },
         background: "linear-gradient(90deg,#e7efff 0%,#f5f8ff 50%,#ffffff 100%)",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: { xs: "flex-start", md: "center" },
         alignItems: "flex-start",
         flexDirection: { xs: "column", md: "row" },
         gap: 6,

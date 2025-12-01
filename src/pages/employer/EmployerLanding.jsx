@@ -8,6 +8,7 @@ import TestimonialsSection from "../../components/Employer/TestimonialsSection";
 import BlogSection from "../../components/Employer/BlogSection";
 import Footer from "../../components/common/Footer/FooterMain";
 
+
 export default function EmployerLanding() {
   return (
     <>
