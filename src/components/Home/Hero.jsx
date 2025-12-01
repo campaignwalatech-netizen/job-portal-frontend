@@ -140,7 +140,7 @@ export default function Hero() {
               fontFamily: "Poppins",
             }}
           >
-            India’s #1 Job Platform
+            India’s #1 Naukri Platform
           </Typography>
 
           <Typography

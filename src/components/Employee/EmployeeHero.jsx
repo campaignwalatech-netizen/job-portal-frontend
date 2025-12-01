@@ -81,7 +81,7 @@ export default function EmployeeHero() {
       {/* LEFT SECTION */}
       <Box className="slide-left" sx={{ width: { xs: "100%", md: "55%" } }}>
         <Typography sx={{ fontSize: "22px", fontWeight: 700, color: "#155bd5" }}>
-          India’s #1 Job Platform
+          India’s #1 Naukri Platform
         </Typography>
 
         <Typography
