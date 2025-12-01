@@ -70,20 +70,67 @@ export default function WantToHire() {
           background: #1559b8;
         }
 
-        @media (max-width: 768px) {
+.hire-wrapper {
+  padding: 80px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.hire-box {
+  width: 999px;
+  height: 500px;
+  background: #D2E5FF;
+  border-radius: 24px;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ----------------- MOBILE FIX ------------------ */
+@media (max-width: 768px) {
+
+  .hire-wrapper {
+    padding: 20px 12px; /* space around */
+  }
+
   .hire-box {
-    flex-direction: column;
+    width: 100%;
+    max-width: 540px; /* same premium box look */
     height: auto;
+    border-radius: 20px;
+    flex-direction: column;
+    margin: 0 auto; /* center on mobile */
+    overflow: hidden;
   }
 
   .hire-left img {
     width: 100%;
     height: auto;
+    object-fit: cover;
   }
-    .hire-btn {
+
+  .hire-right {
+    padding: 24px; /* better spacing */
+    padding-top: 32px;
+    padding-bottom: 40px;
+  }
+
+  .hire-title {
+    font-size: 28px;
+  }
+
+  .hire-desc {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  .hire-btn {
+    margin-top: 12px;
+    padding: 14px 30px;
+    font-size: 16px;
     margin-bottom: 20px;
   }
 }
+
 
       `}</style>
 

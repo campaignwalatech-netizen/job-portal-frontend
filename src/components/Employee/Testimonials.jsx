@@ -87,13 +87,12 @@ export default function Testimonials() {
   const [index, setIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
-  // autoplay
+  
   useEffect(() => {
     const timer = setInterval(() => setIndex((p) => p + 1), 3500);
     return () => clearInterval(timer);
   }, []);
 
-  // infinite loop fix
   useEffect(() => {
     if (index === extended.length - 1) {
       setTimeout(() => {
@@ -112,7 +111,7 @@ export default function Testimonials() {
     }
   }, [index]);
 
-  // centered transform
+
   const transformValue = `translateX(calc(-${index * (CARD_WIDTH + GAP)}px + 50% - ${CARD_WIDTH /
     2}px))`;
 

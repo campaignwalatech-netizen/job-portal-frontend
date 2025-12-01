@@ -23,9 +23,9 @@ export default function SuccessStories() {
         
 top: {
   xs: "10px", 
-  sm: "10px",   // was -70
-  md: "10px",  // was -180
-  lg: "10px",   // was -100
+  sm: "10px",  
+  md: "10px",
+  lg: "10px",
 },
 
 
