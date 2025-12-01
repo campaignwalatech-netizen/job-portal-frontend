@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 
 const testimonials = [
@@ -74,47 +74,87 @@ const testimonials = [
   }
 ];
 
-
-const extended = [
-  testimonials[testimonials.length - 1],
-  ...testimonials,
-  testimonials[0],
-];
-
-
 export default function Testimonials() {
+  const GAP = 32;
+  const AUTOPLAY_MS = 2500;
+
+  const extended = [
+    testimonials[testimonials.length - 1],
+    ...testimonials,
+    testimonials[0],
+  ];
+
   const [index, setIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [cardWidth, setCardWidth] = useState(360);
+
+  const cardRef = useRef(null);
+  const autoplayRef = useRef(null);
+
+  useEffect(() => {
+    const update = () => {
+      if (cardRef.current) {
+        setCardWidth(cardRef.current.offsetWidth);
+      } else {
+        setCardWidth(360);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  useEffect(() => {
+    startAutoplay();
+    return () => stopAutoplay();
+  }, []);
+
+  const startAutoplay = () => {
+    stopAutoplay();
+    autoplayRef.current = setInterval(() => setIndex((p) => p + 1), AUTOPLAY_MS);
+  };
+
+  const stopAutoplay = () => {
+    if (autoplayRef.current) clearInterval(autoplayRef.current);
+  };
+
+  const resetAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
+
+ 
+  useEffect(() => {
+    if (index === extended.length - 1) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setIndex(1);
+        setTimeout(() => setIsTransitioning(true), 30);
+      }, 700);
+    }
+
+    if (index === 0) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setIndex(testimonials.length);
+        setTimeout(() => setIsTransitioning(true), 30);
+      }, 700);
+    }
+  }, [index]);
+
+  const handleDotClick = (i) => {
+    setIsTransitioning(true);
+    setIndex(i + 1); 
+    resetAutoplay();
+  };
 
 
-  // Auto slide
-useEffect(() => {
-  const timer = setInterval(() => {
-    setIndex((prev) => prev + 1);
-  }, 3500);
-  return () => clearInterval(timer);
-}, []);
-
-useEffect(() => {
-  if (index === extended.length - 1) {
-    // Reached cloned-first → jump to real first
-    setTimeout(() => {
-      setIndex(1);
-    }, 700); // SAME as your transition time
-  }
-
-  if (index === 0) {
-    // Reached cloned-last → jump to last real
-    setTimeout(() => {
-      setIndex(testimonials.length);
-    }, 700);
-  }
-}, [index]);
-
+  const transformValue = `translateX(calc(-${index * (cardWidth + GAP)}px + 50% - ${
+    cardWidth / 2
+  }px))`;
 
   return (
     <Box sx={{ paddingY: 10, background: "#ffffff" }}>
-      
-      {/* Heading */}
       <Typography
         sx={{
           textAlign: "center",
@@ -137,107 +177,130 @@ useEffect(() => {
         Don't trust us right away, see what our customers have to say!
       </Typography>
 
-      {/* SLIDER */}
+     
       <Box
+        onMouseEnter={stopAutoplay}
+        onMouseLeave={startAutoplay}
         sx={{
           width: "100%",
           display: "flex",
           justifyContent: "center",
           overflow: "hidden",
-          position: "relative",
+          px: 2,
         }}
       >
         <Box
           sx={{
             display: "flex",
-            gap: 4,
-            transition: index === 1 || index === extended.length - 2 ? "none" : "transform 0.7s ease",
-            transform: `translateX(calc( -${index * 360}px + 50% - 180px ))`,
+            gap: `${GAP / 8}rem`, 
+            transform: transformValue,
+            transition: isTransitioning
+              ? {
+                  xs: "transform 0.5s ease-out",
+                  md: "transform 0.7s ease",
+                }
+              : "none",
+            willChange: "transform",
           }}
         >
-          {extended.map((t, i) => (
-            <Box
-              key={i}
-              sx={{
-                width: "360px",
-                background: "#fff",
-                padding: 4,
-                borderRadius: "16px",
-                boxShadow:
-                  i === index
-                    ? "0px 12px 30px rgba(30, 99, 214, 0.25)"
-                    : "0px 6px 16px rgba(0,0,0,0.06)",
-                borderBottom: i === index ? "4px solid #1e63d6" : "4px solid transparent",
-                opacity: i === index ? 1 : 0.5,
-                transition: "0.3s ease",
-                position: "relative",
-              }}
-            >
-              {/* Quote icon */}
-              <Typography
+          {extended.map((t, i) => {
+            const isActive = i === index;
+            const attachRef = i === 1 ? cardRef : null; 
+
+            return (
+              <Box
+                key={i}
+                ref={attachRef}
                 sx={{
-                  position: "absolute",
-                  top: 20,
-                  right: 20,
-                  fontSize: "40px",
-                  color: "#e0e6f2",
-                  fontWeight: 700,
+                  width: { xs: "85vw", sm: "360px" },
+                  maxWidth: "360px",
+                  background: "#fff",
+                  padding: 4,
+                  borderRadius: "16px",
+                  boxShadow: isActive
+                    ? "0px 12px 30px rgba(30,99,214,0.25)"
+                    : "0px 6px 16px rgba(0,0,0,0.06)",
+                  borderBottom: isActive
+                    ? "4px solid #1e63d6"
+                    : "4px solid transparent",
+                  opacity: isActive ? 1 : 0.5,
+                  transition: "opacity 0.3s ease, box-shadow 0.3s ease",
+                  flexShrink: 0,
+                  position: "relative",
                 }}
               >
-                ”
-              </Typography>
-
-              {/* Title */}
-              <Typography sx={{ fontSize: "19px", fontWeight: 700, color: "#1e63d6" }}>
-                {t.title}
-              </Typography>
-
-              {/* Text */}
-              <Typography sx={{ marginTop: 2, color: "#4b5563", lineHeight: 1.65 }}>
-                {t.text}
-              </Typography>
-
-              {/* USER */}
-              <Box sx={{ display: "flex", alignItems: "center", marginTop: 4 }}>
-                <img
-                  src={t.photo}
-                  alt=""
-                  style={{
-                    width: "55px",
-                    height: "55px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    marginRight: "16px",
+                <Typography
+                  sx={{
+                    position: "absolute",
+                    top: 20,
+                    right: 20,
+                    fontSize: "40px",
+                    color: "#e0e6f2",
+                    fontWeight: 700,
                   }}
-                />
-                <Box>
-                  <Typography sx={{ fontWeight: 700 }}>{t.name}</Typography>
-                  <Typography sx={{ fontSize: "13px", color: "#6b7280" }}>
-                    {t.role}
-                  </Typography>
+                >
+                  ”
+                </Typography>
+
+                <Typography sx={{ fontSize: "19px", fontWeight: 700, color: "#1e63d6" }}>
+                  {t.title}
+                </Typography>
+
+                <Typography sx={{ marginTop: 2, color: "#4b5563", lineHeight: 1.65 }}>
+                  {t.text}
+                </Typography>
+
+                <Box sx={{ display: "flex", alignItems: "center", marginTop: 4 }}>
+                  <img
+                    src={t.photo}
+                    alt=""
+                    style={{
+                      width: "55px",
+                      height: "55px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      marginRight: "16px",
+                    }}
+                  />
+                  <Box>
+                    <Typography sx={{ fontWeight: 700 }}>{t.name}</Typography>
+                    <Typography sx={{ fontSize: "13px", color: "#6b7280" }}>
+                      {t.role}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </Box>
       </Box>
 
-      {/* DOTS */}
-      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3, gap: 1.3 }}>
-        {testimonials.map((_, i) => (
-          <Box
-            key={i}
-            onClick={() => setIndex(i)}
-            sx={{
-              width: i === index ? 14 : 8,
-              height: 8,
-              borderRadius: 10,
-              background: i === index ? "#1e63d6" : "#d1d9e6",
-              cursor: "pointer",
-              transition: "0.3s ease",
-            }}
-          />
-        ))}
+     
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: 3,
+          gap: 1.3,
+        }}
+      >
+        {testimonials.map((_, i) => {
+          const active = index === i + 1; 
+          return (
+            <Box
+              key={i}
+              onClick={() => handleDotClick(i)}
+              sx={{
+                width: active ? 14 : 8,
+                height: 8,
+                borderRadius: 10,
+                background: active ? "#1e63d6" : "#d1d9e6",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+              }}
+            />
+          );
+        })}
       </Box>
     </Box>
   );
