@@ -22,7 +22,7 @@ export default function SuccessStories() {
 
         // Responsive vertical positioning
         top: {
-  xs: "-50px",
+  xs: "-10px",
   sm: "-70px",
   md: "-180px",   // was -180
   lg: "-100px",   // was -200

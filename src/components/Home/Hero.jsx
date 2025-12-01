@@ -176,8 +176,9 @@ export default function Hero() {
               py: "20px",
               pl: "20px",
               pr: "30px",
-              height: "112px",
+              height: { xs: "auto", md: "112px" },
               display: "flex",
+              flexWrap: { xs: "wrap", md: "nowrap" },
               alignItems: "center",
               gap: 2,
               boxShadow: "0 4px 18px rgba(0,0,0,0.08)",
@@ -256,6 +257,8 @@ export default function Hero() {
                 borderRadius: "12px",
                 px: 4,
                 height: "50px",
+                width: { xs: "100%", md: "auto" },
+                mt: { xs: 2, md: 0 },
                 fontSize: "15px",
                 fontFamily: "Poppins",
                 textTransform: "none",
@@ -270,18 +273,18 @@ export default function Hero() {
           </Box>
         </Box>
 
-        {/* ---------------------------------- RIGHT IMAGE ---------------------------------- */}
+        
 {/* RIGHT IMAGE FIXED TO RIGHT */}
 <Box
   sx={{
-    position: "absolute",      // ⭐ FIXED POSITION
-    right: "-40px",            // ⭐ MATCHES LIVE SITE OFFSET
-    bottom: "0",               // ⭐ TOUCHES BOTTOM OF HERO so cards go on top
+    position: "absolute",
+    right: "-40px",           
+    bottom: "0",              
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    width: "50%",              // ⭐ KEEPS IMAGE RESPONSIVE
-    pointerEvents: "none",     // ⭐ Prevents blocking clicks
+    width: "50%",              
+    pointerEvents: "none",     
   }}
 >
   <Box
@@ -290,7 +293,7 @@ export default function Hero() {
     alt="hero"
     sx={{
       width: "100%",
-      maxWidth: "750px",       // ⭐ LITTLE BIGGER, LIKE LIVE SITE
+      maxWidth: "750px",
       objectFit: "contain",
     }}
   />

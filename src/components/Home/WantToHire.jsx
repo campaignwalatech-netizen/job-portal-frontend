@@ -25,7 +25,7 @@ export default function WantToHire() {
         }
 
         .hire-right {
-          idth: 100%;
+          width: 100%;
           min-width: auto;
           height: 100%;
           padding-left: 40px;
