@@ -80,6 +80,9 @@ export default function WantToHire() {
     width: 100%;
     height: auto;
   }
+    .hire-btn {
+    margin-bottom: 20px;
+  }
 }
 
       `}</style>
