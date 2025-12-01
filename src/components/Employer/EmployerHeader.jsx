@@ -10,10 +10,12 @@ export default function EmployerHeader() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        position: "sticky",
+        position: "fixed",
         top: 0,
+        left: 0,
+        right: 0,
         background: "#fff",
-        zIndex: 50,
+        zIndex: 2000,
       }}
     >
       {/* LEFT: LOGO */}

@@ -22,12 +22,17 @@ export default function Header() {
 
   return (
     <AppBar
-      position="sticky"
+      position="fixed"
       elevation={0}
       sx={{
         background: "#ffffff",
         color: "#0b2236",
-        boxShadow: "none"
+        boxShadow: "none",
+        zIndex: 2000,
+top: 0,
+left: 0,
+right: 0,
+
       }}
     >
       <Toolbar
@@ -39,13 +44,13 @@ export default function Header() {
     px: { xs: 2.5, sm: 4, md: 6, lg: 8, xl: 10, xxl: 12 }, 
     justifyContent: "space-between",
     "@media (min-width: 1200px)": {
-      paddingLeft: "300px",
-      paddingRight: "80px",
+      paddingLeft: "120px",
+  paddingRight: "120px",
     },
   }}
 >
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3, flexGrow: 1 }}>
       
           <img
             src="/logo.svg"

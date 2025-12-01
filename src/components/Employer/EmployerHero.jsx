@@ -66,7 +66,8 @@ export default function EmployerHero() {
     <Box
       sx={{
         width: "100%",
-        py: 8,
+        pt: 16,
+        pb: 8,
         px: { xs: 2, md: 4 },
         background: "linear-gradient(90deg,#e7efff 0%,#f5f8ff 50%,#ffffff 100%)",
         display: "flex",

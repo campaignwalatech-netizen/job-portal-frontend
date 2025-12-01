@@ -24,8 +24,9 @@ export default function Hero() {
       sx={{
         width: "100%",
         background: "linear-gradient(to bottom, #ffffff, #bbcef8ff)",
-        pt: { xs: 4, md: 10 },
-        pb: { xs: 10, md: 14 },
+        pt: { xs: 0, md: 10 },
+pb: { xs: 0, md: 14 },
+
         mt: "-2px",
         position: "relative",
         overflow: "hidden",        
@@ -49,7 +50,7 @@ export default function Hero() {
             flex: 1,
             width: "100%",
             animation: `${slideInLeft} 0.9s ease-out`,
-            pb: { xs: 10, sm: 20, md: 0 },
+            pb: { xs: 0, sm: 0, md: 0 },
           }}
         >
           {/* Typography same */}
@@ -278,14 +279,14 @@ export default function Hero() {
 {/* RIGHT IMAGE FIXED TO RIGHT */}
 <Box
   sx={{
-    position: "absolute",
-    right: "-40px",           
-    bottom: "0",              
+    position: { xs: "relative", md: "absolute" },
+    right: { md: "-40px" },
+    bottom: { md: 0 },
+    mt: { xs: -4, md: 0 }, 
+    width: { xs: "100%", md: "50%" },
     display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    width: "50%",              
-    pointerEvents: "none",     
+    justifyContent: "center",
+    pointerEvents: "none",
   }}
 >
   <Box
@@ -293,12 +294,13 @@ export default function Hero() {
     src="/banner-image.webp"
     alt="hero"
     sx={{
-      width: "100%",
+      width: { xs: "85%", sm: "75%", md: "100%" },
       maxWidth: "750px",
       objectFit: "contain",
     }}
   />
 </Box>
+
 
       </Box>
     </Box>
