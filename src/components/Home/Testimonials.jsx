@@ -106,6 +106,13 @@ export default function Testimonials() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  useEffect(() => {
+  if (cardRef.current) {
+    setIsTransitioning(false);
+    const timer = setTimeout(() => setIsTransitioning(true), 50);
+    return () => clearTimeout(timer);
+  }
+}, [cardWidth]);
 
   useEffect(() => {
     startAutoplay();

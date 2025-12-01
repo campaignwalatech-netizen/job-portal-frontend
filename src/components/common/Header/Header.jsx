@@ -36,10 +36,12 @@ export default function Header() {
     alignItems: "center",
     height: 68,
     width: "100%",
-    maxWidth: "1400px",
-    margin: "0 auto",
-    px: { xs: 2, sm: 3, md: 4 }, 
+    px: { xs: 2.5, sm: 4, md: 6, lg: 8, xl: 10, xxl: 12 }, 
     justifyContent: "space-between",
+    "@media (min-width: 1200px)": {
+      paddingLeft: "300px",
+      paddingRight: "80px",
+    },
   }}
 >
 
@@ -99,7 +101,7 @@ export default function Header() {
           {!isMobile && (
 <Button
   variant="contained"
-  onClick={() => window.open("/employee")}
+  onClick={() => window.open("/employee", "_self")}
   sx={{
     borderRadius: "12px",
     paddingX: 2.2,
@@ -149,7 +151,7 @@ export default function Header() {
       variant="contained"
       onClick={() => {
         handleClose();
-        window.open("/employee");
+        window.open("/employee", "_self");
       }}
     >
       Login
