@@ -15,13 +15,13 @@ export default function PostJobSection() {
         gap: 8,
       }}
     >
-      {/* LEFT FAKE JOB CARDS */}
+      {/* LEFT — FLOATING CARDS */}
       <JobCardsLeft />
 
-      {/* RIGHT TEXT */}
+      {/* RIGHT — TEXT */}
       <Box sx={{ width: { xs: "100%", md: "48%" } }}>
-        
-        {/* Small Heading */}
+
+        {/* Small Heading — SAME AS DATABASE SECTION */}
         <Typography
           sx={{
             fontFamily: "Inter, sans-serif",
@@ -34,7 +34,7 @@ export default function PostJobSection() {
           GET STARTED WITH NAUKRI CHAAHIYE
         </Typography>
 
-        {/* Big Heading */}
+        {/* Big Heading — SAME STYLE */}
         <Typography
           sx={{
             fontFamily: "Inter, sans-serif",
@@ -48,26 +48,27 @@ export default function PostJobSection() {
           Post a job in minutes
         </Typography>
 
-        {/* Sub text */}
+        {/* Sub text — SAME STYLE */}
         <Typography
           sx={{
             fontFamily: "Inter, sans-serif",
             fontSize: "24px",
             fontWeight: 400,
             color: "#696969",
-            mb: 1,
+            mb: 2,
+            maxWidth: "90%",
           }}
         >
           Revolutionize your hiring with our AI-powered algorithm.
         </Typography>
 
-        {/* Bullet points */}
+        {/* Bullet points — SAME COMPONENT */}
         <Bullet text="Get unlimited applications" />
         <Bullet text="10x higher relevancy" />
         <Bullet text="Simplified job posting" />
         <Bullet text="40% better ROI than market" />
 
-        {/* CTA Button */}
+        {/* CTA Button — EXACT MATCH */}
         <Button
           variant="contained"
           sx={{
@@ -90,7 +91,9 @@ export default function PostJobSection() {
   );
 }
 
-/* BULLET ITEM */
+/* ===============================
+   BULLET COMPONENT — SAME AS DATABASE
+=============================== */
 function Bullet({ text }) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", mb: 0.5, ml: 4 }}>
@@ -98,7 +101,6 @@ function Bullet({ text }) {
         style={{
           color: "#22C55E",
           fontSize: "18px",
-lineHeight: 1.5,
           marginRight: "10px",
         }}
       >
@@ -119,7 +121,10 @@ lineHeight: 1.5,
   );
 }
 
-/* LEFT JOB CARDS COLUMN */
+/* ===============================
+   LEFT — FLOATING CARD COLUMN
+=============================== */
+
 function JobCardsLeft() {
   return (
     <Box
@@ -134,32 +139,39 @@ function JobCardsLeft() {
     >
       <FloatingCard
         top="40px"
-        left="-30px"
-        title="Graphic designer"
+        left="-20px"
+        title="Graphic Designer"
         status="Active"
+        statusColor="#16a34a"
         date="Nov 30, 2022"
       />
+
       <FloatingCard
         top="170px"
-        left="40px"
-        title="Executive manager operations"
-        status="Under review"
+        left="50px"
+        title="Executive Manager Operations"
+        status="Under Review"
         statusColor="#d97706"
         date="Nov 30, 2022"
       />
+
       <FloatingCard
         top="330px"
-        left="-20px"
-        title="Graphic designer"
+        left="0px"
+        title="Graphic Designer"
         status="Active"
+        statusColor="#16a34a"
         date="Nov 30, 2022"
       />
     </Box>
   );
 }
 
-/* FLOAT CARD */
-function FloatingCard({ top, left, title, status, statusColor = "#16a34a", date }) {
+/* ===============================
+   FLOATING CARD — SAME STYLE AS DATABASE
+=============================== */
+
+function FloatingCard({ top, left, title, status, statusColor, date }) {
   return (
     <Box
       sx={{
@@ -171,12 +183,15 @@ function FloatingCard({ top, left, title, status, statusColor = "#16a34a", date 
         borderRadius: "16px",
         p: 2,
         boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+        fontFamily: "Inter, sans-serif",
       }}
     >
-      <Typography sx={{ fontWeight: 700, mb: 0.5, fontFamily: "Inter" }}>
+      {/* Title */}
+      <Typography sx={{ fontWeight: 700, mb: 0.5 }}>
         {title}
       </Typography>
 
+      {/* Status Badge */}
       <Box
         sx={{
           display: "inline-flex",
@@ -189,15 +204,14 @@ function FloatingCard({ top, left, title, status, statusColor = "#16a34a", date 
           fontSize: "12px",
           fontWeight: 600,
           mb: 1,
-          fontFamily: "Inter",
         }}
       >
         {status}
       </Box>
 
+      {/* Location */}
       <Typography
         sx={{
-          fontFamily: "Inter",
           fontSize: "14px",
           color: "#475569",
         }}
