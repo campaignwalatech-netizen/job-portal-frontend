@@ -136,7 +136,6 @@ export default function EmployerHero() {
         className="slide-right"
         sx={{
           width: { xs: "100%", md: "480px" },
-          height: { xs: "auto", md: "420px"},
           background: "#fff",
           p: 5,
           borderRadius: "16px",
