@@ -47,7 +47,14 @@ export default function PostJobWrapper() {
         );
 
       case 4:
-        return <Step4Preview setStep={setStep} formData={formData} />;
+        return (
+    <Step4Preview
+      setStep={setStep}
+      step1Data={formData.step1}
+      step2Data={formData.step2}
+      step3Data={formData.step3}
+    />
+  );
 
       case 5:
         return <Step5SelectPlan setStep={setStep} formData={formData} />;

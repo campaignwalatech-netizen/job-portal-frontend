@@ -214,8 +214,6 @@ const emailValid = (em) => {
       `}</style>
 
       <div className="step-card">
-        <h2 className="step-title">Step 3 — Interview & Contact</h2>
-        <p className="step-subtitle">Configure how candidates can visit and contact you.</p>
 
         {/* -------------------------- CARD 1 -------------------------- */}
         <div className="section">
