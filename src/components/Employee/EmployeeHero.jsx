@@ -64,23 +64,35 @@ export default function EmployeeHero() {
     }
   };
 
-  return (
+ return (
+  <Box
+    sx={{
+      width: "100%",
+      pt: 16,
+      pb: -8,
+      px: { xs: 2, md: 4 },
+      background: "linear-gradient(90deg,#e7efff 0%,#f5f8ff 50%,#ffffff 100%)",
+      display: "flex",
+      flexDirection: "column",
+      gap: 6,
+    }}
+  >
+
+    {/* ROW: LEFT + LOGIN BOX */}
     <Box
       sx={{
-        width: "100%",
-        pt: 16,
-        pb: 8,
-        px: { xs: 2, md: 4 },
-        background: "linear-gradient(90deg,#e7efff 0%,#f5f8ff 50%,#ffffff 100%)",
         display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        gap: 4,
         justifyContent: "center",
         alignItems: "flex-start",
-        flexDirection: { xs: "column", md: "row" },
-        gap: 6,
+        width: "100%",
       }}
     >
+
       {/* LEFT SECTION */}
-      <Box className="slide-left" sx={{ width: { xs: "100%", md: "55%" } }}>
+      <Box sx={{ width: { xs: "100%", md: "55%" } }}>
+        
         <Typography sx={{ fontSize: "22px", fontWeight: 700, color: "#155bd5" }}>
           India’s #1 Naukri Platform
         </Typography>
@@ -154,41 +166,45 @@ export default function EmployeeHero() {
               borderRadius: "12px",
               px: 4,
               textTransform: "none",
+              whiteSpace: "nowrap",
             }}
           >
             Find Jobs
           </Button>
         </Box>
 
-        {/* SUCCESS STORIES */}
-        <SuccessStories />
       </Box>
 
-      {/* RIGHT SECTION (LOGIN / OTP CARD) */}
+      {/* LOGIN / OTP CARD */}
       <Box
-        className="slide-right"
         sx={{
-          width: { xs: "100%", md: "380px" },
+          width: { xs: "100%", md: "480px" },
+          height: { xs: "auto", md: "420px" },
           background: "#fff",
-          p: 4,
-          borderRadius: "16px",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.10)",
+          p: 5,
+          borderRadius: "20px",
+          boxShadow: "0 12px 45px rgba(0,0,0,0.12)",
           textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: 3,
+          
         }}
       >
         {step === "phone" && (
           <>
-            <Typography sx={{ fontWeight: 700, fontSize: "22px", mb: 3 }}>
+            <Typography sx={{ fontWeight: 700, fontSize: "28px", mb: 3 }}>
               Enter Mobile Number
             </Typography>
 
-            <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-              <TextField value="+91" sx={{ width: "70px" }} disabled />
+            <Box sx={{ display: "flex", gap: 2, width: "100%" }}>
+              <TextField value="+91" sx={{ width: "80px" }} disabled />
               <TextField
+                fullWidth
                 placeholder="10-digit mobile number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                sx={{ flexGrow: 1 }}
               />
             </Box>
 
@@ -276,33 +292,22 @@ export default function EmployeeHero() {
         )}
       </Box>
 
-      <style>{`
-        @keyframes zoomInOut {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.03); }
-          100% { transform: scale(1); }
-        }
-
-        .slide-left {
-          opacity: 0;
-          transform: translateX(-60px);
-          animation: slideInLeft 0.8s forwards ease-out;
-        }
-
-        @keyframes slideInLeft {
-          to { opacity: 1; transform: translateX(0); }
-        }
-
-        .slide-right {
-          opacity: 0;
-          transform: translateX(60px);
-          animation: slideInRight 0.8s forwards ease-out;
-        }
-
-        @keyframes slideInRight {
-          to { opacity: 1; transform: translateX(0); }
-        }
-      `}</style>
     </Box>
-  );
+
+    {/* FULL WIDTH SUCCESS STORIES */}
+    <Box sx={{ width: "100%", mt:-2}}>
+      <SuccessStories />
+    </Box>
+
+    <style>{`
+      @keyframes zoomInOut {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+        100% { transform: scale(1); }
+      }
+    `}</style>
+
+  </Box>
+);
+
 }

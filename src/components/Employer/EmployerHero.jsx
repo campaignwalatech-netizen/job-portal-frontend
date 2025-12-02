@@ -135,9 +135,10 @@ export default function EmployerHero() {
       <Box
         className="slide-right"
         sx={{
-          width: { xs: "100%", md: "380px" },
+          width: { xs: "100%", md: "480px" },
+          height: { xs: "auto", md: "420px"},
           background: "#fff",
-          p: 4,
+          p: 5,
           borderRadius: "16px",
           boxShadow: "0 10px 40px rgba(0,0,0,0.10)",
           textAlign: "center",
