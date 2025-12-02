@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ToggleSwitch from "../../../components/ToggleSwitch";
+
 
 export default function Step1JobDetails({ setStep,step1Data, setStep1Data }) {
   // ---------------------------------------------------------
@@ -301,21 +303,6 @@ setStep1Data({
           color:white;
         }
 
-        .toggle-row { display:flex; gap:14px; }
-
-        .toggle-btn {
-          padding:8px 20px;
-          border-radius:20px;
-          border:2px solid #0b63f8;
-          background:white;
-          color:#0b63f8;
-          cursor:pointer;
-          font-weight:600;
-        }
-        .toggle-btn.active {
-          background:#0b63f8;
-          color:white;
-        }
 
         .grid {
           display:grid;
@@ -954,31 +941,16 @@ setStep1Data({
             Is there any joining fee or deposit required from the candidate? *
           </h3>
 
-          <div className="toggle-row">
-            <div
-              className={`toggle-btn ${
-                joiningFee === "no" ? "active" : ""
-              } ${errors.joiningFee ? "error-label" : ""}`}
-              onClick={() => {
-                setJoiningFee("no");
-                setErrors((p) => ({ ...p, joiningFee: false }));
-              }}
-            >
-              No
-            </div>
+          <div style={{ marginTop: 8 }}>
+  <ToggleSwitch
+    value={joiningFee === "yes"}
+    onChange={(v) => {
+      setJoiningFee(v ? "yes" : "no");
+      setErrors((p) => ({ ...p, joiningFee: false }));
+    }}
+  />
+</div>
 
-            <div
-              className={`toggle-btn ${
-                joiningFee === "yes" ? "active" : ""
-              } ${errors.joiningFee ? "error-label" : ""}`}
-              onClick={() => {
-                setJoiningFee("yes");
-                setErrors((p) => ({ ...p, joiningFee: false }));
-              }}
-            >
-              Yes
-            </div>
-          </div>
 
           {joiningFee === "yes" && (
             <div className="field">
