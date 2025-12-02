@@ -1,35 +1,18 @@
 import React from "react";
 
-export default function Step4Preview({ form, back, next }) {
+export default function Step4Preview({ setStep }) {
   return (
-    <div>
-      <h2>Preview Job Post</h2>
+    <div className="pj-card">
+      <h2 className="pj-title">Step 4: Preview</h2>
+      <p className="pj-subtitle">This is dummy content for step 4.</p>
 
-      <div className="preview-box">
-        <h3>Job Details Summary</h3>
-        <p><strong>Company:</strong> {form.companyName}</p>
-        <p><strong>Title:</strong> {form.jobTitle}</p>
-        <p><strong>Location:</strong> {form.location}</p>
-        <p><strong>Salary:</strong> {form.minSalary} - {form.maxSalary}</p>
-      </div>
-
-      <div className="preview-box">
-        <h3>Basic Details Summary</h3>
-        <p><strong>Min Education:</strong> {form.minEducation}</p>
-        <p><strong>Languages:</strong> {form.languages.join(", ")}</p>
-        <p><strong>Skills:</strong> {form.skills.join(", ")}</p>
-      </div>
-
-      <div className="preview-box">
-        <h3>Interview Summary</h3>
-        <p><strong>Walk-In:</strong> {form.walkIn ? "Yes" : "No"}</p>
-        <p><strong>Recruiter:</strong> {form.contactPerson}</p>
-        <p><strong>Phone:</strong> {form.phone}</p>
-      </div>
-
-      <div className="footer-btns">
-        <button onClick={back}>Previous</button>
-        <button onClick={next} className="btn-primary">Next</button>
+      <div className="pj-footer">
+        <button className="btn" onClick={() => setStep(3)}>
+          Back
+        </button>
+        <button className="btn-primary" onClick={() => setStep(5)}>
+          Next
+        </button>
       </div>
     </div>
   );

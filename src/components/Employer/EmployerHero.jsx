@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 
+
 export default function EmployerHero() {
   const [step, setStep] = useState("phone");
   const [phone, setPhone] = useState("");
@@ -56,7 +57,7 @@ export default function EmployerHero() {
 
   const verifyOtp = () => {
     if (otp.join("") === STATIC_OTP) {
-      window.location.href = "/employer/dashboard";
+      window.location.href = "/employer/post-job";
     } else {
       alert("Incorrect OTP");
     }
