@@ -30,7 +30,6 @@ const scrollRight = {
   gap: 3,
   animation: "slide-right 4s linear infinite",  // mobile fast
   "&:hover": { animationPlayState: "paused" },
-  "&:hover": { animationPlayState: "paused" },
 };
 
 
