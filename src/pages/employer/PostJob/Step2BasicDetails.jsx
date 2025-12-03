@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 
 export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) {
   // ---------------------------------------------------------
@@ -12,6 +15,8 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
   const [gender, setGender] = useState("any");
   const [ageMin, setAgeMin] = useState("");
   const [ageMax, setAgeMax] = useState("");
+  const [ageMinInput, setAgeMinInput] = useState("");
+
 
   const [skills, setSkills] = useState([]);
   const [skillInput, setSkillInput] = useState("");
@@ -24,12 +29,14 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
   const [errors, setErrors] = useState({});
 
   const EDUCATION_OPTIONS = [
+    "Anyone can apply",
     "10th pass",
     "12th pass",
     "Graduation",
     "Post Graduation",
     "UG Diploma",
     "PG diploma",
+
   ];
 
   const LANGUAGES_LIST = [
@@ -38,7 +45,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     "Maithili", "Nepali", "Sindhi", "Konkani", "Kashmiri", "Sanskrit",
     "Arabic", "French", "German", "Spanish", "Chinese", "Japanese",
     "Russian", "Portuguese",
-    "Other"
   ];
 
   const YEARS_OPTIONS = [...Array(11).keys()].map(String).concat([">10"]);
@@ -349,21 +355,20 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
               ))}
             </div>
 
-            {/* Other language input */}
-            {languages.includes("Other") && (
-              <input
-                placeholder="Enter other language & press Enter"
-                style={{ marginTop: "12px" }}
-                value={otherLangInput}
-                onChange={(e) => setOtherLangInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && otherLangInput.trim() !== "") {
-                    setLanguages([...languages, otherLangInput]);
-                    setOtherLangInput("");
-                  }
-                }}
-              />
-            )}
+            {/* Other language input */} 
+            <input
+  placeholder="Other Language(if any) and enter"
+  style={{ marginTop: "12px" }}
+  value={otherLangInput}
+  onChange={(e) => setOtherLangInput(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter" && otherLangInput.trim() !== "") {
+      setLanguages([...languages, otherLangInput.trim()]);
+      setOtherLangInput("");
+    }
+  }}
+/>
+
 
             {/* Selected languages again */}
             <div className="chips" style={{ marginTop: "10px" }}>
@@ -396,8 +401,10 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
                 className={errors.experience ? "error-input" : ""}
                 value={expMin}
                 onChange={(e) => {
-                  setExpMin(e.target.value);
+                  const v = e.target.value;
+                  setExpMin(v);
                   setErrors((p) => ({ ...p, experience: false }));
+                  if (v === ">10") setExpMax(">10");
                 }}
               >
                 <option value="">Select</option>
@@ -442,6 +449,24 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
               Fresher/No Experience Required
             </span>
           )}
+          {expMin === ">10" && expMax === ">10" && (
+  <span
+    style={{
+      display: "inline-block",
+      background: "#fef3c7",
+      color: "#b45309",
+      border: "1px solid #fde68a",
+      padding: "6px 12px",
+      borderRadius: "16px",
+      fontSize: "13px",
+      marginTop: "8px",
+      fontWeight: 600
+    }}
+  >
+    Over 10 Years Experience Required
+  </span>
+)}
+
 
           {errors.experience && (
             <div className="error-text">Enter valid experience range.</div>
@@ -495,23 +520,44 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
           {/* Age */}
           <div className="grid">
-            <div className="field">
-              <label>Min Age</label>
-              <select
-                value={ageMin}
-                onChange={(e) => {
-                  setAgeMin(e.target.value);
-                  setAgeMax("");
-                }}
-              >
-                <option value="">Select</option>
-                <option value="<18">&lt;18</option>
-                {AGE_NUM.map((n) => (
-                  <option key={n}>{n}</option>
-                ))}
-                <option value=">40">&gt;40</option>
-              </select>
-            </div>
+            <label>Min Age</label>
+<input
+  value={ageMinInput}
+  onChange={(e) => {
+    setAgeMinInput(e.target.value);
+    setAgeMin(e.target.value);
+    setAgeMax("");
+  }}
+  placeholder="Enter age"
+/>
+
+<select
+  value={ageMin}
+  onChange={(e) => {
+    setAgeMin(e.target.value);
+    setAgeMinInput(e.target.value);
+    setAgeMax("");
+  }}
+  style={{ marginTop: "8px" }}
+>
+  <option value="">Select</option>
+
+  {/* typed number filtering */}
+  {AGE_NUM
+    .filter((n) =>
+      ageMinInput === "" ? true : n.toString().startsWith(ageMinInput)
+    )
+    .map((n) => (
+      <option key={n}>{n}</option>
+    ))}
+
+  {/* if user typed >40 */}
+  {Number(ageMinInput) > 40 && <option value=">40">&gt;40</option>}
+
+  <option value="<18">&lt;18</option>
+  <option value=">40">&gt;40</option>
+</select>
+
 
             <div className="field">
               <label>Max Age</label>
@@ -565,18 +611,15 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
               Description (20–5000 chars) *
             </label>
 
-            <textarea
-              rows={6}
-              className={errors.description ? "error-input" : ""}
-              placeholder="Describe the role, responsibilities..."
-              value={description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-                setErrors((p) => ({ ...p, description: false }));
-              }}
-            />
+            <ReactQuill
+  theme="snow"
+  value={description}
+  onChange={(value) => {
+    setDescription(value);
+    setErrors((p) => ({ ...p, description: false }));
+  }}
+/>
 
-            <small>{description.length}/5000</small>
 
             {errors.description && (
               <div className="error-text">

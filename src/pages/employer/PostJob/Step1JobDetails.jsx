@@ -53,6 +53,8 @@ const [otherPerks, setOtherPerks] = useState("");
 
   const [joiningFee, setJoiningFee] = useState("");
   const [joiningAmount, setJoiningAmount] = useState("");
+  const [joiningComment, setJoiningComment] = useState("");
+
 
   // ---------------------------------------------------------
   // ERRORS
@@ -222,6 +224,7 @@ setStep1Data({
   selectedPerks,
   joiningFee,
   joiningAmount,
+  joiningComment,
   otherPerksList: finalOtherPerksArray,
 
 });
@@ -919,18 +922,15 @@ setStep1Data({
               </span>
             ))}
           </div>
-          {selectedPerks.includes("Other Perks") && (
-  <div className="field" style={{ marginTop: "12px" }}>
-    <label>Enter Other Perks (comma separated)</label>
-    <input
-      type="text"
-      placeholder="add comma separated values"
-      value={otherPerks}
-      onChange={(e) => setOtherPerks(e.target.value)}
-    />
-  </div>
-)}
-
+          <div className="field" style={{ marginTop: "12px" }}>
+            <label>Other Perks (optional, comma separated)</label>
+            <input
+            type="text"
+            placeholder="e.g., Free snacks, Gym access"
+            value={otherPerks}
+            onChange={(e) => setOtherPerks(e.target.value)}
+            />
+          </div>
         </div>
 
         {/* ---------------------------------------------------
@@ -953,6 +953,7 @@ setStep1Data({
 
 
           {joiningFee === "yes" && (
+            <>
             <div className="field">
               <label className={errors.joiningAmount ? "error-label" : ""}>
                 Enter Amount *
@@ -968,6 +969,23 @@ setStep1Data({
                 }}
               />
             </div>
+            <div className="field">
+      <label className={errors.joiningComment ? "error-label" : ""}>
+        Why is this fee taken? *
+      </label>
+      <input
+        type="text"
+        className={errors.joiningComment ? "error-input" : ""}
+        placeholder="e.g., Security deposit, verification fee"
+        value={joiningComment}
+        onChange={(e) => {
+          setJoiningComment(e.target.value);
+          setErrors((p) => ({ ...p, joiningComment: false }));
+        }}
+      />
+    </div>
+  </>
+            
           )}
         </div>
 
