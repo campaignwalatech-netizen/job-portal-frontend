@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MockDigiLocker from "../../components/Employer/dashboard/MiniDigiLocker";
 import DashboardHeader from "../../components/Employer/dashboard/dashboardheader";
+import MockDigiLocker from "../../components/Employer/dashboard/MiniDigiLocker";
 import { useNavigate } from "react-router-dom";
 
 const COMPANY_DOCS = [
@@ -78,41 +78,42 @@ const ACCEPTED_TYPES = [
   "image/jpg",
 ];
 
-const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
+const MAX_BYTES = 10 * 1024 * 1024;
 
 export default function EmployerVerification() {
   const navigate = useNavigate();
 
-  // Company card state
   const [companyDocType, setCompanyDocType] = React.useState("");
   const [companyNumber, setCompanyNumber] = React.useState("");
   const [companyFile, setCompanyFile] = React.useState(null);
 
-  // Personal card state
   const [personalDocType, setPersonalDocType] = React.useState("");
   const [personalNumber, setPersonalNumber] = React.useState("");
   const [personalFile, setPersonalFile] = React.useState(null);
 
   const [digilockerOpen, setDigilockerOpen] = React.useState(false);
 
-  // UI
-  const [snack, setSnack] = React.useState({ open: false, severity: "success", message: "" });
+  const [snack, setSnack] = React.useState({
+    open: false,
+    severity: "success",
+    message: "",
+  });
+
   const [submitting, setSubmitting] = React.useState(false);
 
-  // ---------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------
   const validateFile = (file) => {
-    if (!file) return "No file";
     if (!ACCEPTED_TYPES.includes(file.type))
       return "Invalid file type. Allowed: pdf, png, jpg, jpeg";
-    if (file.size > MAX_BYTES) return "File is larger than 10 MB";
+
+    if (file.size > MAX_BYTES) return "File size must be less than 10MB";
+
     return null;
   };
 
   const onChooseFile = (e, target) => {
     const f = e.target.files?.[0];
     if (!f) return;
+
     const err = validateFile(f);
     if (err) {
       setSnack({ open: true, severity: "error", message: err });
@@ -131,137 +132,147 @@ export default function EmployerVerification() {
     else setPersonalFile(fileObj);
   };
 
-  const removeFile = (target) => {
-    if (target === "company") setCompanyFile(null);
+  const removeFile = (type) => {
+    if (type === "company") setCompanyFile(null);
     else setPersonalFile(null);
   };
 
   const handleDigilockerSelect = (doc) => {
-    // Fill personal area with mock digilocker data
+    setPersonalDocType(doc.label);
+    setPersonalNumber(doc.number);
     setPersonalFile({
       name: doc.name,
       size: doc.size,
       type: doc.type,
-      origin: doc.source || "digilocker",
+      origin: "digilocker",
     });
-    // If doc.label exists, set type accordingly
-    if (doc.label) setPersonalDocType(doc.label);
-    if (doc.number) setPersonalNumber(doc.number);
-    setSnack({ open: true, severity: "info", message: "Selected from DigiLocker" });
+
+    setSnack({
+      open: true,
+      severity: "info",
+      message: "Selected from DigiLocker",
+    });
   };
 
-  // ---------------------------------------------------------------------
-  // Submit logic -> mock backend upload
-  // ---------------------------------------------------------------------
   const mockUpload = async (payload) => {
-    // simulate upload latency
-    return new Promise((res) => {
-      setTimeout(() => {
-        res({ status: "ok", uploaded: true, id: "VER_" + Date.now() });
-      }, 900);
-    });
+    return new Promise((res) => setTimeout(() => res({ status: "ok" }), 900));
   };
 
   const handleSubmit = async () => {
-    // basic validation
     if (!companyDocType || !companyNumber || !companyFile) {
-      setSnack({ open: true, severity: "error", message: "Complete Company document section" });
-      return;
-    }
-    if (!personalDocType || !personalNumber || !personalFile) {
-      setSnack({ open: true, severity: "error", message: "Complete Personal document section" });
+      setSnack({
+        open: true,
+        severity: "error",
+        message: "Complete Company Document section",
+      });
       return;
     }
 
-    // validate file sizes/types again
-    let err = validateFile(companyFile.file || companyFile);
-    if (err) {
-      setSnack({ open: true, severity: "error", message: "Company file: " + err });
-      return;
-    }
-    err = validateFile(personalFile.file || personalFile);
-    if (err) {
-      setSnack({ open: true, severity: "error", message: "Personal file: " + err });
+    if (!personalDocType || !personalNumber || !personalFile) {
+      setSnack({
+        open: true,
+        severity: "error",
+        message: "Complete Personal Document section",
+      });
       return;
     }
 
     setSubmitting(true);
 
-    // mock multi-part: prepare payload (we keep files in state, here we simulate an upload)
     const payload = {
       company: {
         docType: companyDocType,
         number: companyNumber,
         fileName: companyFile.name,
-        origin: companyFile.origin || "local",
       },
       personal: {
         docType: personalDocType,
         number: personalNumber,
         fileName: personalFile.name,
-        origin: personalFile.origin || "local",
       },
     };
 
-    try {
-      const res = await mockUpload(payload);
-      if (res?.status === "ok") {
-        setSnack({ open: true, severity: "success", message: "Documents submitted for verification" });
-        // auto redirect to dashboard home after short delay
-        setTimeout(() => {
-          navigate("/employer/dashboard");
-        }, 1400);
-      } else {
-        setSnack({ open: true, severity: "error", message: "Upload failed (mock)" });
-      }
-    } catch (e) {
-      setSnack({ open: true, severity: "error", message: "Unexpected error" });
-    } finally {
-      setSubmitting(false);
+    const res = await mockUpload(payload);
+
+    if (res?.status === "ok") {
+      setSnack({
+        open: true,
+        severity: "success",
+        message: "Documents submitted successfully",
+      });
+
+      setTimeout(() => navigate("/employer/dashboard"), 1400);
     }
+
+    setSubmitting(false);
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", background: "#fbfdff" }}>
+    <Box sx={{ minHeight: "100vh", background: "#f9fbff" }}>
       <DashboardHeader />
 
-      <Box sx={{ px: { xs: 2, md: 6 }, py: { xs: 3, md: 6 } }}>
-        <Typography sx={{ fontSize: 26, fontWeight: 700, mb: 3 }}>Company Verification</Typography>
+      <Box
+        sx={{
+          px: { xs: 2, md: 8 },
+          py: { xs: 3, md: 5 },
+          maxWidth: "1100px",
+          margin: "0 auto",
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: 30,
+            fontWeight: 700,
+            mb: 4,
+            color: "#0b2236",
+          }}
+        >
+          Company Verification
+        </Typography>
 
-        {/* Company Documents Card */}
+        {/* COMPANY DOCUMENTS */}
         <Paper
           elevation={0}
           sx={{
-            background: "#e9edf2",
-            borderRadius: 2,
-            p: { xs: 2, md: 3 },
+            background: "#eff3f9",
+            borderRadius: "14px",
+            p: { xs: 2.5, md: 3 },
             mb: 4,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
           }}
         >
-          <Typography sx={{ fontSize: 18, fontWeight: 700, mb: 1 }}>Company Documents</Typography>
-          <Typography sx={{ color: "#6b7280", mb: 2, fontSize: 14 }}>
+          <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
+            Company Documents
+          </Typography>
+          <Typography sx={{ color: "#6b7280", mb: 3, mt: 0.5, fontSize: 14 }}>
             Upload Company Documents for verification
           </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={3}>
             <FormControl fullWidth>
-              <InputLabel id="company-doc-label">Select Document Type</InputLabel>
+              <InputLabel>Select Document Type</InputLabel>
               <Select
-                labelId="company-doc-label"
-                value={companyDocType}
                 label="Select Document Type"
+                value={companyDocType}
                 onChange={(e) => setCompanyDocType(e.target.value)}
               >
                 <MenuItem value="">-- Select --</MenuItem>
-                {COMPANY_DOCS.map((c) => (
-                  <MenuItem key={c} value={c}>
-                    {c}
+                {COMPANY_DOCS.map((doc) => (
+                  <MenuItem key={doc} value={doc}>
+                    {doc}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
 
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "1fr auto" },
+                gap: 2,
+                alignItems: "center",
+              }}
+            >
               <TextField
                 placeholder="enter number e.g 765464568"
                 value={companyNumber}
@@ -269,7 +280,7 @@ export default function EmployerVerification() {
                 fullWidth
               />
 
-              <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+              <Box>
                 <input
                   id="company-file"
                   type="file"
@@ -282,65 +293,76 @@ export default function EmployerVerification() {
                     <UploadFileIcon />
                   </IconButton>
                 </label>
-
-                {companyFile && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      background: "#fff",
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: 1,
-                      border: "1px solid #E6EEF8",
-                    }}
-                  >
-                    <Typography sx={{ fontSize: 13 }}>{companyFile.name}</Typography>
-                    <IconButton size="small" onClick={() => removeFile("company")}>
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                )}
               </Box>
             </Box>
+
+            {companyFile && (
+              <Box
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 1,
+                  background: "#fff",
+                  px: 2,
+                  py: 1,
+                  borderRadius: 1,
+                  border: "1px solid #dbe3ee",
+                }}
+              >
+                <Typography sx={{ fontSize: 13 }}>
+                  {companyFile.name}
+                </Typography>
+                <IconButton size="small" onClick={() => removeFile("company")}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            )}
           </Stack>
         </Paper>
 
-        {/* Personal Documents Card */}
+        {/* PERSONAL DOCUMENTS */}
         <Paper
           elevation={0}
           sx={{
-            background: "#e9edf2",
-            borderRadius: 2,
-            p: { xs: 2, md: 3 },
+            background: "#eff3f9",
+            borderRadius: "14px",
+            p: { xs: 2.5, md: 3 },
             mb: 4,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
           }}
         >
-          <Typography sx={{ fontSize: 18, fontWeight: 700, mb: 1 }}>Personal Documents</Typography>
-          <Typography sx={{ color: "#6b7280", mb: 2, fontSize: 14 }}>
+          <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
+            Personal Documents
+          </Typography>
+          <Typography sx={{ color: "#6b7280", mb: 3, mt: 0.5, fontSize: 14 }}>
             Upload your Documents for verification
           </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={3}>
             <FormControl fullWidth>
-              <InputLabel id="personal-doc-label">Select Document Type</InputLabel>
+              <InputLabel>Select Document Type</InputLabel>
               <Select
-                labelId="personal-doc-label"
-                value={personalDocType}
                 label="Select Document Type"
+                value={personalDocType}
                 onChange={(e) => setPersonalDocType(e.target.value)}
               >
                 <MenuItem value="">-- Select --</MenuItem>
-                {PERSONAL_DOCS.map((c) => (
-                  <MenuItem key={c} value={c}>
-                    {c}
+                {PERSONAL_DOCS.map((doc) => (
+                  <MenuItem key={doc} value={doc}>
+                    {doc}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
 
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "1fr auto" },
+                gap: 2,
+                alignItems: "center",
+              }}
+            >
               <TextField
                 placeholder="enter number e.g 765464568"
                 value={personalNumber}
@@ -350,14 +372,18 @@ export default function EmployerVerification() {
 
               <Button
                 variant="contained"
-                sx={{ background: "#14b866", textTransform: "none", ml: 0 }}
+                sx={{
+                  background: "#14b866",
+                  textTransform: "none",
+                  px: 2,
+                }}
                 onClick={() => setDigilockerOpen(true)}
               >
                 Use Digilocker to verify
               </Button>
             </Box>
 
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+            <Box>
               <input
                 id="personal-file"
                 type="file"
@@ -374,18 +400,23 @@ export default function EmployerVerification() {
               {personalFile && (
                 <Box
                   sx={{
-                    display: "flex",
+                    display: "inline-flex",
                     alignItems: "center",
                     gap: 1,
                     background: "#fff",
-                    px: 1,
-                    py: 0.5,
+                    px: 2,
+                    py: 1,
                     borderRadius: 1,
-                    border: "1px solid #E6EEF8",
+                    border: "1px solid #dbe3ee",
                   }}
                 >
-                  <Typography sx={{ fontSize: 13 }}>{personalFile.name}</Typography>
-                  <IconButton size="small" onClick={() => removeFile("personal")}>
+                  <Typography sx={{ fontSize: 13 }}>
+                    {personalFile.name}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    onClick={() => removeFile("personal")}
+                  >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Box>
@@ -394,17 +425,18 @@ export default function EmployerVerification() {
           </Stack>
         </Paper>
 
-        <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+        <Box sx={{ mt: 2 }}>
           <Button
             variant="contained"
             sx={{
               background: "linear-gradient(90deg,#3b82f6,#8b5cf6)",
               textTransform: "none",
-              borderRadius: 2,
-              px: 3,
+              borderRadius: "10px",
+              px: 4,
+              py: 1.3,
             }}
-            onClick={handleSubmit}
             disabled={submitting}
+            onClick={handleSubmit}
           >
             Submit For Verification
           </Button>
