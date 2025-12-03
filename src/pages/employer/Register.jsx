@@ -181,7 +181,8 @@ setTimeout(() => {
   select
   label="Company Size"
   fullWidth
-  SelectProps={{ native: true }}
+  InputLabelProps={{ shrink: true }}
+  SelectProps={{ native: true, displayEmpty: true }}
   sx={{ mb: 2 }}
   value={companySize}
   error={errors.companySize}
@@ -190,7 +191,9 @@ setTimeout(() => {
     setErrors((prev) => ({ ...prev, companySize: false }));
   }}
 >
-  <option value="">Select Company Size</option>
+
+
+ <option value="" disabled>Select Company Size</option>
   <option value="1-50">1–50 employees</option>
   <option value="50-200">50–200 employees</option>
   <option value="200-1000">200–1000 employees</option>
