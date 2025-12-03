@@ -11,7 +11,7 @@ const EmployerLanding = lazy(() => import('./pages/employer/EmployerLanding'));
 const EmployerDashboard = lazy(() => import('./pages/employer/EmployerDashboard'));
 const PostJob = lazy(() => import('./pages/employer/PostJob/PostJobWrapper'));
 const EmployerRegister = lazy(() => import('./pages/employer/Register'));
-const EmployerVerification = lazy(() => import("./pages/employer/EmployerVerification"));
+
 
 
 
@@ -45,9 +45,6 @@ function App() {
             <Route path="*" element={<JobPortalLanding />} />
             <Route path="/employer/post-job" element={<PostJob />} />
             <Route path="/employer/register" element={<EmployerRegister />} />
-            <Route path="/employer/dashboard/verification" element={<EmployerVerification />} />
-
-
           </Routes>
         </Suspense>
       </BrowserRouter>
