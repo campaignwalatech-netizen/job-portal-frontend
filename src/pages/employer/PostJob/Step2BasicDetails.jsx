@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import RichTextEditor from "../../../components/RichTextEditor";
 
 export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) {
   // ---------------------------------------------------------
@@ -16,7 +16,7 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
   const [ageMin, setAgeMin] = useState("");
   const [ageMax, setAgeMax] = useState("");
   const [ageMinInput, setAgeMinInput] = useState("");
-
+  const [ageMaxInput, setAgeMaxInput] = useState("");
 
   const [skills, setSkills] = useState([]);
   const [skillInput, setSkillInput] = useState("");
@@ -36,7 +36,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     "Post Graduation",
     "UG Diploma",
     "PG diploma",
-
   ];
 
   const LANGUAGES_LIST = [
@@ -48,9 +47,8 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
   ];
 
   const YEARS_OPTIONS = [...Array(11).keys()].map(String).concat([">10"]);
-
-  const AGE_NUM = Array.from({ length: 23 }, (_, i) => 18 + i);
-
+  const AGE_NUM = Array.from({ length: 23 }, (_, i) => 18 + i); // 18..40
+  const AGE_OPTIONS = [...AGE_NUM.map(String), ">40"];
 
   // ---------------------------------------------------------
   // LOAD SAVED DATA ON MOUNT
@@ -66,6 +64,8 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setGender(step2Data.gender || "any");
     setAgeMin(step2Data.ageMin || "");
     setAgeMax(step2Data.ageMax || "");
+    setAgeMinInput(step2Data.ageMinInput ?? (step2Data.ageMin || ""));
+    setAgeMaxInput(step2Data.ageMaxInput ?? (step2Data.ageMax || ""));
 
     setSkills(step2Data.skills || []);
     setDescription(step2Data.description || "");
@@ -73,59 +73,27 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setOtherLangInput(step2Data.otherLangInput || "");
   }, []);
 
-
   // ---------------------------------------------------------
-  // EDUCATION LOGIC (updated)
+  // EDUCATION LOGIC (hierarchy)
   // ---------------------------------------------------------
   const toggleEducation = (item) => {
     let selected = [...education];
+    const add = (val) => { if (!selected.includes(val)) selected.push(val); };
+    const remove = (val) => { selected = selected.filter((x) => x !== val); };
 
-    const add = (val) => {
-      if (!selected.includes(val)) selected.push(val);
-    };
-
-    const remove = (val) => {
-      selected = selected.filter((x) => x !== val);
-    };
-
-    const hierarchy = [
-      "10th pass",
-      "12th pass",
-      "Graduation",
-      "Post Graduation"
-    ];
+    const hierarchy = ["10th pass", "12th pass", "Graduation", "Post Graduation"];
 
     if (!selected.includes(item)) {
-      if (item === "Graduation") {
-        add("10th pass");
-        add("12th pass");
-      }
-      if (item === "Post Graduation") {
-        add("10th pass");
-        add("12th pass");
-        add("Graduation");
-      }
-      if (item === "PG diploma") {
-        add("10th pass");
-        add("12th pass");
-        add("Graduation");
-      }
-      if (item === "UG Diploma") {
-        add("10th pass");
-        add("12th pass");
-      }
+      if (item === "Graduation") { add("10th pass"); add("12th pass"); }
+      if (item === "Post Graduation") { add("10th pass"); add("12th pass"); add("Graduation"); }
+      if (item === "PG diploma") { add("10th pass"); add("12th pass"); add("Graduation"); }
+      if (item === "UG Diploma") { add("10th pass"); add("12th pass"); }
       add(item);
-    }
-
-    // deselect lower → also remove upper
-    else {
+    } else {
       remove(item);
-
       const index = hierarchy.indexOf(item);
       if (index !== -1) {
-        for (let i = index + 1; i < hierarchy.length; i++) {
-          remove(hierarchy[i]);
-        }
+        for (let i = index + 1; i < hierarchy.length; i++) remove(hierarchy[i]);
       }
     }
 
@@ -133,9 +101,8 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setErrors((p) => ({ ...p, education: false }));
   };
 
-
   // ---------------------------------------------------------
-  // LANGUAGES (with Other)
+  // LANGUAGES (always-visible other input)
   // ---------------------------------------------------------
   const toggleLanguage = (lang) => {
     if (languages.includes(lang)) {
@@ -146,15 +113,24 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setErrors((p) => ({ ...p, languages: false }));
   };
 
+  const handleOtherLangEnter = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const v = otherLangInput.trim();
+      if (!v) return;
+      if (!languages.includes(v)) setLanguages([...languages, v]);
+      setOtherLangInput("");
+    }
+  };
 
   // ---------------------------------------------------------
   // SKILL TAG LOGIC
   // ---------------------------------------------------------
   const addSkill = () => {
-    if (!skillInput) return;
-    if (skills.includes(skillInput)) return;
-
-    setSkills([...skills, skillInput]);
+    const v = skillInput.trim();
+    if (!v) return;
+    if (skills.includes(v)) { setSkillInput(""); return; }
+    setSkills([...skills, v]);
     setSkillInput("");
   };
 
@@ -165,27 +141,42 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
   const handleSkillKey = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      addSkill();
+      e.preventDefault(); addSkill();
     } else if (e.key === "Backspace" && skillInput === "") {
       setSkills(skills.slice(0, -1));
     }
   };
 
-
   // ---------------------------------------------------------
-  // AGE LOGIC
+  // AGE & EXPERIENCE COMPUTE HELPERS
   // ---------------------------------------------------------
   const computeAgeMax = () => {
-    if (!ageMin) return ["<18", ...AGE_NUM, ">40"];
-
-    if (ageMin === "<18") return [...AGE_NUM, ">40"];
+    if (!ageMin) return [...AGE_NUM.map(String), ">40"];
     if (ageMin === ">40") return [">40"];
-
-    const n = Number(ageMin);
-    return [...AGE_NUM.filter((x) => x >= n), ">40"];
+    const minVal = Number(ageMin);
+    if (isNaN(minVal)) return [...AGE_NUM.map(String), ">40"];
+    return [...AGE_NUM.filter((x) => x >= minVal).map(String), ">40"];
   };
 
+  const computeExpMax = () => {
+    if (!expMin) return YEARS_OPTIONS;
+    if (expMin === ">10") return [">10"];
+    const min = Number(expMin);
+    if (isNaN(min)) return YEARS_OPTIONS;
+    return YEARS_OPTIONS.filter((x) => {
+      if (x === ">10") return true;
+      return Number(x) >= min;
+    });
+  };
+
+  // ---------------------------------------------------------
+  // DESCRIPTION helpers (strip HTML for length check)
+  // ---------------------------------------------------------
+  const plainTextFromHtml = (html) => {
+    if (!html) return "";
+    const withoutTags = html.replace(/<[^>]*>/g, "");
+    return withoutTags.replace(/&nbsp;|&#160;/g, " ").trim();
+  };
 
   // ---------------------------------------------------------
   // VALIDATION + NEXT
@@ -198,16 +189,15 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     if (!expMin || !expMax) e.experience = true;
 
     if (expMin === ">10" && expMax !== ">10") e.experience = true;
-    if (expMin !== ">10" && expMax !== ">10" && Number(expMin) > Number(expMax))
-      e.experience = true;
+    if (expMin !== ">10" && expMax !== ">10" && Number(expMin) > Number(expMax)) e.experience = true;
 
-    if (description.length < 20 || description.length > 5000)
-      e.description = true;
+    const plain = plainTextFromHtml(description);
+    if (plain.length < 20 || plain.length > 5000) e.description = true;
 
     setErrors(e);
     if (Object.keys(e).length > 0) return;
 
-    // SAVE STEP-2 DATA HERE
+    // SAVE STEP-2 DATA HERE (include inputs too for restoring)
     setStep2Data({
       education,
       languages,
@@ -216,18 +206,53 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
       gender,
       ageMin,
       ageMax,
+      ageMinInput,
+      ageMaxInput,
       skills,
       description,
       otherLangInput,
     });
 
-    // GO TO NEXT STEP
     setStep(3);
   };
 
+  // ---------------------------------------------------------
+  // Helpers for Autocomplete behaviour: typing + Enter selects
+  // ---------------------------------------------------------
+  const filterAgeOptions = (options, input) => {
+    const inputStr = (input ?? "").toString().trim();
+    if (!inputStr) return options;
+    if (inputStr === ">40" || (!isNaN(Number(inputStr)) && Number(inputStr) > 40)) return [">40"];
+    return options.filter((o) => String(o).startsWith(inputStr));
+  };
+
+  const handleAgeMinKeyDown = (event) => {
+    if (event.key !== "Enter") return;
+    // find first matching option from AGE_OPTIONS
+    const matches = filterAgeOptions(AGE_OPTIONS, ageMinInput);
+    if (matches.length === 0) return;
+    event.preventDefault();
+    const pick = matches[0];
+    // do not accept <18
+    if (!isNaN(Number(pick)) && Number(pick) < 18) return;
+    setAgeMin(String(pick));
+    setAgeMinInput(String(pick));
+    setAgeMax("");
+  };
+
+  const handleAgeMaxKeyDown = (event) => {
+    if (event.key !== "Enter") return;
+    const matches = filterAgeOptions(computeAgeMax(), ageMaxInput);
+    if (matches.length === 0) return;
+    event.preventDefault();
+    const pick = matches[0];
+    if (!isNaN(Number(pick)) && Number(pick) < 18) return;
+    setAgeMax(String(pick));
+    setAgeMaxInput(String(pick));
+  };
 
   // ---------------------------------------------------------
-  // UI CSS + JSX (unchanged)
+  // JSX + STYLES (kept same visual theme)
   // ---------------------------------------------------------
   return (
     <>
@@ -277,6 +302,16 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 
+        .preview-box {
+          background:#f8fafc;
+          padding:12px;
+          border-radius:10px;
+          border:1px solid #e2e8f0;
+          margin-top:10px;
+          font-size:14px;
+          color:#334155;
+        }
+
         .footer-actions { display:flex; justify-content:space-between; gap:14px; margin-top:24px; }
 
         .btn-secondary {
@@ -295,6 +330,18 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
         .error-text { color:#dc2626; font-size:12px; margin-top:4px; font-weight:500; }
 
+        /* MUI Autocomplete tweaks to match Step-1 input (Option A exact match) */
+        .mui-autocomplete-root .MuiOutlinedInput-root {
+          border-radius: 10px;
+          padding: 0;
+          background: #fff;
+        }
+        .mui-autocomplete-input {
+          padding: 12px 14px !important;
+          font-size: 14px;
+          font-family: Inter;
+        }
+
         @media (max-width:900px) {
           .step-card { padding:20px; }
           .grid { grid-template-columns:1fr; gap:16px; }
@@ -304,16 +351,14 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
         }
       `}</style>
 
-      {/* ---- UI START ---- */}
       <div className="step-card">
         <h2 className="step-title">Candidate Requirements</h2>
         <p className="step-subtitle">Set the essential criteria for your ideal candidates.</p>
 
-
         {/* -------------------------- CARD 1 -------------------------- */}
         <div className="section">
           <h3 className="section-title">Minimum Candidate Requirements</h3>
-          <p className="step-subtitle" style={{ marginTop:"-6px", marginBottom:"18px" }}>
+          <p className="step-subtitle" style={{ marginTop: "-6px", marginBottom: "18px" }}>
             Set the essential criteria for your ideal candidates.
           </p>
 
@@ -338,7 +383,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
             )}
           </div>
 
-
           {/* Languages */}
           <div className="field">
             <label className={errors.languages ? "error-label" : ""}>Languages Known *</label>
@@ -355,43 +399,32 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
               ))}
             </div>
 
-            {/* Other language input */} 
+            {/* Other language input - always visible */}
             <input
-  placeholder="Other Language(if any) and enter"
-  style={{ marginTop: "12px" }}
-  value={otherLangInput}
-  onChange={(e) => setOtherLangInput(e.target.value)}
-  onKeyDown={(e) => {
-    if (e.key === "Enter" && otherLangInput.trim() !== "") {
-      setLanguages([...languages, otherLangInput.trim()]);
-      setOtherLangInput("");
-    }
-  }}
-/>
+              placeholder="Other language (optional). Type & press Enter"
+              style={{ marginTop: "12px" }}
+              value={otherLangInput}
+              onChange={(e) => setOtherLangInput(e.target.value)}
+              onKeyDown={handleOtherLangEnter}
+            />
 
-
-            {/* Selected languages again */}
+            {/* Selected languages shown as chips */}
             <div className="chips" style={{ marginTop: "10px" }}>
-              {languages
-                .filter((lang) => lang !== "Other")
-                .map((lang) => (
-                  <span
-                    key={lang}
-                    className="chip selected"
-                    onClick={() =>
-                      setLanguages(languages.filter((l) => l !== lang))
-                    }
-                  >
-                    ✕ {lang}
-                  </span>
-                ))}
+              {languages.map((lang) => (
+                <span
+                  key={lang}
+                  className="chip selected"
+                  onClick={() => setLanguages(languages.filter((l) => l !== lang))}
+                >
+                  ✕ {lang}
+                </span>
+              ))}
             </div>
 
             {errors.languages && (
               <div className="error-text">Select at least one language.</div>
             )}
           </div>
-
 
           {/* Experience */}
           <div className="grid">
@@ -405,6 +438,7 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
                   setExpMin(v);
                   setErrors((p) => ({ ...p, experience: false }));
                   if (v === ">10") setExpMax(">10");
+                  else if (expMax === ">10") setExpMax("");
                 }}
               >
                 <option value="">Select</option>
@@ -425,7 +459,7 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
                 }}
               >
                 <option value="">Select</option>
-                {YEARS_OPTIONS.map((x) => (
+                {computeExpMax().map((x) => (
                   <option key={x}>{x}</option>
                 ))}
               </select>
@@ -446,130 +480,156 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
                 fontWeight: 600
               }}
             >
-              Fresher/No Experience Required
+              Fresher
             </span>
           )}
-          {expMin === ">10" && expMax === ">10" && (
-  <span
-    style={{
-      display: "inline-block",
-      background: "#fef3c7",
-      color: "#b45309",
-      border: "1px solid #fde68a",
-      padding: "6px 12px",
-      borderRadius: "16px",
-      fontSize: "13px",
-      marginTop: "8px",
-      fontWeight: 600
-    }}
-  >
-    Over 10 Years Experience Required
-  </span>
-)}
 
+          {expMin === ">10" && expMax === ">10" && (
+            <span
+              style={{
+                display: "inline-block",
+                background: "#fef3c7",
+                color: "#b45309",
+                border: "1px solid #fde68a",
+                padding: "6px 12px",
+                borderRadius: "16px",
+                fontSize: "13px",
+                marginTop: "8px",
+                fontWeight: 600
+              }}
+            >
+              Over 10 Years Experience Required
+            </span>
+          )}
 
           {errors.experience && (
             <div className="error-text">Enter valid experience range.</div>
           )}
         </div>
 
-
         {/* -------------------------- CARD 2 -------------------------- */}
         <div className="section">
           <h3 className="section-title">Optional Candidate Filters</h3>
-          <p className="step-subtitle" style={{ marginTop:"-6px", marginBottom:"18px" }}>
+          <p className="step-subtitle" style={{ marginTop: "-6px", marginBottom: "18px" }}>
             Further refine your candidate search with additional preferences.
           </p>
 
           {/* Gender */}
           <div className="field">
             <label>Gender</label>
-
             <div className="radio-row">
               <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  checked={gender === "male"}
-                  onChange={() => setGender("male")}
-                />
-                Male
+                <input type="radio" name="gender" checked={gender === "male"} onChange={() => setGender("male")} /> Male
               </label>
-
               <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  checked={gender === "female"}
-                  onChange={() => setGender("female")}
-                />
-                Female
+                <input type="radio" name="gender" checked={gender === "female"} onChange={() => setGender("female")} /> Female
               </label>
-
               <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  checked={gender === "any"}
-                  onChange={() => setGender("any")}
-                />
-                Any
+                <input type="radio" name="gender" checked={gender === "any"} onChange={() => setGender("any")} /> Any
               </label>
             </div>
           </div>
 
-          {/* Age */}
+          {/* Age (single Autocomplete fields with typing + dropdown + Enter) */}
           <div className="grid">
-            <label>Min Age</label>
-<input
-  value={ageMinInput}
-  onChange={(e) => {
-    setAgeMinInput(e.target.value);
-    setAgeMin(e.target.value);
-    setAgeMax("");
-  }}
-  placeholder="Enter age"
-/>
+            {/* Min Age */}
+            <div className="field">
+              <label>Min Age</label>
 
-<select
-  value={ageMin}
-  onChange={(e) => {
-    setAgeMin(e.target.value);
-    setAgeMinInput(e.target.value);
-    setAgeMax("");
-  }}
-  style={{ marginTop: "8px" }}
->
-  <option value="">Select</option>
+              <Autocomplete
+                className="mui-autocomplete-root"
+                options={AGE_OPTIONS}
+                freeSolo
+                value={ageMin === "" ? null : ageMin}
+                inputValue={ageMinInput}
+                onInputChange={(e, newInput, reason) => {
+                  if (reason === "clear") {
+                    setAgeMin("");
+                    setAgeMinInput("");
+                    setAgeMax("");
+                    return;
+                  }
+                  // always allow typing
+                  setAgeMinInput(newInput ?? "");
+                }}
+                onChange={(e, newVal) => {
+                  if (newVal === null) {
+                    setAgeMin("");
+                    setAgeMinInput("");
+                    setAgeMax("");
+                    return;
+                  }
+                  const pick = String(newVal);
+                  if (!isNaN(Number(pick)) && Number(pick) < 18) return;
+                  setAgeMin(pick);
+                  setAgeMinInput(pick);
+                  setAgeMax("");
+                }}
+                openOnFocus
+                clearOnBlur={false}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Type or select age"
+                    InputProps={{
+                      ...params.InputProps,
+                      className: "mui-autocomplete-input",
+                      onKeyDown: handleAgeMinKeyDown,
+                    }}
+                    variant="outlined"
+                  />
+                )}
+                getOptionLabel={(opt) => String(opt)}
+                filterOptions={(options, state) => filterAgeOptions(options, state.inputValue)}
+              />
+            </div>
 
-  {/* typed number filtering */}
-  {AGE_NUM
-    .filter((n) =>
-      ageMinInput === "" ? true : n.toString().startsWith(ageMinInput)
-    )
-    .map((n) => (
-      <option key={n}>{n}</option>
-    ))}
-
-  {/* if user typed >40 */}
-  {Number(ageMinInput) > 40 && <option value=">40">&gt;40</option>}
-
-  <option value="<18">&lt;18</option>
-  <option value=">40">&gt;40</option>
-</select>
-
-
+            {/* Max Age */}
             <div className="field">
               <label>Max Age</label>
-              <select
-                value={ageMax}
-                onChange={(e) => setAgeMax(e.target.value)}
-              >
-                <option value="">Select</option>
-                {computeAgeMax().map((x) => (
-                  <option key={x}>{x}</option>
-                ))}
-              </select>
+
+              <Autocomplete
+                className="mui-autocomplete-root"
+                options={computeAgeMax()}
+                freeSolo
+                value={ageMax === "" ? null : ageMax}
+                inputValue={ageMaxInput}
+                onInputChange={(e, newInput, reason) => {
+                  if (reason === "clear") {
+                    setAgeMax("");
+                    setAgeMaxInput("");
+                    return;
+                  }
+                  setAgeMaxInput(newInput ?? "");
+                }}
+                onChange={(e, newVal) => {
+                  if (newVal === null) {
+                    setAgeMax("");
+                    setAgeMaxInput("");
+                    return;
+                  }
+                  const pick = String(newVal);
+                  if (!isNaN(Number(pick)) && Number(pick) < 18) return;
+                  setAgeMax(pick);
+                  setAgeMaxInput(pick);
+                }}
+                openOnFocus
+                clearOnBlur={false}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Type or select age"
+                    InputProps={{
+                      ...params.InputProps,
+                      className: "mui-autocomplete-input",
+                      onKeyDown: handleAgeMaxKeyDown,
+                    }}
+                    variant="outlined"
+                  />
+                )}
+                getOptionLabel={(opt) => String(opt)}
+                filterOptions={(options, state) => filterAgeOptions(options, state.inputValue)}
+              />
             </div>
           </div>
 
@@ -583,26 +643,18 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
               onChange={(e) => setSkillInput(e.target.value)}
               onKeyDown={handleSkillKey}
             />
-
             <div className="chips" style={{ marginTop: "10px" }}>
               {skills.map((s) => (
-                <span
-                  key={s}
-                  className="chip selected"
-                  onClick={() => removeSkill(s)}
-                >
-                  ✕ {s}
-                </span>
+                <span key={s} className="chip selected" onClick={() => removeSkill(s)}>✕ {s}</span>
               ))}
             </div>
           </div>
         </div>
 
-
         {/* -------------------------- CARD 3 -------------------------- */}
         <div className="section">
           <h3 className="section-title">Detailed Job Description</h3>
-          <p className="step-subtitle" style={{ marginTop:"-6px", marginBottom:"18px" }}>
+          <p className="step-subtitle" style={{ marginTop: "-6px", marginBottom: "18px" }}>
             Provide a comprehensive description of the role and responsibilities.
           </p>
 
@@ -611,34 +663,24 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
               Description (20–5000 chars) *
             </label>
 
-            <ReactQuill
-  theme="snow"
-  value={description}
-  onChange={(value) => {
-    setDescription(value);
-    setErrors((p) => ({ ...p, description: false }));
-  }}
-/>
-
+            <RichTextEditor
+              value={description}
+              onChange={(val) => {
+                setDescription(val);
+                setErrors((p) => ({ ...p, description: false }));
+              }}
+            />
 
             {errors.description && (
-              <div className="error-text">
-                Description must be between 20 and 5000 characters.
-              </div>
+              <div className="error-text">Description must be between 20 and 5000 characters.</div>
             )}
           </div>
         </div>
 
-
         {/* -------------------------- FOOTER -------------------------- */}
         <div className="footer-actions">
-          <button className="btn-secondary" onClick={() => setStep(1)}>
-            Previous
-          </button>
-
-          <button className="btn-primary" onClick={validateAndNext}>
-            Next
-          </button>
+          <button className="btn-secondary" onClick={() => setStep(1)}>Previous</button>
+          <button className="btn-primary" onClick={validateAndNext}>Next</button>
         </div>
       </div>
     </>

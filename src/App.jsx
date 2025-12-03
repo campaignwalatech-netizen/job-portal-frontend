@@ -10,6 +10,7 @@ const EmployeeDashboard = lazy(() => import('./pages/employee/EmployeeDashboard'
 const EmployerLanding = lazy(() => import('./pages/employer/EmployerLanding'));
 const EmployerDashboard = lazy(() => import('./pages/employer/EmployerDashboard'));
 const PostJob = lazy(() => import('./pages/employer/PostJob/PostJobWrapper'));
+const EmployerRegister = lazy(() => import('./pages/employer/Register'));
 
 
 
@@ -41,6 +42,8 @@ function App() {
             <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
             <Route path="*" element={<JobPortalLanding />} />
             <Route path="/employer/post-job" element={<PostJob />} />
+            <Route path="/employer/register" element={<EmployerRegister />} />
+
           </Routes>
         </Suspense>
       </BrowserRouter>

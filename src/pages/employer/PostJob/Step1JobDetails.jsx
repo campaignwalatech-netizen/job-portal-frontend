@@ -686,7 +686,7 @@ setStep1Data({
               <div className="grid">
                 <div className="field">
                   <label className={errors.minSalary ? "error-label" : ""}>
-                    Min Salary *
+                    Min Monthly Salary *
                   </label>
                   <input
                     type="number"
@@ -719,7 +719,7 @@ setStep1Data({
 
                 <div className="field">
                   <label className={errors.maxSalary ? "error-label" : ""}>
-                    Max Salary *
+                    Max Monthly Salary *
                   </label>
                   <input
                     type="number"
@@ -804,7 +804,7 @@ setStep1Data({
             <>
               <div className="grid">
                 <div className="field">
-                  <label className={errors.minSalary ? "error-label" : ""}>Min Salary *</label>
+                  <label className={errors.minSalary ? "error-label" : ""}>Min Monthly Salary *</label>
                   <input
                     type="number"
                     className={errors.minSalary ? "error-input" : ""}
@@ -835,7 +835,7 @@ setStep1Data({
 
 
                 <div className="field">
-                  <label className={errors.maxSalary ? "error-label" : ""}>Max Salary *</label>
+                  <label className={errors.maxSalary ? "error-label" : ""}>Max Monthly Salary *</label>
                   <input
                     type="number"
                     className={errors.maxSalary ? "error-input" : ""}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import ToggleSwitch from "../../../components/ToggleSwitch";
 
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,6 +10,7 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
   // FORM STATES
   // ---------------------------------------------------------
   const [walkinEnabled, setWalkinEnabled] = useState(false);
+  const [addressMode, setAddressMode] = useState("manual"); // manual | current
   const [startDate, setStartDate] = useState(null); // Date object
   const [endDate, setEndDate] = useState(null); // Date object
   const [startTime, setStartTime] = useState(""); // "HH:MM"
@@ -26,7 +26,7 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
   const [recruiterPhone, setRecruiterPhone] = useState("");
   const [recruiterEmail, setRecruiterEmail] = useState("");
 
-  const [contactAccess, setContactAccess] = useState("all"); // all | matched
+  const [contactAccess, setContactAccess] = useState("all"); // all | matched | none
   const [whatsappAlerts, setWhatsappAlerts] = useState(false);
 
   const [errors, setErrors] = useState({});
@@ -38,6 +38,7 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
     if (!step3Data) return;
 
     setWalkinEnabled(step3Data.walkinEnabled || false);
+    setAddressMode(step3Data.addressMode || "manual");
     setStartDate(step3Data.startDate ? new Date(step3Data.startDate) : null);
     setEndDate(step3Data.endDate ? new Date(step3Data.endDate) : null);
     setStartTime(step3Data.startTime || "");
@@ -90,11 +91,9 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
   };
 
   // simple email validation
-// simple email validation
-const emailValid = (em) => {
-  return /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(em);
-};
-
+  const emailValid = (em) => {
+    return /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(em);
+  };
 
   // ---------------------------------------------------------
   // VALIDATION + NEXT
@@ -112,9 +111,12 @@ const emailValid = (em) => {
       if (!startTime) e.startTime = true;
       if (!endTime) e.endTime = true;
 
-      if (!address) e.address = true;
-      if (!city) e.city = true;
-      if (!pincode) e.pincode = true;
+      // address requirement only when manual selected
+      if (addressMode === "manual") {
+        if (!address) e.address = true;
+        if (!city) e.city = true;
+        if (!pincode) e.pincode = true;
+      }
 
       if (instructions && instructions.length > 500) e.instructions = true;
     }
@@ -125,8 +127,7 @@ const emailValid = (em) => {
       if (!recruiterName) e.recruiterName = true;
       if (!recruiterPhone) e.recruiterPhone = true;
       if (!recruiterEmail) e.recruiterEmail = true;
-      if (recruiterEmail && !emailValid(recruiterEmail))
-        e.recruiterEmail = true;
+      if (recruiterEmail && !emailValid(recruiterEmail)) e.recruiterEmail = true;
     }
 
     // Candidate contact access
@@ -138,6 +139,7 @@ const emailValid = (em) => {
     // SAVE STEP-3 DATA
     setStep3Data({
       walkinEnabled,
+      addressMode,
       startDate: startDate ? startDate.toISOString() : null,
       endDate: endDate ? endDate.toISOString() : null,
       startTime,
@@ -187,8 +189,6 @@ const emailValid = (em) => {
         .chip { padding:8px 14px; background:#F1F5F9; border-radius:20px; font-size:14px; border:1px solid #E2E8F0; cursor:pointer; display:flex; align-items:center; gap:4px; }
         .chip.selected { background:#0b63f8; border-color:#0b63f8; color:white; }
 
-        .toggle-row { display:flex; gap:14px; }
-
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 
         .preview-box { background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #e2e8f0; margin-top:10px; font-size:14px; color:#334155; }
@@ -202,6 +202,35 @@ const emailValid = (em) => {
 
         .right-toggle { margin-left:auto; }
 
+        /* Full-width tabs for address mode */
+        .address-tabs {
+          display:flex;
+          gap:0;
+          margin:20px 0 20px 0;
+          border-radius:10px;
+          overflow:hidden;
+          border:1px solid #D1D5DB;
+        }
+        .address-tab {
+          flex:1;
+          padding:10px 12px;
+          text-align:center;
+          cursor:pointer;
+          font-weight:600;
+          font-family:Inter;
+          color:#475569;
+          background:white;
+          border-right:1px solid #D1D5DB;
+          user-select:none;
+        }
+        .address-tab:last-child { border-right: none; }
+        .address-tab.active {
+          background:#0b63f8;
+          color:white;
+          border-color:#0b63f8;
+        }
+        /* No hover effects (per request) */
+
         @media (max-width:900px) {
           .step-card { padding:20px; }
           .grid { grid-template-columns:1fr; gap:16px; }
@@ -209,11 +238,11 @@ const emailValid = (em) => {
           .footer-actions { flex-direction:column; gap:12px; }
           .btn-primary, .btn-secondary { width:100%; }
         }
-
-
       `}</style>
 
       <div className="step-card">
+        <h2 className="step-title">Step 3 — Interview & Contact</h2>
+        <p className="step-subtitle">Configure how candidates can visit and contact you.</p>
 
         {/* -------------------------- CARD 1 -------------------------- */}
         <div className="section">
@@ -226,13 +255,34 @@ const emailValid = (em) => {
               <div style={{ fontSize: 13, color: "#6b7280" }}>Allow candidates to directly visit for interviews.</div>
             </div>
             <div className="right-toggle">
-              <ToggleSwitch value={walkinEnabled} onChange={setWalkinEnabled} />
+              <ToggleSwitch value={walkinEnabled} onChange={(v) => { setWalkinEnabled(v); setErrors((p) => ({ ...p, startDate: false, endDate: false })); }} />
             </div>
           </div>
 
           {walkinEnabled && (
             <>
-              <div className="grid" style={{ marginTop: 16 }}>
+              {/* Address Mode Tabs */}
+              <div className="address-tabs" role="tablist" aria-label="Address mode tabs">
+                <div
+                  role="tab"
+                  aria-selected={addressMode === "manual"}
+                  className={`address-tab ${addressMode === "manual" ? "active" : ""}`}
+                  onClick={() => setAddressMode("manual")}
+                >
+                  Enter Address Manually
+                </div>
+
+                <div
+                  role="tab"
+                  aria-selected={addressMode === "current"}
+                  className={`address-tab ${addressMode === "current" ? "active" : ""}`}
+                  onClick={() => setAddressMode("current")}
+                >
+                  Use Current Location
+                </div>
+              </div>
+
+              <div className="grid" style={{ marginTop: 0 }}>
                 <div className="field">
                   <label className={errors.startDate ? "error-label" : ""}>Start Date *</label>
                   <DatePicker
@@ -258,7 +308,7 @@ const emailValid = (em) => {
                 </div>
               </div>
 
-              <div className="grid">
+              <div className="grid" style={{ marginTop: 16 }}>
                 <div className="field">
                   <label className={errors.startTime ? "error-label" : ""}>Start Time *</label>
                   <input
@@ -280,36 +330,62 @@ const emailValid = (em) => {
                 </div>
               </div>
 
-              <div className="field">
-                <label className={errors.address ? "error-label" : ""}>Address Line *</label>
-                <input
-                  className={errors.address ? "error-input" : ""}
-                  value={address}
-                  onChange={(e) => { setAddress(e.target.value); setErrors((p) => ({ ...p, address: false })); }}
-                />
-              </div>
+              {/* Manual Address Mode */}
+              {addressMode === "manual" && (
+                <>
+                  <div className="field" style={{ marginTop: 12 }}>
+                    <label className={errors.address ? "error-label" : ""}>Address Line *</label>
+                    <input
+                      className={errors.address ? "error-input" : ""}
+                      value={address}
+                      onChange={(e) => { setAddress(e.target.value); setErrors((p) => ({ ...p, address: false })); }}
+                    />
+                  </div>
 
-              <div className="grid">
-                <div className="field">
-                  <label className={errors.city ? "error-label" : ""}>City *</label>
-                  <input
-                    className={errors.city ? "error-input" : ""}
-                    value={city}
-                    onChange={(e) => { setCity(e.target.value); setErrors((p) => ({ ...p, city: false })); }}
-                  />
+                  <div className="grid">
+                    <div className="field">
+                      <label className={errors.city ? "error-label" : ""}>City *</label>
+                      <input
+                        className={errors.city ? "error-input" : ""}
+                        value={city}
+                        onChange={(e) => { setCity(e.target.value); setErrors((p) => ({ ...p, city: false })); }}
+                      />
+                    </div>
+
+                    <div className="field">
+                      <label className={errors.pincode ? "error-label" : ""}>Pincode *</label>
+                      <input
+                        className={errors.pincode ? "error-input" : ""}
+                        value={pincode}
+                        onChange={(e) => { setPincode(e.target.value); setErrors((p) => ({ ...p, pincode: false })); }}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Current Location Mode: Dummy Map */}
+              {addressMode === "current" && (
+                <div style={{ marginTop: 12 }}>
+                  <div
+                    style={{
+                      height: 200,
+                      borderRadius: 10,
+                      background: "#e2e8f0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#475569",
+                      fontWeight: 700,
+                      border: "1px solid #D1D5DB",
+                    }}
+                  >
+                    📍 Dummy Map Preview (Static) — current location will be captured here
+                  </div>
                 </div>
+              )}
 
-                <div className="field">
-                  <label className={errors.pincode ? "error-label" : ""}>Pincode *</label>
-                  <input
-                    className={errors.pincode ? "error-input" : ""}
-                    value={pincode}
-                    onChange={(e) => { setPincode(e.target.value); setErrors((p) => ({ ...p, pincode: false })); }}
-                  />
-                </div>
-              </div>
-
-              <div className="field">
+              <div className="field" style={{ marginTop: 12 }}>
                 <label className={errors.instructions ? "error-label" : ""}>Instructions for Candidate (max 500 chars)</label>
                 <textarea
                   rows={4}
@@ -325,7 +401,6 @@ const emailValid = (em) => {
                 {startDate && endDate && startTime && endTime && (
                   <div className="preview-box">{formatSummaryDateTime(startDate, startTime, endDate, endTime)}</div>
                 )}
-
               </div>
             </>
           )}
@@ -364,7 +439,7 @@ const emailValid = (em) => {
                 checked={commPref === "no"}
                 onChange={() => { setCommPref("no"); setErrors((p) => ({ ...p, commPref: false })); }}
               />
-              No, I will contact candidates myself
+              No, I will contact candidates first
             </label>
           </div>
 
@@ -428,11 +503,21 @@ const emailValid = (em) => {
               />
               Only matched candidates (~30% of all candidates)
             </label>
+
+            <label>
+              <input
+                type="radio"
+                name="contactAccess"
+                checked={contactAccess === "none"}
+                onChange={() => { setContactAccess("none"); setErrors((p) => ({ ...p, contactAccess: false })); }}
+              />
+              None can contact me
+            </label>
           </div>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
             <div style={{ color: "#475569" }}>Do you want WhatsApp alerts from Naukri Chaahiye? <FaWhatsapp color="#25D366" size={18} /></div>
-            <ToggleSwitch value={whatsappAlerts} onChange={setWhatsappAlerts} />
+            <ToggleSwitch value={whatsappAlerts} onChange={(v) => setWhatsappAlerts(v)} />
           </div>
 
         </div>
@@ -455,6 +540,7 @@ const emailValid = (em) => {
               // quick-save without validation
               setStep3Data({
                 walkinEnabled,
+                addressMode,
                 startDate: startDate ? startDate.toISOString() : null,
                 endDate: endDate ? endDate.toISOString() : null,
                 startTime,

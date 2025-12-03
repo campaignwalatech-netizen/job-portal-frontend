@@ -1,175 +1,244 @@
+import { useState } from "react";
 import {
   Box,
-  Typography,
   TextField,
   Button,
+  Typography,
   Checkbox,
   FormControlLabel,
-  Paper,
+  CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function EmployerRegister() {
-  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [isConsultancy, setIsConsultancy] = useState(false);
+  const [terms, setTerms] = useState(false);
 
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    company: "",
-    isConsultancy: false,
-    agree: false,
-  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null);
 
-  const handleChange = (key, value) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // ---------------------------------------------------------
+  // MOCK BACKEND API
+  // ---------------------------------------------------------
+  const mockRegisterAPI = async (payload) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          status: "success",
+          message: "Registered successfully",
+          employerId: "EMP_" + Math.floor(Math.random() * 100000),
+          payload,
+        });
+      }, 1200);
+    });
   };
 
-  const handleRegister = () => {
-    if (!form.fullName || !form.email || !form.company || !form.agree) {
-      alert("Please fill all required fields.");
-      return;
-    }
+  const validate = () => {
+    const e = {};
+    if (!fullName) e.fullName = true;
+    if (!email || !emailRegex.test(email)) e.email = true;
+    if (!companyName) e.companyName = true;
+    if (!terms) e.terms = true;
 
-    navigate("/employer");
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleRegister = async () => {
+    if (!validate()) return;
+
+    setLoading(true);
+    setToast(null);
+
+    const payload = {
+      fullName,
+      email,
+      companyName,
+      isConsultancy,
+    };
+
+    const res = await mockRegisterAPI(payload);
+    setLoading(false);
+
+    if (res.status === "success") {
+      setToast({
+        type: "success",
+        message: "Registration Successful",
+      });
+
+      setTimeout(() => {
+        window.location.href = "/employer/post-job";
+      }, 1500);
+    }
   };
 
   return (
     <Box
       sx={{
+        width: "100%",
         minHeight: "100vh",
-        background: "#f9fafb",
         display: "flex",
-        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
-        pt: 8,
+        background: "#f8faff",
+        p: 2,
+        position: "relative",
       }}
     >
-      {/* Logo + Name */}
-      <Box sx={{ textAlign: "center", mb: 4 }}>
-        <img src="/logo.svg" width={60} alt="logo" />
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: 700, mt: 1, color: "#2563eb" }}
+      {/* SUCCESS TOAST */}
+      {toast && (
+        <div
+          style={{
+            position: "fixed",
+            top: "30px",
+            right: "30px",
+            background: "#12B76A",
+            padding: "14px 20px",
+            borderRadius: "10px",
+            color: "white",
+            fontSize: "15px",
+            fontWeight: 600,
+            boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
+            animation: "slideIn 0.4s ease-out",
+          }}
         >
-          Naukri Chaahiye
-        </Typography>
-      </Box>
+          {toast.message}
+        </div>
+      )}
 
-      {/* Form Card */}
-      <Paper
-        elevation={1}
+      <style>
+        {`
+          @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}
+      </style>
+
+      {/* CARD */}
+      <Box
         sx={{
           width: "420px",
-          maxWidth: "95%",
-          p: 4,
+          background: "#fff",
+          p: 5,
           borderRadius: "14px",
+          boxShadow: "0 10px 35px rgba(0,0,0,0.08)",
+          textAlign: "center",
         }}
       >
-        <Typography
-          sx={{ fontSize: "22px", fontWeight: 700, textAlign: "center", mb: 1 }}
-        >
+        {/* LOGO */}
+        <img src="/logo.svg" alt="logo" style={{ width: 48, margin: "0 auto 10px" }} />
+
+        <Typography sx={{ fontSize: "24px", fontWeight: 700, mb: 1 }}>
           Create Your Employer Account
         </Typography>
 
-        <Typography
-          sx={{
-            textAlign: "center",
-            color: "#64748b",
-            fontSize: "14px",
-            mb: 3,
-          }}
-        >
-          Join Naukri Chaahiye to streamline your hiring process.
+        <Typography sx={{ color: "#6b7280", fontSize: "14px", mb: 4 }}>
+          Join Naukri Chahiye to streamline your hiring process.
         </Typography>
 
-        {/* Full Name */}
+        {/* FULL NAME */}
         <TextField
-          fullWidth
           label="Full Name"
-          value={form.fullName}
-          onChange={(e) => handleChange("fullName", e.target.value)}
+          fullWidth
           sx={{ mb: 2 }}
+          value={fullName}
+          error={errors.fullName}
+          onChange={(e) => {
+            setFullName(e.target.value);
+            setErrors((prev) => ({ ...prev, fullName: false }));
+          }}
         />
 
-        {/* Email */}
+        {/* EMAIL */}
         <TextField
-          fullWidth
           label="Email"
-          value={form.email}
-          onChange={(e) => handleChange("email", e.target.value)}
-          sx={{ mb: 2 }}
-        />
-
-        {/* Company Name */}
-        <TextField
           fullWidth
-          label="Company Name"
-          value={form.company}
-          onChange={(e) => handleChange("company", e.target.value)}
-          sx={{ mb: 1 }}
+          sx={{ mb: 2 }}
+          value={email}
+          error={errors.email}
+          helperText={errors.email ? "Enter a valid email" : ""}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setErrors((prev) => ({ ...prev, email: false }));
+          }}
         />
 
-        {/* Checkboxes */}
+        {/* COMPANY NAME */}
+        <TextField
+          label="Company Name"
+          fullWidth
+          sx={{ mb: 2 }}
+          value={companyName}
+          error={errors.companyName}
+          onChange={(e) => {
+            setCompanyName(e.target.value);
+            setErrors((prev) => ({ ...prev, companyName: false }));
+          }}
+        />
+
+        {/* CONSULTANCY CHECK */}
         <FormControlLabel
           control={
             <Checkbox
-              checked={form.isConsultancy}
-              onChange={(e) =>
-                handleChange("isConsultancy", e.target.checked)
-              }
+              checked={isConsultancy}
+              onChange={(e) => setIsConsultancy(e.target.checked)}
             />
           }
           label="This is a consultancy firm"
+          sx={{ width: "100%", mt: 1, mb: 1, justifyContent: "flex-start" }}
         />
 
+        {/* TERMS CHECK */}
         <FormControlLabel
           control={
             <Checkbox
-              checked={form.agree}
-              onChange={(e) => handleChange("agree", e.target.checked)}
+              checked={terms}
+              onChange={(e) => {
+                setTerms(e.target.checked);
+                setErrors((prev) => ({ ...prev, terms: false }));
+              }}
             />
           }
-          label="I agree to the Terms and Conditions"
+          label={
+            <span style={{ color: errors.terms ? "#dc2626" : "#0b2236" }}>
+              I agree to the Terms and Conditions
+            </span>
+          }
+          sx={{ width: "100%", mt: 0, mb: 2, justifyContent: "flex-start" }}
         />
 
-        {/* Register Button */}
+        {/* REGISTER BUTTON */}
         <Button
           variant="contained"
           fullWidth
-          sx={{
-            mt: 2,
-            py: 1.4,
-            fontSize: "15px",
-            textTransform: "none",
-            borderRadius: "10px",
-          }}
           onClick={handleRegister}
+          disabled={loading}
+          sx={{
+            background: "#1e63d6",
+            borderRadius: "10px",
+            py: 1.3,
+            fontSize: "16px",
+            textTransform: "none",
+            mt: 2,
+          }}
         >
-          Register
+          {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Register"}
         </Button>
 
-        <Typography
-          sx={{
-            textAlign: "center",
-            mt: 2,
-            fontSize: "14px",
-            color: "#475569",
-          }}
-        >
+        {/* SIGN IN */}
+        <Typography sx={{ mt: 3, fontSize: "14px" }}>
           Already have an account?{" "}
-          <span
-            style={{ color: "#2563eb", cursor: "pointer" }}
-            onClick={() => navigate("/employer-login")}
-          >
+          <a href="/employer" style={{ color: "#1e63d6", fontWeight: 600 }}>
             Sign In
-          </span>
+          </a>
         </Typography>
-      </Paper>
-
-      <Typography sx={{ mt: 5, fontSize: "12px", color: "#94a3b8" }}>
-        Made with 💙 by Afreeda Asad
-      </Typography>
+      </Box>
     </Box>
   );
 }
