@@ -5,8 +5,6 @@ import SuccessStories from "../Employee/EmployeeSuccessStories";
 export default function EmployeeHero() {
   const [step, setStep] = useState("phone");
   const [phone, setPhone] = useState("");
-
-  const STATIC_OTP = "1234";
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(30);
 
@@ -56,13 +54,30 @@ export default function EmployeeHero() {
     }
   };
 
-  const verifyOtp = () => {
-    if (otp.join("") === STATIC_OTP) {
-      window.location.href = "/employee/dashboard";
+const verifyOtp = async () => {
+  const code = otp.join(""); // combine OTP digits
+
+  try {
+    const res = await verifyOtpAPI(phone, "employee", code);
+
+    const token = res.data.token;
+    const isNew = res.data.isNewUser;
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", "employee");
+    localStorage.setItem("phone", phone);
+
+    if (isNew) {
+      window.location.href = "/employee/register";
     } else {
-      alert("Incorrect OTP");
+      window.location.href = "/employee/dashboard";
     }
-  };
+
+  } catch (error) {
+    alert("Invalid OTP");
+  }
+};
+
 
  return (
   <Box
@@ -218,14 +233,17 @@ export default function EmployeeHero() {
                 py: 1.4,
                 textTransform: "none",
               }}
-              onClick={() => {
-                if (phone.length === 10) {
+              onClick={async () => {
+                if (phone.length !== 10) return alert("Enter valid number");
+                try {
+                  await sendOtp(phone, "employee");  
                   setStep("otp");
                   setTimer(30);
-                } else {
-                  alert("Enter valid number");
+                } catch (error) {
+                  alert("Error sending OTP");
                 }
               }}
+
             >
               Get Started Now
             </Button>
