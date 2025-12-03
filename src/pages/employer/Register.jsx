@@ -40,37 +40,39 @@ export default function EmployerRegister() {
     return Object.keys(e).length === 0;
   };
 
-  const handleRegister = async () => {
-    if (!validate()) return;
+const handleRegister = async () => {
+  if (!validate()) return;
 
-    setLoading(true);
-    const token = localStorage.getItem("token");
-    setToast(null);
+  setLoading(true);
+  setToast(null);
 
-    const payload = {
-      name: fullName,
-      email,
-      companyName,
-      employeeNumber: companySize,
-      isConsultancy,
-    };
+  const token = localStorage.getItem("token");
 
-    try {
+  const payload = {
+    fullName,
+    email,
+    companyName,
+    employeeNumber: companySize,
+    isConsultancy
+  };
+
+  try {
     await completeEmployerRegister(payload, token);
 
-setLoading(false);
-setToast({ message: "Registration Successful!" });
+    setLoading(false);
+    setToast({ message: "Registration Successful!" });
 
-setTimeout(() => {
-  window.location.href = "/employer/post-job";
-}, 800);
-
+    setTimeout(() => {
+      window.location.href = "/employer/post-job";
+    }, 800);
 
   } catch (error) {
     setLoading(false);
+    console.error(error);
     alert("Registration failed");
   }
-  };
+};
+
 
   return (
     <Box

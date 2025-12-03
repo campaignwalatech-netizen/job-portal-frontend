@@ -19,11 +19,22 @@ export const verifyOtpAPI = async (phone, role = "employer", otp) => {
   });
 };
 
-// Complete Registration (if profile is incomplete)
+// Complete Employer Registration
 export const completeEmployerRegister = async (data, token) => {
-  return await axios.post(`${API}/employer`, data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  return await axios.post(
+    `${API}/employer`,
+    {
+      fullName: data.fullName,
+      email: data.email,
+      companyName: data.companyName,
+      employeeNumber: data.employeeNumber,
+      isConsultancy: data.isConsultancy ? "true" : "false",
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
