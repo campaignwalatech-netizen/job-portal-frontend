@@ -8,6 +8,8 @@ import {
   FormControlLabel,
   CircularProgress,
 } from "@mui/material";
+import { completeEmployerRegister } from "../../api/auth";
+
 
 export default function EmployerRegister() {
   const [fullName, setFullName] = useState("");
@@ -19,24 +21,12 @@ export default function EmployerRegister() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
+  const [companySize, setCompanySize] = useState("");
+
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // ---------------------------------------------------------
-  // MOCK BACKEND API
-  // ---------------------------------------------------------
-  const mockRegisterAPI = async (payload) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          status: "success",
-          message: "Registered successfully",
-          employerId: "EMP_" + Math.floor(Math.random() * 100000),
-          payload,
-        });
-      }, 1200);
-    });
-  };
+
 
   const validate = () => {
     const e = {};
@@ -44,6 +34,7 @@ export default function EmployerRegister() {
     if (!email || !emailRegex.test(email)) e.email = true;
     if (!companyName) e.companyName = true;
     if (!terms) e.terms = true;
+    if (!companySize) e.companySize = true;
 
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -53,28 +44,27 @@ export default function EmployerRegister() {
     if (!validate()) return;
 
     setLoading(true);
+    const token = localStorage.getItem("token");
     setToast(null);
 
     const payload = {
-      fullName,
+      name: fullName,
       email,
       companyName,
+      employeeNumber: companySize,
       isConsultancy,
     };
 
-    const res = await mockRegisterAPI(payload);
+    try {
+    await completeEmployerRegister(payload, token);
+
     setLoading(false);
+    window.location.href = "/employer/post-job";
 
-    if (res.status === "success") {
-      setToast({
-        type: "success",
-        message: "Registration Successful",
-      });
-
-      setTimeout(() => {
-        window.location.href = "/employer/post-job";
-      }, 1500);
-    }
+  } catch (error) {
+    setLoading(false);
+    alert("Registration failed");
+  }
   };
 
   return (
@@ -181,6 +171,27 @@ export default function EmployerRegister() {
             setErrors((prev) => ({ ...prev, companyName: false }));
           }}
         />
+        {/* COMPANY SIZE DROPDOWN */}
+<TextField
+  select
+  label="Company Size"
+  fullWidth
+  SelectProps={{ native: true }}
+  sx={{ mb: 2 }}
+  value={companySize}
+  error={errors.companySize}
+  onChange={(e) => {
+    setCompanySize(e.target.value);
+    setErrors((prev) => ({ ...prev, companySize: false }));
+  }}
+>
+  <option value="">Select Company Size</option>
+  <option value="1-50">1–50 employees</option>
+  <option value="50-200">50–200 employees</option>
+  <option value="200-1000">200–1000 employees</option>
+  <option value="1000+">1000+ employees</option>
+</TextField>
+
 
         {/* CONSULTANCY CHECK */}
         <FormControlLabel

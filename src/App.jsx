@@ -12,13 +12,6 @@ const EmployerDashboard = lazy(() => import('./pages/employer/EmployerDashboard'
 const PostJob = lazy(() => import('./pages/employer/PostJob/PostJobWrapper'));
 const EmployerRegister = lazy(() => import('./pages/employer/Register'));
 
-
-
-
-
-
-
-
 const theme = createTheme({
   palette: {
     primary: { main: "#2563eb" },
@@ -45,6 +38,7 @@ function App() {
             <Route path="*" element={<JobPortalLanding />} />
             <Route path="/employer/post-job" element={<PostJob />} />
             <Route path="/employer/register" element={<EmployerRegister />} />
+            
           </Routes>
         </Suspense>
       </BrowserRouter>

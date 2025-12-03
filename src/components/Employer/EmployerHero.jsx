@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
+import { sendOtp, verifyOtpAPI } from "../../api/auth";
+
 
 
 export default function EmployerHero() {
@@ -7,7 +9,6 @@ export default function EmployerHero() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(30);
-  const STATIC_OTP = "1234";
 
   const [count, setCount] = useState({
     candidates: 0,
@@ -55,13 +56,29 @@ export default function EmployerHero() {
     }
   };
 
-  const verifyOtp = () => {
-    if (otp.join("") === STATIC_OTP) {
-      window.location.href = "/employer/post-job";
+const verifyOtp = async () => {
+  const code = otp.join(""); // combine entered OTP digits
+
+  try {
+    const res = await verifyOtpAPI(phone, "employer", code);
+
+    const token = res.data.token;
+    const isNew = res.data.isNewUser;
+    
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", "employer");
+    localStorage.setItem("phone", phone);
+
+    if (isNew) {
+      window.location.href = "/employer/register";
     } else {
-      alert("Incorrect OTP");
+      window.location.href = "/employer/post-job";
     }
-  };
+  } catch (err) {
+    alert("Invalid OTP");
+  }
+};
+
 
   return (
     <Box
@@ -163,14 +180,16 @@ export default function EmployerHero() {
             <Button
               variant="contained"
               fullWidth
-              onClick={() => {
-                if (phone.length === 10) {
-                  setStep("otp");
-                  setTimer(30);
-                } else {
-                  alert("Enter valid number");
+              onClick={async () => {
+                if (phone.length !== 10) return alert("Enter valid number");
+                try {
+                  await sendOtp(phone, "employer");
+                } catch (error) {
+                alert("Error sending OTP");
+                console.error(error);
                 }
               }}
+
               sx={{
                 background: "#1e63d6",
                 borderRadius: "10px",
