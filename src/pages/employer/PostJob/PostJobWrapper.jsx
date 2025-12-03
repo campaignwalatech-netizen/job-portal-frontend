@@ -16,6 +16,9 @@ export default function PostJobWrapper() {
     step2: {},
     step3: {},
   });
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [step]);
 
   const renderStep = () => {
     switch (step) {

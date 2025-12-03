@@ -184,9 +184,11 @@ const togglePerk = (perk) => {
       newErrors.maxIncentive = true;
 
     // Joining fee
-    if (!joiningFee) newErrors.joiningFee = true;
-    if (joiningFee === "yes" && !joiningAmount)
-      newErrors.joiningAmount = true;
+if (joiningFee === "yes") {
+  if (!joiningAmount) newErrors.joiningAmount = true;
+  if (!joiningComment) newErrors.joiningComment = true;
+}
+
 
     setErrors(newErrors);
 
@@ -945,9 +947,19 @@ setStep1Data({
   <ToggleSwitch
     value={joiningFee === "yes"}
     onChange={(v) => {
-      setJoiningFee(v ? "yes" : "no");
-      setErrors((p) => ({ ...p, joiningFee: false }));
-    }}
+  setJoiningFee(v ? "yes" : "no");
+  // Clear dependent errors when turning OFF
+  if (!v) {
+    setJoiningAmount("");
+    setJoiningComment("");
+    setErrors((p) => ({
+      ...p,
+      joiningAmount: false,
+      joiningComment: false
+    }));
+  }
+}}
+
   />
 </div>
 
