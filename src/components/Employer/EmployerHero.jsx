@@ -57,17 +57,23 @@ export default function EmployerHero() {
   };
 
 const verifyOtp = async () => {
-  const code = otp.join(""); // combine entered OTP digits
+  const code = otp.join("");
+
+  if (code.length !== 4) {
+    alert("Enter 4-digit OTP");
+    return;
+  }
 
   try {
     const res = await verifyOtpAPI(phone, "employer", code);
 
     const token = res.data.token;
-    const isNew = res.data.isNewUser;
-    
+    const user = res.data.user;
+    const isNew = !user.profileCompleted; // CORRECT CHECK
+
     localStorage.setItem("token", token);
-    localStorage.setItem("role", "employer");
-    localStorage.setItem("phone", phone);
+    localStorage.setItem("role", user.role);
+    localStorage.setItem("phone", user.phone);
 
     if (isNew) {
       window.location.href = "/employer/register";
@@ -75,9 +81,11 @@ const verifyOtp = async () => {
       window.location.href = "/employer/post-job";
     }
   } catch (err) {
-    alert("Invalid OTP");
+    alert("Invalid or expired OTP");
+    console.error(err);
   }
 };
+
 
 
   return (
@@ -181,15 +189,19 @@ const verifyOtp = async () => {
               variant="contained"
               fullWidth
               onClick={async () => {
-                if (phone.length !== 10) return alert("Enter valid number");
+                if (!/^[0-9]{10}$/.test(phone)) {
+                  alert("Enter a valid 10-digit number");
+                  return;
+                }
                 try {
                   await sendOtp(phone, "employer");
+                  setStep("otp");
+                  setTimer(30);
                 } catch (error) {
-                alert("Error sending OTP");
-                console.error(error);
+                  alert("Error sending OTP");
+                  console.error(error);
                 }
               }}
-
               sx={{
                 background: "#1e63d6",
                 borderRadius: "10px",
@@ -237,9 +249,20 @@ const verifyOtp = async () => {
 
             <Typography sx={{ mb: 2 }}>
               {timer === 0 ? (
-                <span onClick={() => setTimer(30)} style={{ color: "#1e63d6", cursor: "pointer" }}>
-                  Resend OTP
-                </span>
+                <span
+  onClick={async () => {
+    try {
+      await sendOtp(phone, "employer");
+      setTimer(30);
+    } catch (error) {
+      alert("Error resending OTP");
+    }
+  }}
+  style={{ color: "#1e63d6", cursor: "pointer" }}
+>
+  Resend OTP
+</span>
+
               ) : (
                 <span style={{ color: "#1e63d6" }}>Resend OTP in {timer}s</span>
               )}

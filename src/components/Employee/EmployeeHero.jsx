@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import SuccessStories from "../Employee/EmployeeSuccessStories";
+import { sendOtp, verifyOtpAPI } from "../../api/auth";
+
 
 export default function EmployeeHero() {
   const [step, setStep] = useState("phone");
@@ -55,17 +57,23 @@ export default function EmployeeHero() {
   };
 
 const verifyOtp = async () => {
-  const code = otp.join(""); // combine OTP digits
+  const code = otp.join("");
+
+  if (code.length !== 4) {
+    alert("Enter 4-digit OTP");
+    return;
+  }
 
   try {
     const res = await verifyOtpAPI(phone, "employee", code);
 
     const token = res.data.token;
-    const isNew = res.data.isNewUser;
+    const user = res.data.user;
+    const isNew = !user.profileCompleted;
 
     localStorage.setItem("token", token);
-    localStorage.setItem("role", "employee");
-    localStorage.setItem("phone", phone);
+    localStorage.setItem("role", user.role);
+    localStorage.setItem("phone", user.phone);
 
     if (isNew) {
       window.location.href = "/employee/register";
@@ -74,9 +82,11 @@ const verifyOtp = async () => {
     }
 
   } catch (error) {
-    alert("Invalid OTP");
+    alert("Invalid or expired OTP");
+    console.error(error);
   }
 };
+
 
 
  return (

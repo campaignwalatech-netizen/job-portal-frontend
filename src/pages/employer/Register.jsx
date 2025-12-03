@@ -58,8 +58,13 @@ export default function EmployerRegister() {
     try {
     await completeEmployerRegister(payload, token);
 
-    setLoading(false);
-    window.location.href = "/employer/post-job";
+setLoading(false);
+setToast({ message: "Registration Successful!" });
+
+setTimeout(() => {
+  window.location.href = "/employer/post-job";
+}, 800);
+
 
   } catch (error) {
     setLoading(false);
