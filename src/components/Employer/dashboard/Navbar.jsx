@@ -9,7 +9,7 @@ export default function Navbar({ mobile = false, closeDrawer = () => {} }) {
   const location = useLocation();
 
   const menu = [
-    { label: "Jobs", icon: <WorkIcon />, path: "/employer/dashboard/home" },
+    { label: "Jobs", icon: <WorkIcon />, path: "/employer/dashboard/job-listing" },
     { label: "Database", icon: <StorageIcon />, path: "/employer/dashboard/database" },
     { label: "Credits & Usage", icon: <CreditScoreIcon />, path: "/employer/dashboard/credits" },
     { label: "Billing", icon: <ReceiptIcon />, path: "/employer/dashboard/billing" },

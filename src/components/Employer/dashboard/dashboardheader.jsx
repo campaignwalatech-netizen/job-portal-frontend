@@ -59,7 +59,7 @@ export default function DashboardHeader() {
               whiteSpace: "nowrap",
             }}
           >
-            Naukri Chahiye
+            Naukri Chaahiye
           </Typography>
         </Box>
 

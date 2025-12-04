@@ -2,7 +2,7 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react'; 
 
 const JobPortalLanding = lazy(() => import('./pages/Home/JobPortalLanding'));
 const EmployeeLanding = lazy(() => import('./pages/employee/EmployeeLanding'));
@@ -13,6 +13,9 @@ const PostJob = lazy(() => import('./pages/employer/PostJob/PostJobWrapper'));
 const EmployerRegister = lazy(() => import('./pages/employer/Register'));
 const EmployeeRegister = lazy(() => import('./pages/employee/register'));
 const EmployerVerification = lazy(() => import('./pages/employer/EmployerVerification'));
+const JobManagement = lazy(() => import('./pages/employer/jobs/JobManagement'));
+const EmployerDashboardHome = lazy(() => import('./pages/employer/EmployerDashboardHome'));
+
 
 
 
@@ -36,7 +39,6 @@ function App() {
           <Routes>
             <Route path="/" element={<JobPortalLanding />} />
             <Route path="/employer" element={<EmployerLanding />} />
-            <Route path="/employer/dashboard" element={<EmployerDashboard />} />
             <Route path="/employee" element={<EmployeeLanding />} />
             <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
             <Route path="*" element={<JobPortalLanding />} />
@@ -44,6 +46,12 @@ function App() {
             <Route path="/employer/register" element={<EmployerRegister />} />
             <Route path="/employee/register" element={<EmployeeRegister />} />
             <Route path="/employer/verification" element={<EmployerVerification />} />
+            <Route path="/employer/dashboard" element={<EmployerDashboard />}>
+              <Route index element={<EmployerDashboardHome />} />
+              <Route path="home" element={<EmployerDashboardHome />} />
+              <Route path="job-listing" element={<JobManagement />} />
+            </Route>
+
 
 
           </Routes>
