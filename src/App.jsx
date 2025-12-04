@@ -12,6 +12,8 @@ const EmployerDashboard = lazy(() => import('./pages/employer/EmployerDashboard'
 const PostJob = lazy(() => import('./pages/employer/PostJob/PostJobWrapper'));
 const EmployerRegister = lazy(() => import('./pages/employer/Register'));
 const EmployeeRegister = lazy(() => import('./pages/employee/register'));
+const EmployerVerification = lazy(() => import('./pages/employer/EmployerVerification'));
+
 
 
 const theme = createTheme({
@@ -41,6 +43,7 @@ function App() {
             <Route path="/employer/post-job" element={<PostJob />} />
             <Route path="/employer/register" element={<EmployerRegister />} />
             <Route path="/employee/register" element={<EmployeeRegister />} />
+            <Route path="/employer/verification" element={<EmployerVerification />} />
 
 
           </Routes>

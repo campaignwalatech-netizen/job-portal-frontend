@@ -4,9 +4,8 @@ import WorkIcon from "@mui/icons-material/Work";
 import StorageIcon from "@mui/icons-material/Storage";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import VerifiedIcon from "@mui/icons-material/Verified";
 
-export default function Navbar() {
+export default function Navbar({ mobile = false, closeDrawer = () => {} }) {
   const location = useLocation();
 
   const menu = [
@@ -14,7 +13,6 @@ export default function Navbar() {
     { label: "Database", icon: <StorageIcon />, path: "/employer/dashboard/database" },
     { label: "Credits & Usage", icon: <CreditScoreIcon />, path: "/employer/dashboard/credits" },
     { label: "Billing", icon: <ReceiptIcon />, path: "/employer/dashboard/billing" },
-    { label: "Verification", icon: <VerifiedIcon />, path: "/employer/dashboard/verification" },
   ];
 
   return (
@@ -22,9 +20,8 @@ export default function Navbar() {
       sx={{
         width: "240px",
         background: "#ffffff",
-        borderRight: "1px solid #e5e7eb",
-        display: { xs: "none", md: "block" },
         pt: 3,
+        display: mobile ? "block" : { xs: "none", md: "block" },
       }}
     >
       {menu.map((item) => {
@@ -34,6 +31,7 @@ export default function Navbar() {
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={closeDrawer}
             style={{ textDecoration: "none" }}
           >
             <Box

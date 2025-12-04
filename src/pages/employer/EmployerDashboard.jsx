@@ -1,32 +1,21 @@
-import { Outlet, Navigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import DashboardHeader from "../../components/Employer/dashboard/dashboardheader";
 import Navbar from "../../components/Employer/dashboard/Navbar";
+import EmployerDashboardHome from "./EmployerDashboardHome";
+import FooterMain from "../../components/common/Footer/FooterMain";
 
 export default function EmployerDashboard() {
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", background: "#f8fafc" }}>
-      {/* LEFT SIDEBAR */}
-      <Navbar />
+    <Box sx={{ minHeight: "100vh", background: "#f8fafc" }}>
 
-      {/* RIGHT AREA */}
-      <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-        {/* TOP HEADER */}
-        <DashboardHeader />
-
-        {/* PAGE CONTENT */}
-        <Box
-          sx={{
-            flexGrow: 1,
-            p: { xs: 2, md: 4 },
-            maxWidth: "1200px",
-            margin: "0 auto",
-            width: "100%",
-          }}
-        >
-          <Outlet />
+      <DashboardHeader />
+      <Box sx={{ display: "flex" }}>
+        <Navbar />
+        <Box sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, width: "100%", maxWidth: { md: "1200px" }, mx: "auto", }} >
+          <EmployerDashboardHome />
         </Box>
       </Box>
+      <FooterMain />
     </Box>
   );
 }
