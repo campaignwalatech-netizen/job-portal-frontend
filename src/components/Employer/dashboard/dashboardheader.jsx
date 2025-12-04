@@ -4,11 +4,20 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar"; 
+import { keyframes } from "@mui/system";
+  const bellBounce = keyframes`
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+`;
 
 
 export default function DashboardHeader() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+
+
 
   return (
     <>
@@ -67,14 +76,37 @@ export default function DashboardHeader() {
 
         {/* RIGHT SIDE BUTTONS */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <IconButton
-            onClick={() => navigate("/notifications")}
-            sx={{ "&:hover": { background: "rgba(30,99,214,0.08)" } }}
-          >
-            <Badge variant="dot" color="error">
-              <NotificationsNoneIcon sx={{ fontSize: 24, color: "#1e293b" }} />
-            </Badge>
-          </IconButton>
+<IconButton
+  onClick={() => {
+    const el = document.getElementById("notif-bell");
+    if (el) {
+      el.classList.remove("animate");
+    }
+    void document.getElementById("notif-bell")?.offsetWidth;
+    document.getElementById("notif-bell")?.classList.add("animate");
+
+    navigate("/employer/dashboard/notifications");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }}
+  sx={{
+    "&:hover": { background: "rgba(30,99,214,0.08)" }
+  }}
+>
+  <Badge variant="dot" color="error">
+    <NotificationsNoneIcon
+      id="notif-bell"
+      sx={{
+        fontSize: 24,
+        color: "#1e293b",
+        "&.animate": {
+          animation: `${bellBounce} 0.4s ease`,
+        },
+      }}
+    />
+  </Badge>
+</IconButton>
+
+
 
           <Typography
             onClick={() => navigate("/employer/dashboard/credits")}

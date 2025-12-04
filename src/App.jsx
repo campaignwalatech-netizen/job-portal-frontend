@@ -16,6 +16,7 @@ const EmployerVerification = lazy(() => import('./pages/employer/EmployerVerific
 const JobManagement = lazy(() => import('./pages/employer/jobs/JobManagement'));
 const EmployerDashboardHome = lazy(() => import('./pages/employer/EmployerDashboardHome'));
 const SearchCandidates = lazy(() => import('./pages/employer/database/SearchCandidates'));
+const Notifications = lazy(() => import('./pages/employer/notifications'));
 
 
 
@@ -52,6 +53,7 @@ function App() {
               <Route path="home" element={<EmployerDashboardHome />} />
               <Route path="job-listing" element={<JobManagement />} />
               <Route path="database/search" element={<SearchCandidates />} />
+              <Route path="notifications" element={<Notifications />} />
 
             </Route>
 
