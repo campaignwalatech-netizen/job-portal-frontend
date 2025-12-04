@@ -291,10 +291,11 @@ pb: { xs: 0, md: 14 },
 >
   <Box
     component="img"
-    src="/banner-image.webp"
+    src="/banner-photo.webp"
     alt="hero"
     sx={{
-      width: { xs: "85%", sm: "75%", md: "100%" },
+      width: { xs: "85%", sm: "40%", md: "75%" },
+      marginRight: {xs: 0, sm: 0, md: -18, lg: -10},
       maxWidth: "750px",
       objectFit: "contain",
     }}
