@@ -43,3 +43,22 @@ button {
 .hidden { display: none !important; }
 .flex { display: flex; }
 .center { display: flex; align-items: center; justify-content: center; }
+
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cfd8e3;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8c4d6;
+}

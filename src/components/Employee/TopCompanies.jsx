@@ -19,8 +19,8 @@ const scrollLeft = {
   display: "flex",
   gap: 3,
   animation: {
-    xs: "slide-left 4s linear infinite",   // mobile = fast
-    md: "slide-left 15s linear infinite",  // desktop = normal
+    xs: "slide-left 4s linear infinite",  
+    md: "slide-left 15s linear infinite",
   },
   "&:hover": { animationPlayState: "paused" },
 };
@@ -29,8 +29,8 @@ const scrollRight = {
   display: "flex",
   gap: 3,
   animation: {
-    xs: "slide-right 4s linear infinite",  // mobile fast
-    md: "slide-right 15s linear infinite", // desktop normal
+    xs: "slide-right 4s linear infinite", 
+    md: "slide-right 15s linear infinite", 
   },
   "&:hover": { animationPlayState: "paused" },
 };

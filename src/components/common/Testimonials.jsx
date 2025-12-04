@@ -5,7 +5,6 @@ export default function Testimonials({ testimonials }) {
   const GAP = 32;
   const CARD_WIDTH = 360;
 
-  // Create 2 clones on each side
   const extended = [
     testimonials[testimonials.length - 2],
     testimonials[testimonials.length - 1],
@@ -14,11 +13,9 @@ export default function Testimonials({ testimonials }) {
     testimonials[1],
   ];
 
-  // Index starts at 2 because first real card = extended[2]
   const [index, setIndex] = useState(2);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
-  // Autoplay
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => prev + 1);
@@ -26,35 +23,29 @@ export default function Testimonials({ testimonials }) {
     return () => clearInterval(interval);
   }, []);
 
-  // Loop handling
   useEffect(() => {
-    // If we reach the right clones → jump back to real start
     if (index === extended.length - 2) {
       setTimeout(() => {
         setIsTransitioning(false);
-        setIndex(2); // real card 0
+        setIndex(2);
         setTimeout(() => setIsTransitioning(true), 30);
       }, 700);
     }
-
-    // If we reach left clones → jump to real end
     if (index === 1) {
       setTimeout(() => {
         setIsTransitioning(false);
-        setIndex(extended.length - 3); // last real card
+        setIndex(extended.length - 3); 
         setTimeout(() => setIsTransitioning(true), 30);
       }, 700);
     }
   }, [index, extended.length]);
 
-  // Center active card
   const transformValue = `translateX(calc(-${
     index * (CARD_WIDTH + GAP)
   }px + 50% - ${CARD_WIDTH / 2}px))`;
 
   return (
     <Box sx={{ paddingY: 10, background: "#ffffff" }}>
-      {/* Heading */}
       <Typography
         sx={{
           textAlign: "center",
@@ -77,7 +68,6 @@ export default function Testimonials({ testimonials }) {
         Don't trust us right away, see what our customers have to say!
       </Typography>
 
-      {/* OUTER WRAPPER — must not use flex */}
       <Box
         sx={{
           width: "100%",
@@ -85,7 +75,6 @@ export default function Testimonials({ testimonials }) {
           position: "relative",
         }}
       >
-        {/* TRACK */}
         <Box
           sx={{
             display: "flex",
@@ -118,7 +107,6 @@ export default function Testimonials({ testimonials }) {
                   position: "relative",
                 }}
               >
-                {/* Quote icon */}
                 <Typography
                   sx={{
                     position: "absolute",
@@ -132,7 +120,6 @@ export default function Testimonials({ testimonials }) {
                   ”
                 </Typography>
 
-                {/* Title */}
                 <Typography
                   sx={{
                     fontSize: "19px",
@@ -143,7 +130,6 @@ export default function Testimonials({ testimonials }) {
                   {item.title}
                 </Typography>
 
-                {/* Description */}
                 <Typography
                   sx={{
                     mt: 2,
@@ -154,7 +140,6 @@ export default function Testimonials({ testimonials }) {
                   {item.text}
                 </Typography>
 
-                {/* User */}
                 <Box sx={{ display: "flex", alignItems: "center", mt: 4 }}>
                   <img
                     src={item.photo}

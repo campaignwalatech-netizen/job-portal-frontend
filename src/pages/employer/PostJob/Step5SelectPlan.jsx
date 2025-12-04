@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 export default function Step5SelectPlan({ setStep, formData }) {
-  // -------------------------------
-  // PLANS
-  // -------------------------------
   const plans = [
     {
       id: "free",
@@ -41,9 +38,6 @@ export default function Step5SelectPlan({ setStep, formData }) {
     },
   ];
 
-  // -------------------------------
-  // STATE
-  // -------------------------------
   const [selectedPlan, setSelectedPlan] = useState("free");
 
   useEffect(() => {
@@ -226,17 +220,14 @@ export default function Step5SelectPlan({ setStep, formData }) {
           </span>
         </div>
 
-        {/* CTA */}
         <button
           className="btn-primary"
           style={{ marginTop: 14 }}
           onClick={() => {
             if (current.price === 0) {
               alert("Job Posted Successfully (Free Plan)");
-              // you can handle posting logic here
             } else {
               alert("Redirect to Payment Gateway");
-              // you will integrate payment API here
             }
           }}
         >

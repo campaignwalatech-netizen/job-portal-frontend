@@ -33,7 +33,6 @@ export default function RichTextEditor({ value, onChange }) {
 
   return (
     <div className="tiptap-wrapper">
-      {/* Toolbar */}
       <div className="tiptap-toolbar">
         <button onClick={() => editor.chain().focus().toggleBold().run()}
           className={editor.isActive("bold") ? "active" : ""}>B</button>
@@ -62,11 +61,8 @@ export default function RichTextEditor({ value, onChange }) {
         <button onClick={() => editor.chain().focus().undo().run()}>↺</button>
         <button onClick={() => editor.chain().focus().redo().run()}>↻</button>
       </div>
-
-      {/* Editor */}
       <EditorContent editor={editor} className="tiptap-editor" />
 
-      {/* CSS */}
       <style>{`
         .tiptap-wrapper {
           border: 1px solid #d1d5db;

@@ -53,7 +53,6 @@ export default function MockDigiLocker({ open, onClose, onSelect }) {
           disabled={!selected}
           onClick={() => {
             const doc = MOCK_DOCS.find((m) => m.id === selected);
-            // return a mock file-like object
             onSelect({
               name: `${doc.label.replace(/\s+/g, "_")}.pdf`,
               size: 200000,

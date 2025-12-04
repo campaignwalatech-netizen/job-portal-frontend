@@ -52,16 +52,16 @@ const boxStyle = {
 const scrollLeft = {
   display: "flex",
   animation: {
-    xs: "scroll-left 6s linear infinite",   // mobile faster
-    md: "scroll-left 22s linear infinite",   // desktop normal
+    xs: "scroll-left 6s linear infinite",  
+    md: "scroll-left 22s linear infinite",  
   },
 };
 
 const scrollRight = {
   display: "flex",
   animation: {
-    xs: "scroll-right 6s linear infinite",  // mobile faster
-    md: "scroll-right 22s linear infinite",  // desktop normal
+    xs: "scroll-right 6s linear infinite",
+    md: "scroll-right 22s linear infinite", 
   },
 };
 
@@ -74,7 +74,6 @@ export default function StatsScroller() {
         Our customers have gotten offers from awesome companies.
       </Typography>
 
-      {/* -------- ROW 1 -------- */}
       <Box sx={{ mt: 5, whiteSpace: "nowrap", overflow: "hidden" }}>
         <Box sx={scrollLeft}>
           {[...dataRow1, ...dataRow1].map((box, i) => (

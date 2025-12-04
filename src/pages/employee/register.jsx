@@ -23,9 +23,6 @@ export default function EmployeeRegister() {
 
   const handleSubmit = () => {
     if (!validate()) return;
-
-    // For now, no backend API for employee register
-    // Redirect to dashboard directly
     window.location.href = "/employee/dashboard";
   };
 

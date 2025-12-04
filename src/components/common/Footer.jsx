@@ -6,9 +6,9 @@ export default function Footer(){
 
       <Box sx={{ paddingY: 6, background: "#fff" }}>
         <Box sx={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2, paddingX: 2 }}>
-          <Box> {/* Links column */} ... </Box>
-          <Box> {/* Legal column */} ... </Box>
-          <Box> {/* Resources column */} ... </Box>
+          <Box>  ... </Box>
+          <Box>  ... </Box>
+          <Box>  ... </Box>
         </Box>
       </Box>
 

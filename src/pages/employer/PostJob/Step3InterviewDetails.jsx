@@ -6,14 +6,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep }) {
-  // ---------------------------------------------------------
-  // FORM STATES
-  // ---------------------------------------------------------
   const [walkinEnabled, setWalkinEnabled] = useState(false);
-  const [addressMode, setAddressMode] = useState("manual"); // manual | current
-  const [startDate, setStartDate] = useState(null); // Date object
-  const [endDate, setEndDate] = useState(null); // Date object
-  const [startTime, setStartTime] = useState(""); // "HH:MM"
+  const [addressMode, setAddressMode] = useState("manual");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
   const [address, setAddress] = useState("");
@@ -21,19 +18,16 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
   const [pincode, setPincode] = useState("");
   const [instructions, setInstructions] = useState("");
 
-  const [commPref, setCommPref] = useState("self"); // self | other | no
+  const [commPref, setCommPref] = useState("self"); 
   const [recruiterName, setRecruiterName] = useState("");
   const [recruiterPhone, setRecruiterPhone] = useState("");
   const [recruiterEmail, setRecruiterEmail] = useState("");
 
-  const [contactAccess, setContactAccess] = useState("all"); // all | matched | none
+  const [contactAccess, setContactAccess] = useState("all"); 
   const [whatsappAlerts, setWhatsappAlerts] = useState(false);
 
   const [errors, setErrors] = useState({});
 
-  // ---------------------------------------------------------
-  // LOAD SAVED DATA ON MOUNT (same pattern as Step-1 & Step-2)
-  // ---------------------------------------------------------
   useEffect(() => {
     if (!step3Data) return;
 
@@ -58,9 +52,6 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
     setWhatsappAlerts(Boolean(step3Data.whatsappAlerts));
   }, []);
 
-  // ---------------------------------------------------------
-  // HELPERS
-  // ---------------------------------------------------------
   const todayAtMidnight = () => {
     const d = new Date();
     d.setHours(0, 0, 0, 0);
@@ -89,19 +80,13 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
     if (!sDate || !sTime || !eDate || !eTime) return "";
     return `${formatDate(sDate)} (${to12Hour(sTime)}) to ${formatDate(eDate)} (${to12Hour(eTime)})`;
   };
-
-  // simple email validation
   const emailValid = (em) => {
     return /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(em);
   };
 
-  // ---------------------------------------------------------
-  // VALIDATION + NEXT
-  // ---------------------------------------------------------
   const validateAndNext = () => {
     const e = {};
 
-    // WALK-IN validations only when enabled
     if (walkinEnabled) {
       if (!startDate) e.startDate = true;
       if (!endDate) e.endDate = true;
@@ -111,7 +96,6 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
       if (!startTime) e.startTime = true;
       if (!endTime) e.endTime = true;
 
-      // address requirement only when manual selected
       if (addressMode === "manual") {
         if (!address) e.address = true;
         if (!city) e.city = true;
@@ -121,7 +105,6 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
       if (instructions && instructions.length > 500) e.instructions = true;
     }
 
-    // Communication Preferences
     if (!commPref) e.commPref = true;
     if (commPref === "other") {
       if (!recruiterName) e.recruiterName = true;
@@ -130,13 +113,11 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
       if (recruiterEmail && !emailValid(recruiterEmail)) e.recruiterEmail = true;
     }
 
-    // Candidate contact access
     if (!contactAccess) e.contactAccess = true;
 
     setErrors(e);
     if (Object.keys(e).length > 0) return alert("Please fix the highlighted fields.");
 
-    // SAVE STEP-3 DATA
     setStep3Data({
       walkinEnabled,
       addressMode,
@@ -158,7 +139,6 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
       whatsappAlerts,
     });
 
-    // PROCEED
     setStep(4);
   };
 
@@ -532,12 +512,10 @@ export default function Step3InterviewDetails({ step3Data, setStep3Data, setStep
           </div>
         </div>
 
-        {/* -------------------------- FOOTER -------------------------- */}
         <div className="footer-actions">
           <button className="btn-secondary" onClick={() => setStep(2)}>Previous</button>
           <div style={{ display: "flex", gap: 12 }}>
             <button className="btn-secondary" onClick={() => {
-              // quick-save without validation
               setStep3Data({
                 walkinEnabled,
                 addressMode,

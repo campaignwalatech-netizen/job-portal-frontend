@@ -1,9 +1,6 @@
 import React from "react";
 
 export default function Step4Preview({ setStep, step1Data, step2Data, step3Data }) {
-  // -----------------------------------------------------
-  // FORMAT HELPERS
-  // -----------------------------------------------------
   const formatSalary = () => {
     const { salaryType, minSalary, maxSalary, minIncentive, maxIncentive } = step1Data;
 

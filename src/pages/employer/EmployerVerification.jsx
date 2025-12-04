@@ -23,7 +23,6 @@ import DashboardHeader from "../../components/Employer/dashboard/dashboardheader
 
 import { useNavigate } from "react-router-dom";
 
-// ---------------------- DOCUMENT LISTS -----------------------
 const COMPANY_DOCS = [
   "Certificate of Incorporation (CoI)",
   "Memorandum of Association (MoA)",
@@ -75,7 +74,7 @@ const PERSONAL_DOCS = [
   "Full and Final Settlement Document",
 ];
 
-// ---------------------- FILE SETTINGS -----------------------
+
 const ACCEPTED_TYPES = [
   "application/pdf",
   "image/png",
@@ -85,21 +84,18 @@ const ACCEPTED_TYPES = [
 
 const MAX_BYTES = 10 * 1024 * 1024;
 
-// -------------------------------------------------------------------
+
 export default function EmployerVerification() {
   const navigate = useNavigate();
 
-  // Company
   const [companyDocType, setCompanyDocType] = React.useState("");
   const [companyNumber, setCompanyNumber] = React.useState("");
   const [companyFile, setCompanyFile] = React.useState(null);
 
-  // Personal
   const [personalDocType, setPersonalDocType] = React.useState("");
   const [personalNumber, setPersonalNumber] = React.useState("");
   const [personalFile, setPersonalFile] = React.useState(null);
 
-  // UI
   const [snack, setSnack] = React.useState({
     open: false,
     severity: "success",
@@ -109,7 +105,6 @@ export default function EmployerVerification() {
   const [digilockerOpen, setDigilockerOpen] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
 
-  // ---------------------- FILE VALIDATION ---------------------
   const validateFile = (file) => {
     if (!ACCEPTED_TYPES.includes(file.type))
       return "Invalid file type. Allowed: pdf, png, jpg, jpeg";
@@ -145,8 +140,6 @@ export default function EmployerVerification() {
     if (type === "company") setCompanyFile(null);
     else setPersonalFile(null);
   };
-
-  // ---------------------- DIGILOCKER -----------------------
   const handleDigilockerSelect = (doc) => {
     setPersonalFile({
       name: doc.name,
@@ -164,8 +157,6 @@ export default function EmployerVerification() {
       message: "Selected from DigiLocker",
     });
   };
-
-  // ---------------------- SUBMIT ---------------------------
   const mockUpload = async (payload) => {
     return new Promise((res) =>
       setTimeout(() => res({ ok: true }), 1000)
@@ -236,9 +227,6 @@ export default function EmployerVerification() {
           Company Verification
         </Typography>
 
-        {/* ---- COMPONENT DESIGN: CLEAN, PREMIUM, CENTERED ---- */}
-
-        {/* COMPANY SECTION */}
         <Paper
           sx={{
             p: { xs: 3, md: 4 },
@@ -272,7 +260,6 @@ export default function EmployerVerification() {
               </Select>
             </FormControl>
 
-            {/* Number + Upload */}
             <Box
               sx={{
                 display: "grid",
@@ -312,7 +299,6 @@ export default function EmployerVerification() {
               </Box>
             </Box>
 
-            {/* File chip */}
             {companyFile && (
               <Box
                 sx={{
@@ -334,8 +320,6 @@ export default function EmployerVerification() {
             )}
           </Stack>
         </Paper>
-
-        {/* PERSONAL SECTION */}
         <Paper
           sx={{
             p: { xs: 3, md: 4 },
@@ -400,7 +384,6 @@ export default function EmployerVerification() {
               </Button>
             </Box>
 
-            {/* Upload */}
             <Box>
               <input
                 id="personal-file"

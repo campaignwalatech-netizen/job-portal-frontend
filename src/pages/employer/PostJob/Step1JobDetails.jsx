@@ -3,9 +3,7 @@ import ToggleSwitch from "../../../components/ToggleSwitch";
 
 
 export default function Step1JobDetails({ setStep,step1Data, setStep1Data }) {
-  // ---------------------------------------------------------
-  // FORM STATES
-  // ---------------------------------------------------------
+
   const [companyName, setCompanyName] = useState("");
 const [jobTitle, setJobTitle] = useState("");
 const [roleDesc, setRoleDesc] = useState("");
@@ -56,9 +54,6 @@ const [otherPerks, setOtherPerks] = useState("");
   const [joiningComment, setJoiningComment] = useState("");
 
 
-  // ---------------------------------------------------------
-  // ERRORS
-  // ---------------------------------------------------------
   const [errors, setErrors] = useState({});
   React.useEffect(() => {
   if (!step1Data) return;
@@ -96,16 +91,12 @@ const [otherPerks, setOtherPerks] = useState("");
 }, []);
 
 
-  // ---------------------------------------------------------
-  // CHIP LOGIC
-  // ---------------------------------------------------------
-
 
 const togglePerk = (perk) => {
   if (perk === "Other Perks") {
     if (selectedPerks.includes(perk)) {
       setSelectedPerks(selectedPerks.filter((p) => p !== perk));
-      setOtherPerks(""); // clear textbox when unselecting
+      setOtherPerks(""); 
     } else {
       setSelectedPerks([...selectedPerks, perk]);
     }
@@ -119,25 +110,15 @@ const togglePerk = (perk) => {
   }
 };
 
-  // ---------------------------------------------------------
-  // VALIDATION + ERROR SETTING
-  // ---------------------------------------------------------
   const validateFields = () => {
     const newErrors = {};
 
-    // Company & Role
     if (!companyName) newErrors.companyName = true;
     if (!jobTitle) newErrors.jobTitle = true;
     if (!roleDesc) newErrors.roleDesc = true;
-
-    // Job Type
     if (!jobType) newErrors.jobType = true;
-
-    // Work Location
     if (!workLocation) newErrors.workLocation = true;
-
     if (workLocation === "wfh" && !wfhCity) newErrors.wfhCity = true;
-
     if (workLocation === "wfo") {
       if (!wfoAddress) newErrors.wfoAddress = true;
       if (!wfoCity) newErrors.wfoCity = true;
@@ -149,8 +130,6 @@ const togglePerk = (perk) => {
       if (!fieldCity) newErrors.fieldCity = true;
       if (!fieldPincode) newErrors.fieldPincode = true;
     }
-
-    // Salary
     if (!salaryType) newErrors.salaryType = true;
 
     if (salaryType === "fixed") {
@@ -170,7 +149,6 @@ const togglePerk = (perk) => {
       if (!maxIncentive) newErrors.maxIncentive = true;
     }
 
-    // Salary rules
     if (minSalary && Number(minSalary) < 5000) newErrors.minSalary = true;
 
     if (maxSalary && minSalary && Number(maxSalary) < Number(minSalary))
@@ -183,7 +161,6 @@ const togglePerk = (perk) => {
     )
       newErrors.maxIncentive = true;
 
-    // Joining fee
 if (joiningFee === "yes") {
   if (!joiningAmount) newErrors.joiningAmount = true;
   if (!joiningComment) newErrors.joiningComment = true;
@@ -948,7 +925,6 @@ setStep1Data({
     value={joiningFee === "yes"}
     onChange={(v) => {
   setJoiningFee(v ? "yes" : "no");
-  // Clear dependent errors when turning OFF
   if (!v) {
     setJoiningAmount("");
     setJoiningComment("");

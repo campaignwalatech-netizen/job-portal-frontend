@@ -69,7 +69,7 @@ const verifyOtp = async () => {
 
     const token = res.data.token;
     const user = res.data.user;
-    const isNew = !user.profileCompleted; // CORRECT CHECK
+    const isNew = !user.profileCompleted;
 
     localStorage.setItem("token", token);
     localStorage.setItem("role", user.role);

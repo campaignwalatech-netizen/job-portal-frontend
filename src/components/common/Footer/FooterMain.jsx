@@ -7,47 +7,69 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 
 export default function FooterMain() {
   return (
-    <Box sx={{ background: "#0f0a37", color: "#fff", pt: 5, pb: 4, mt: 6 }}>
+    <Box
+      sx={{
+        background: "#0f0a37",
+        color: "#fff",
+        pt: { xs: 5, sm: 6 },
+        pb: { xs: 5, sm: 6 },
+        mt: 6,
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
       <Box
         sx={{
-          maxWidth: "1200px",
+          maxWidth: "1400px",
           mx: "auto",
-          px: 2,
+          px: { xs: 3, sm: 4 },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
           alignItems: { xs: "flex-start", md: "flex-start" },
-          gap: 6,
+          gap: { xs: 4, md: 8 },
         }}
       >
-   
-        <Box sx={{ width: { xs: "100%", md: "260px" } }}>
+        {/* LEFT SECTION */}
+        <Box sx={{ width: { xs: "100%", md: "280px" } }}>
           <img
             src="/logo.svg"
-            width={80}
+            width={90}
             alt="logo"
             style={{ borderRadius: "14px" }}
           />
 
-          <Typography sx={{ mt: 2, fontSize: "15px" }}>
+          <Typography sx={{ mt: 2, fontSize: "16px", fontWeight: 500 }}>
             Follow us on social media
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <FacebookIcon sx={{ fontSize: 26 }} />
-            <LinkedInIcon sx={{ fontSize: 26 }} />
-            <TwitterIcon sx={{ fontSize: 26 }} />
-            <InstagramIcon sx={{ fontSize: 26 }} />
-            <YouTubeIcon sx={{ fontSize: 26 }} />
+          <Box sx={{ display: "flex", gap: 2.2, mt: 2 }}>
+            {[FacebookIcon, LinkedInIcon, TwitterIcon, InstagramIcon, YouTubeIcon].map(
+              (Icon, i) => (
+                <Icon
+                  key={i}
+                  sx={{
+                    fontSize: 28,
+                    opacity: 0.9,
+                    cursor: "pointer",
+                    transition: "0.25s",
+                    "&:hover": { opacity: 1, transform: "scale(1.15)" },
+                  }}
+                />
+              )
+            )}
           </Box>
         </Box>
 
-
+        {/* COLUMN GRID */}
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
-            gap: 4,
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "1fr 1fr",
+              md: "1fr 1fr 1fr",
+            },
+            gap: { xs: 3, md: 6 },
             flexGrow: 1,
           }}
         >
@@ -68,9 +90,15 @@ export default function FooterMain() {
         </Box>
       </Box>
 
-
+      {/* COPYRIGHT */}
       <Typography
-        sx={{ textAlign: "center", color: "#cbd5e1", mt: 4, fontSize: "13px" }}
+        sx={{
+          textAlign: "center",
+          color: "#cbd5e1",
+          mt: 4,
+          fontSize: "13px",
+          opacity: 0.7,
+        }}
       >
         © 2026 Naukri Chaahiye | All rights reserved
       </Typography>
@@ -78,12 +106,12 @@ export default function FooterMain() {
   );
 }
 
-
-
 function FooterColumn({ title, items }) {
   return (
     <Box>
-      <Typography sx={{ fontWeight: 700, fontSize: "16px", mb: 1.5 }}>
+      <Typography
+        sx={{ fontWeight: 700, fontSize: "17px", mb: 1.8, color: "#fff" }}
+      >
         {title}
       </Typography>
 
@@ -92,10 +120,11 @@ function FooterColumn({ title, items }) {
           key={i}
           sx={{
             color: "#d1d5db",
-            fontSize: "14px",
-            mb: 1,
+            fontSize: "15px",
+            mb: 1.1,
             cursor: "pointer",
-            "&:hover": { color: "#ffffff" },
+            transition: "0.2s ease",
+            "&:hover": { color: "#fff" },
           }}
         >
           {el}

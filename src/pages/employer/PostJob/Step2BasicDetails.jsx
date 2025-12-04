@@ -4,9 +4,6 @@ import TextField from "@mui/material/TextField";
 import RichTextEditor from "../../../components/RichTextEditor";
 
 export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) {
-  // ---------------------------------------------------------
-  // STATES
-  // ---------------------------------------------------------
   const [education, setEducation] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [expMin, setExpMin] = useState("");
@@ -47,12 +44,9 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
   ];
 
   const YEARS_OPTIONS = [...Array(11).keys()].map(String).concat([">10"]);
-  const AGE_NUM = Array.from({ length: 23 }, (_, i) => 18 + i); // 18..40
+  const AGE_NUM = Array.from({ length: 23 }, (_, i) => 18 + i); 
   const AGE_OPTIONS = [...AGE_NUM.map(String), ">40"];
 
-  // ---------------------------------------------------------
-  // LOAD SAVED DATA ON MOUNT
-  // ---------------------------------------------------------
   useEffect(() => {
     if (!step2Data) return;
 
@@ -72,10 +66,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
     setOtherLangInput(step2Data.otherLangInput || "");
   }, []);
-
-  // ---------------------------------------------------------
-  // EDUCATION LOGIC (hierarchy)
-  // ---------------------------------------------------------
   const toggleEducation = (item) => {
     let selected = [...education];
     const add = (val) => { if (!selected.includes(val)) selected.push(val); };
@@ -100,10 +90,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setEducation([...selected]);
     setErrors((p) => ({ ...p, education: false }));
   };
-
-  // ---------------------------------------------------------
-  // LANGUAGES (always-visible other input)
-  // ---------------------------------------------------------
   const toggleLanguage = (lang) => {
     if (languages.includes(lang)) {
       setLanguages(languages.filter((l) => l !== lang));
@@ -123,9 +109,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     }
   };
 
-  // ---------------------------------------------------------
-  // SKILL TAG LOGIC
-  // ---------------------------------------------------------
   const addSkill = () => {
     const v = skillInput.trim();
     if (!v) return;
@@ -147,9 +130,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     }
   };
 
-  // ---------------------------------------------------------
-  // AGE & EXPERIENCE COMPUTE HELPERS
-  // ---------------------------------------------------------
   const computeAgeMax = () => {
     if (!ageMin) return [...AGE_NUM.map(String), ">40"];
     if (ageMin === ">40") return [">40"];
@@ -169,18 +149,11 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     });
   };
 
-  // ---------------------------------------------------------
-  // DESCRIPTION helpers (strip HTML for length check)
-  // ---------------------------------------------------------
   const plainTextFromHtml = (html) => {
     if (!html) return "";
     const withoutTags = html.replace(/<[^>]*>/g, "");
     return withoutTags.replace(/&nbsp;|&#160;/g, " ").trim();
   };
-
-  // ---------------------------------------------------------
-  // VALIDATION + NEXT
-  // ---------------------------------------------------------
   const validateAndNext = () => {
     const e = {};
 
@@ -197,7 +170,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setErrors(e);
     if (Object.keys(e).length > 0) return;
 
-    // SAVE STEP-2 DATA HERE (include inputs too for restoring)
     setStep2Data({
       education,
       languages,
@@ -215,10 +187,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
     setStep(3);
   };
-
-  // ---------------------------------------------------------
-  // Helpers for Autocomplete behaviour: typing + Enter selects
-  // ---------------------------------------------------------
   const filterAgeOptions = (options, input) => {
     const inputStr = (input ?? "").toString().trim();
     if (!inputStr) return options;
@@ -228,12 +196,10 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
 
   const handleAgeMinKeyDown = (event) => {
     if (event.key !== "Enter") return;
-    // find first matching option from AGE_OPTIONS
     const matches = filterAgeOptions(AGE_OPTIONS, ageMinInput);
     if (matches.length === 0) return;
     event.preventDefault();
     const pick = matches[0];
-    // do not accept <18
     if (!isNaN(Number(pick)) && Number(pick) < 18) return;
     setAgeMin(String(pick));
     setAgeMinInput(String(pick));
@@ -251,9 +217,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
     setAgeMaxInput(String(pick));
   };
 
-  // ---------------------------------------------------------
-  // JSX + STYLES (kept same visual theme)
-  // ---------------------------------------------------------
   return (
     <>
       <style>{`
@@ -549,7 +512,6 @@ export default function Step2BasicDetails({ step2Data, setStep2Data, setStep }) 
                     setAgeMax("");
                     return;
                   }
-                  // always allow typing
                   setAgeMinInput(newInput ?? "");
                 }}
                 onChange={(e, newVal) => {

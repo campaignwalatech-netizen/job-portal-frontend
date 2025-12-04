@@ -15,31 +15,8 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 export default function EmployerDashboardHome() {
   const navigate = useNavigate();
 
-  // -----------------------------------------------------
-  // 🔵 CENTRALIZED DUMMY DATA (replace with API easily)
-  // -----------------------------------------------------
+
   const jobStats = [
-    {
-      title: "Live Job Posts",
-      value: 5,
-      subtitle: "Currently active and receiving applications",
-      icon: <WorkIcon sx={{ fontSize: 38 }} />,
-      link: "/employer/dashboard/jobs/live",
-    },
-    {
-      title: "Expired Job Posts",
-      value: 44,
-      subtitle: "Currently inactive",
-      icon: <DeleteIcon sx={{ fontSize: 38 }} />,
-      link: "/employer/dashboard/jobs/expired",
-    },
-    {
-      title: "Draft Job Posts",
-      value: 23,
-      subtitle: "Complete the details to post",
-      icon: <DraftsIcon sx={{ fontSize: 38 }} />,
-      link: "/employer/dashboard/jobs/drafts",
-    },
     {
       title: "All Jobs",
       value: 56,
@@ -47,6 +24,29 @@ export default function EmployerDashboardHome() {
       icon: <FolderOpenIcon sx={{ fontSize: 38 }} />,
       link: "/employer/dashboard/jobs/all",
     },
+    {
+      title: "Live Job Posts",
+      value: 5,
+      subtitle: "Currently active and receiving applications",
+      icon: <WorkIcon sx={{ fontSize: 38, color: "#0b8125ff"}} />,
+      link: "/employer/dashboard/jobs/live",
+    },
+    {
+      title: "Draft Job Posts",
+      value: 23,
+      subtitle: "Complete the details to post",
+      icon: <DraftsIcon sx={{ fontSize: 38, color: "#e7eb06ff"}} />,
+      link: "/employer/dashboard/jobs/drafts",
+    },
+    {
+      title: "Expired Job Posts",
+      value: 44,
+      subtitle: "Currently inactive",
+      icon: <DeleteIcon sx={{ fontSize: 38, color: "#ef4444"}} />,
+      link: "/employer/dashboard/jobs/expired",
+    },
+    
+    ,
   ];
 
   const candidateStats = [
@@ -65,19 +65,20 @@ export default function EmployerDashboardHome() {
       link: "/employer/dashboard/candidates/shortlisted",
     },
     {
-      title: "Rejected Candidates",
-      value: 120,
-      subtitle: "For live job posts",
-      icon: <HighlightOffIcon sx={{ fontSize: 38, color: "#ef4444" }} />,
-      link: "/employer/dashboard/candidates/rejected",
-    },
-    {
       title: "Pending Candidates",
       value: 120,
       subtitle: "Awaiting review",
       icon: <PendingActionsIcon sx={{ fontSize: 38 }} />,
       link: "/employer/dashboard/candidates/pending",
     },
+    {
+      title: "Rejected Candidates",
+      value: 120,
+      subtitle: "For live job posts",
+      icon: <HighlightOffIcon sx={{ fontSize: 38, color: "#ef4444" }} />,
+      link: "/employer/dashboard/candidates/rejected",
+    },
+    
     {
       title: "Saved Candidates",
       value: 789,
@@ -87,9 +88,6 @@ export default function EmployerDashboardHome() {
     },
   ];
 
-  // -----------------------------------------------------
-  // 🔵 CARD COMPONENT (now clickable + hover blue bg)
-  // -----------------------------------------------------
   const Card = ({ title, value, subtitle, icon, link }) => (
     <Paper
       onClick={() => navigate(link)}
@@ -106,7 +104,7 @@ export default function EmployerDashboardHome() {
         transition: "0.25s",
         "&:hover": {
           boxShadow: "0 6px 28px rgba(0,0,0,0.12)",
-          background: "rgba(59, 130, 246, 0.06)", // light blue hover
+          background: "rgba(59, 130, 246, 0.06)", 
           transform: "translateY(-4px)",
         },
       }}
@@ -127,9 +125,6 @@ export default function EmployerDashboardHome() {
     </Paper>
   );
 
-  // -----------------------------------------------------
-  // 🔵 UI STARTS
-  // -----------------------------------------------------
   return (
     <Box sx={{ width: "100%", pb: 5 }}>
       {/* Welcome */}

@@ -109,7 +109,7 @@ export default function JobManagement() {
   const longPressTimer = useRef(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 600); // skeleton
+    const t = setTimeout(() => setLoading(false), 600); 
     return () => clearTimeout(t);
   }, []);
 
@@ -454,7 +454,7 @@ export default function JobManagement() {
                                 : job.status === "select_plan"
                                 ? "#92400e"
                                 : job.status === "under_review"
-                                ? "#4338ca"
+                                ? "#060325ff"
                                 : "#334155",
                           }}
                         />
