@@ -122,7 +122,7 @@ export default function DashboardHeader() {
           </Typography>
 
           <Box
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/employer/dashboard/profile")}
             sx={{
               cursor: "pointer",
               "& .avatar": { transition: "0.2s" },

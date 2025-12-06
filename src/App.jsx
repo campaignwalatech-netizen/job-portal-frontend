@@ -2,7 +2,7 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from 'react'; 
+import { Suspense, lazy } from 'react';
 
 const JobPortalLanding = lazy(() => import('./pages/Home/JobPortalLanding'));
 const EmployeeLanding = lazy(() => import('./pages/employee/EmployeeLanding'));
@@ -17,6 +17,8 @@ const JobManagement = lazy(() => import('./pages/employer/jobs/JobManagement'));
 const EmployerDashboardHome = lazy(() => import('./pages/employer/EmployerDashboardHome'));
 const SearchCandidates = lazy(() => import('./pages/employer/database/SearchCandidates'));
 const Notifications = lazy(() => import('./pages/employer/notifications'));
+const ProfileSettings = lazy(() => import('./pages/employer/ProfileSettings'));
+
 
 
 
@@ -54,6 +56,8 @@ function App() {
               <Route path="job-listing" element={<JobManagement />} />
               <Route path="database/search" element={<SearchCandidates />} />
               <Route path="notifications" element={<Notifications />} />
+              <Route path="profile" element={<ProfileSettings />} />
+
 
             </Route>
 
