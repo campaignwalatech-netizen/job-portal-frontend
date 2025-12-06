@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -20,13 +20,16 @@ import {
   Radio,
   MenuItem,
 } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SchoolIcon from "@mui/icons-material/School";
 
-// Mock unlocked candidates (you can later replace with API data)
+/* ------------------------------
+   Mock Data for Unlocked Candidates
+------------------------------ */
 const mockUnlockedCandidates = [
   {
     id: "u1",
@@ -34,7 +37,7 @@ const mockUnlockedCandidates = [
     avatar: "https://i.pravatar.cc/100?img=32",
     city: "Bengaluru",
     country: "India",
-    education: "B. Tech in Computer Science",
+    education: "B.Tech in Computer Science",
     skills: ["React", "Node.js", "TypeScript", "AWS"],
     languages: ["English", "Hindi", "Kannada"],
     status: "Open to Offers",
@@ -51,8 +54,8 @@ const mockUnlockedCandidates = [
     city: "Mumbai",
     country: "India",
     education: "MBA in Finance",
-    skills: ["Financial Modeling", "Data Analysis", "Excel", "SAP"],
-    languages: ["English", "Hindi", "Marathi"],
+    skills: ["Financial Modeling", "Data Analysis", "Excel"],
+    languages: ["English", "Hindi"],
     status: "Active",
     phone: "+91 98765 11111",
     resume: "/resumes/amit-singh.pdf",
@@ -66,9 +69,9 @@ const mockUnlockedCandidates = [
     avatar: "https://i.pravatar.cc/100?img=12",
     city: "Hyderabad",
     country: "India",
-    education: "M.Sc. in Data Science",
+    education: "M.Sc Data Science",
     skills: ["Python", "Machine Learning", "SQL", "Tableau"],
-    languages: ["English", "Telugu", "Hindi"],
+    languages: ["English", "Hindi", "Telugu"],
     status: "Seeking New Role",
     phone: "+91 98765 22222",
     resume: "/resumes/sneha-reddy.pdf",
@@ -76,127 +79,103 @@ const mockUnlockedCandidates = [
     age: 26,
     lastActiveDays: 5,
   },
-  {
-    id: "u4",
-    name: "Rahul Kumar",
-    avatar: "https://i.pravatar.cc/100?img=22",
-    city: "Delhi",
-    country: "India",
-    education: "B.E. in Mechanical Engineering",
-    skills: ["AutoCAD", "SolidWorks", "Project Management", "Manufacturing"],
-    languages: ["English", "Hindi"],
-    status: "Currently Employed",
-    phone: "+91 98765 33333",
-    resume: "/resumes/rahul-kumar.pdf",
-    cvAvailable: true,
-    age: 30,
-    lastActiveDays: 12,
-  },
-  {
-    id: "u5",
-    name: "Deepika Patel",
-    avatar: "https://i.pravatar.cc/100?img=56",
-    city: "Ahmedabad",
-    country: "India",
-    education: "B. Com in Accounting",
-    skills: ["Tally", "GST Filing", "Auditing", "Financial Reporting"],
-    languages: ["English", "Gujarati", "Hindi"],
-    status: "Open to Offers",
-    phone: "+91 98765 44444",
-    resume: "/resumes/deepika-patel.pdf",
-    cvAvailable: true,
-    age: 29,
-    lastActiveDays: 7,
-  },
-  {
-    id: "u6",
-    name: "Vikram Menon",
-    avatar: "https://i.pravatar.cc/100?img=64",
-    city: "Chennai",
-    country: "India",
-    education: "MCA in Software Development",
-    skills: ["Java", "Spring Boot", "Microservices", "MongoDB"],
-    languages: ["English", "Tamil", "Malayalam"],
-    status: "Active",
-    phone: "+91 98765 55555",
-    resume: "/resumes/vikram-menon.pdf",
-    cvAvailable: true,
-    age: 31,
-    lastActiveDays: 2,
-  },
-  {
-    id: "u7",
-    name: "Anjali Desai",
-    avatar: "https://i.pravatar.cc/100?img=65",
-    city: "Pune",
-    country: "India",
-    education: "B.Arch in Architecture",
-    skills: ["Revit", "Sketchup", "Interior Design", "Project Coordination"],
-    languages: ["English", "Marathi", "Hindi"],
-    status: "Seeking New Role",
-    phone: "+91 98765 66666",
-    resume: "/resumes/anjali-desai.pdf",
-    cvAvailable: true,
-    age: 27,
-    lastActiveDays: 9,
-  },
-  {
-    id: "u8",
-    name: "Rajesh Gupta",
-    avatar: "https://i.pravatar.cc/100?img=49",
-    city: "Kolkata",
-    country: "India",
-    education: "Ph.D in Chemistry",
-    skills: [
-      "Research & Development",
-      "Quality Control",
-      "Analytical Techniques",
-      "Lab Management",
-    ],
-    languages: ["English", "Bengali", "Hindi"],
-    status: "Currently Employed",
-    phone: "+91 98765 77777",
-    resume: "/resumes/rajesh-gupta.pdf",
-    cvAvailable: false,
-    age: 38,
-    lastActiveDays: 20,
-  },
 ];
 
+/* ------------------------------
+   Constants
+------------------------------ */
 const PAGE_SIZE = 6;
+const SIDEBAR_MIN = 220;
+const SIDEBAR_MAX = 520;
+const defaultWidth = 280;
 
 export default function UnlockCandidates() {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const isSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Filters
+  /* ------------------------------
+     Sidebar resize state
+  ------------------------------ */
+  const [sidebarWidth, setSidebarWidth] = useState(defaultWidth);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const startWidth = useRef(defaultWidth);
+
+  /* ------------------------------
+     Filters State
+  ------------------------------ */
   const [activeDaysRange, setActiveDaysRange] = useState([0, 30]);
-  const [cvAvailability, setCvAvailability] = useState("any"); // 'any' | 'available' | 'not_available'
+  const [cvAvailability, setCvAvailability] = useState("any");
   const [keywords, setKeywords] = useState("");
-  const [education, setEducation] = useState("any"); // 'any' | 'bachelors' | 'masters' | 'phd' etc.
+  const [education, setEducation] = useState("any");
   const [ageRange, setAgeRange] = useState([18, 60]);
 
   const [page, setPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  /* ------------------------------
+     Sidebar Drag Handlers
+  ------------------------------ */
+  const startDrag = (e) => {
+    if (!isMdUp) return;
+    isDragging.current = true;
+    startX.current = e.clientX ?? e.touches?.[0]?.clientX;
+    startWidth.current = sidebarWidth;
+
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  };
+
+  useEffect(() => {
+    if (!isMdUp) return;
+
+    const onMove = (e) => {
+      if (!isDragging.current) return;
+      const clientX = e.clientX ?? e.touches?.[0]?.clientX;
+      const dx = clientX - startX.current;
+
+      let newW = startWidth.current + dx;
+      newW = Math.max(SIDEBAR_MIN, Math.min(SIDEBAR_MAX, newW));
+      setSidebarWidth(newW);
+    };
+
+    const onUp = () => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    window.addEventListener("touchmove", onMove);
+    window.addEventListener("touchend", onUp);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onUp);
+    };
+  }, [isMdUp]);
+
+  /* ------------------------------
+     Filter Logic
+  ------------------------------ */
   const filteredCandidates = useMemo(() => {
     let data = [...mockUnlockedCandidates];
 
-    // Active days
     const [minActive, maxActive] = activeDaysRange;
     data = data.filter(
       (c) => c.lastActiveDays >= minActive && c.lastActiveDays <= maxActive
     );
 
-    // CV availability
-    if (cvAvailability === "available") {
-      data = data.filter((c) => c.cvAvailable);
-    } else if (cvAvailability === "not_available") {
+    if (cvAvailability === "available") data = data.filter((c) => c.cvAvailable);
+    else if (cvAvailability === "not_available")
       data = data.filter((c) => !c.cvAvailable);
-    }
 
-    // Keywords -> check skills + name + education
     if (keywords.trim()) {
       const k = keywords.toLowerCase();
       data = data.filter(
@@ -207,7 +186,6 @@ export default function UnlockCandidates() {
       );
     }
 
-    // Education
     if (education !== "any") {
       const e = education;
       data = data.filter((c) => {
@@ -219,7 +197,6 @@ export default function UnlockCandidates() {
       });
     }
 
-    // Age range
     const [minAge, maxAge] = ageRange;
     data = data.filter((c) => c.age >= minAge && c.age <= maxAge);
 
@@ -233,6 +210,9 @@ export default function UnlockCandidates() {
     page * PAGE_SIZE
   );
 
+  /* ------------------------------
+     Filter Reset
+  ------------------------------ */
   const resetFilters = () => {
     setActiveDaysRange([0, 30]);
     setCvAvailability("any");
@@ -242,62 +222,92 @@ export default function UnlockCandidates() {
     setPage(1);
   };
 
-  const handleDownloadExcel = () => {
-    // hook your real export logic/API here
-    console.log("Download Excel for unlocked candidates");
+  /* ------------------------------
+     Excel Export
+  ------------------------------ */
+ const handleDownloadExcel = () => {
+  const rows = filteredCandidates.map((c) => ({
+    Name: c.name,
+    Phone: c.phone,
+    City: c.city,
+    Country: c.country,
+    Education: c.education,
+    Skills: c.skills.join(", "),
+    Languages: c.languages.join(", "),
+    Status: c.status,
+    Age: c.age,
+    LastActiveDays: c.lastActiveDays,
+  }));
+
+  const header = Object.keys(rows[0]).join(",") + "\n";
+
+  const csvRows = rows
+    .map((r) =>
+      Object.values(r)
+        .map((v) => `"${v}"`)
+        .join(",")
+    )
+    .join("\n");
+
+  const csvContent = header + csvRows;
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "unlocked_candidates.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+
+  /* ------------------------------
+     Resume View/Download
+  ------------------------------ */
+  const handleViewResume = (c) => {
+    if (c.resume) window.open(c.resume, "_blank", "noopener,noreferrer");
   };
 
-  const handleViewResume = (candidate) => {
-    if (candidate.resume) {
-      window.open(candidate.resume, "_blank", "noopener,noreferrer");
-    }
-  };
-
-  const handleDownloadResume = (candidate) => {
-    if (!candidate.resume) return;
+  const handleDownloadResume = (c) => {
+    if (!c.resume) return;
     const link = document.createElement("a");
-    link.href = candidate.resume;
-    link.download = `${candidate.name}-resume.pdf`;
+    link.href = c.resume;
+    link.download = `${c.name}-resume.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  /* ------------------------------
+     Sidebar Filters UI
+  ------------------------------ */
   const FiltersContent = (
-    <Box sx={{ p: 2 }}>
-      <Typography sx={{ fontWeight: 700, mb: 2 }}>Filter Candidates</Typography>
+    <Paper
+      sx={{
+        p: 2,
+        borderRadius: 2,
+        boxShadow: "none",
+        border: "1px solid rgba(15,23,42,0.06)",
+      }}
+    >
+      {/* Search Page Similar Title */}
+      <Typography sx={{ fontWeight: 700, mb: 1 }}>Filters</Typography>
 
       {/* Active Days */}
       <Typography sx={{ fontSize: 13, fontWeight: 600, mb: 1 }}>
-        Active Days
+        Active in (days)
       </Typography>
-      <Box sx={{ px: 1, mb: 2 }}>
-        <Slider
-          value={activeDaysRange}
-          onChange={(e, v) => {
-            setActiveDaysRange(v);
-            setPage(1);
-          }}
-          valueLabelDisplay="auto"
-          valueLabelFormat={(v) => `${v}d`}
-          step={1}
-          min={0}
-          max={90}
-        />
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          sx={{ fontSize: 12, color: "text.secondary" }}
-        >
-          <span>{activeDaysRange[0]}d</span>
-          <span>{activeDaysRange[1]}d</span>
-        </Stack>
-        <Typography
-          sx={{ fontSize: 12, color: "text.secondary", mt: 0.5 }}
-        >
-          Last 30 days
-        </Typography>
-      </Box>
+      <Slider
+        value={activeDaysRange}
+        onChange={(e, v) => setActiveDaysRange(v)}
+        valueLabelDisplay="auto"
+        step={1}
+        min={0}
+        max={90}
+      />
+
+      <Divider sx={{ my: 2 }} />
 
       {/* CV Availability */}
       <Typography sx={{ fontSize: 13, fontWeight: 600, mb: 1 }}>
@@ -305,11 +315,7 @@ export default function UnlockCandidates() {
       </Typography>
       <RadioGroup
         value={cvAvailability}
-        onChange={(e) => {
-          setCvAvailability(e.target.value);
-          setPage(1);
-        }}
-        sx={{ mb: 2 }}
+        onChange={(e) => setCvAvailability(e.target.value)}
       >
         <FormControlLabel
           value="available"
@@ -328,21 +334,21 @@ export default function UnlockCandidates() {
         />
       </RadioGroup>
 
+      <Divider sx={{ my: 2 }} />
+
       {/* Keywords */}
       <Typography sx={{ fontSize: 13, fontWeight: 600, mb: 1 }}>
         Keywords
       </Typography>
       <TextField
         size="small"
-        placeholder="e.g., Senior Developer, Java"
         fullWidth
+        placeholder="React, Finance..."
         value={keywords}
-        onChange={(e) => {
-          setKeywords(e.target.value);
-          setPage(1);
-        }}
-        sx={{ mb: 2 }}
+        onChange={(e) => setKeywords(e.target.value)}
       />
+
+      <Divider sx={{ my: 2 }} />
 
       {/* Education */}
       <Typography sx={{ fontSize: 13, fontWeight: 600, mb: 1 }}>
@@ -353,79 +359,55 @@ export default function UnlockCandidates() {
         select
         fullWidth
         value={education}
-        onChange={(e) => {
-          setEducation(e.target.value);
-          setPage(1);
-        }}
-        sx={{ mb: 2 }}
+        onChange={(e) => setEducation(e.target.value)}
       >
         <MenuItem value="any">Any</MenuItem>
-        <MenuItem value="bachelors">Bachelor's</MenuItem>
-        <MenuItem value="masters">Master's</MenuItem>
+        <MenuItem value="bachelors">Bachelor’s</MenuItem>
+        <MenuItem value="masters">Master’s</MenuItem>
         <MenuItem value="phd">PhD</MenuItem>
       </TextField>
 
-      {/* Age Range */}
+      <Divider sx={{ my: 2 }} />
+
+      {/* Age */}
       <Typography sx={{ fontSize: 13, fontWeight: 600, mb: 1 }}>
         Age Range
       </Typography>
-      <Box sx={{ px: 1 }}>
-        <Slider
-          value={ageRange}
-          onChange={(e, v) => {
-            setAgeRange(v);
-            setPage(1);
-          }}
-          valueLabelDisplay="auto"
-          valueLabelFormat={(v) => `${v} yrs`}
-          step={1}
-          min={18}
-          max={60}
-        />
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          sx={{ fontSize: 12, color: "text.secondary" }}
-        >
-          <span>Min: {ageRange[0]} years</span>
-          <span>Max: {ageRange[1]} years</span>
-        </Stack>
-      </Box>
+      <Slider
+        value={ageRange}
+        onChange={(e, v) => setAgeRange(v)}
+        valueLabelDisplay="auto"
+        min={18}
+        max={60}
+      />
 
-      {/* Actions */}
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{ mt: 3, justifyContent: "flex-end" }}
-      >
-        <Button
-          variant="outlined"
-          onClick={resetFilters}
-          sx={{ textTransform: "none" }}
-        >
-          Reset Filters
+      <Divider sx={{ my: 2 }} />
+
+      {/* Buttons */}
+      <Stack direction="row" spacing={1} justifyContent="flex-end">
+        <Button variant="outlined" onClick={resetFilters}>
+          Reset
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => setPage(1)}
-          sx={{ textTransform: "none" }}
-        >
-          Apply Filters
+        <Button variant="contained" onClick={() => setPage(1)}>
+          Apply
         </Button>
       </Stack>
-    </Box>
+    </Paper>
   );
 
+  /* ------------------------------
+     Render
+  ------------------------------ */
   return (
     <Box sx={{ width: "100%", pb: 6 }}>
-      {/* Mobile header */}
+      {/* Mobile Header */}
       {isSmDown && (
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
             justifyContent: "space-between",
             mb: 2,
+            alignItems: "center",
           }}
         >
           <Typography sx={{ fontSize: 20, fontWeight: 800 }}>
@@ -436,7 +418,6 @@ export default function UnlockCandidates() {
             <Button
               variant="outlined"
               size="small"
-              sx={{ textTransform: "none", fontSize: 12 }}
               onClick={handleDownloadExcel}
             >
               Download Excel
@@ -450,58 +431,88 @@ export default function UnlockCandidates() {
       )}
 
       <Box sx={{ display: "flex", gap: 3 }}>
-        {/* Sidebar filters (desktop) */}
+        {/* -------- Desktop Sidebar + Resizer -------- */}
         {isMdUp && (
-          <Paper
-            sx={{
-              width: 300,
-              boxSizing: "border-box",
-              position: "sticky",
-              top: 20,
-              alignSelf: "flex-start",
-              maxHeight: "calc(100vh - 40px)",
-              overflowY: "auto",
-              borderRadius: 2,
-              border: "1px solid rgba(15,23,42,0.06)",
-              "&::-webkit-scrollbar": { width: 6 },
-              "&::-webkit-scrollbar-thumb": {
-                background: "#cbd5e1",
-                borderRadius: 8,
-              },
-              "&::-webkit-scrollbar-track": { background: "transparent" },
-            }}
-          >
-            {FiltersContent}
-          </Paper>
+          <Box sx={{ display: "flex", alignItems: "stretch" }}>
+            {/* Sidebar */}
+            <Box
+              sx={{
+                width: sidebarWidth,
+                minWidth: SIDEBAR_MIN,
+                maxWidth: SIDEBAR_MAX,
+                boxSizing: "border-box",
+                position: "sticky",
+                top: 20,
+                maxHeight: "calc(100vh - 40px)",
+                overflowY: "auto",
+                background: "#fff",
+                borderRadius: 1,
+                border: "1px solid rgba(15,23,42,0.03)",
+                px: 1,
+                py: 1.5,
+                "&::-webkit-scrollbar": { width: "6px" },
+                "&::-webkit-scrollbar-thumb": {
+                  background: "#cfd8e3",
+                  borderRadius: "8px",
+                },
+                "&::-webkit-scrollbar-track": { background: "transparent" },
+              }}
+            >
+              {/* Heading outside Paper — matches SearchCandidates */}
+              <Typography sx={{ fontWeight: 700, mb: 1 }}>Filters</Typography>
+
+              {FiltersContent}
+            </Box>
+
+            {/* Draggable resizer */}
+            <Box
+              onMouseDown={startDrag}
+              onTouchStart={startDrag}
+              sx={{
+                width: "8px",
+                cursor: "col-resize",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                "&:hover": {
+                  background: "rgba(15,23,42,0.04)",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  width: 2,
+                  height: 40,
+                  background: "rgba(15,23,42,0.2)",
+                  borderRadius: 1,
+                }}
+              />
+            </Box>
+          </Box>
         )}
 
-        {/* Main content */}
+        {/* -------- Main Content -------- */}
         <Box sx={{ flex: 1 }}>
-          {/* Title + actions (desktop) */}
           {isMdUp && (
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
                 justifyContent: "space-between",
                 mb: 2,
+                alignItems: "center",
               }}
             >
               <Typography sx={{ fontSize: 26, fontWeight: 800 }}>
                 Unlocked Candidates
               </Typography>
 
-              <Button
-                variant="outlined"
-                onClick={handleDownloadExcel}
-                sx={{ textTransform: "none", fontWeight: 600 }}
-              >
+              <Button variant="outlined" onClick={handleDownloadExcel}>
                 Download Excel
               </Button>
             </Box>
           )}
 
-          {/* Cards grid */}
+          {/* Cards Grid */}
           <Grid container spacing={3}>
             {paged.length === 0 && (
               <Grid item xs={12}>
@@ -509,98 +520,63 @@ export default function UnlockCandidates() {
                   <Typography sx={{ fontWeight: 800, mb: 1 }}>
                     No unlocked candidates
                   </Typography>
-                  <Typography sx={{ color: "#64748b" }}>
-                    Try adjusting your filters or unlock candidates from the
-                    search page.
-                  </Typography>
                 </Paper>
               </Grid>
             )}
 
             {paged.map((c) => (
-              <Grid item key={c.id} xs={12} sm={6} md={4} sx={{ display: "flex" }}>
+              <Grid item xs={12} sm={6} md={4} key={c.id}>
                 <Paper
                   sx={{
                     p: 3,
                     borderRadius: 3,
+                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    flex: 1,
-                    boxShadow: "0 8px 20px rgba(15,23,42,0.05)",
                     border: "1px solid rgba(148,163,184,0.25)",
-                    transition:
-                      "transform 0.15s ease-out, box-shadow 0.15s ease-out",
+                    boxShadow: "0 8px 20px rgba(14,42,100,0.04)",
+                    transition: "0.15s",
                     "&:hover": {
                       transform: "translateY(-4px)",
-                      boxShadow: "0 16px 35px rgba(15,23,42,0.10)",
+                      boxShadow: "0 18px 40px rgba(14,42,100,0.08)",
                     },
                   }}
                 >
-                  {/* Header row */}
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    alignItems="flex-start"
-                    sx={{ mb: 1.5 }}
-                  >
+                  {/* Header */}
+                  <Stack direction="row" spacing={2}>
                     <Avatar src={c.avatar} sx={{ width: 56, height: 56 }} />
-                    <Box sx={{ flex: 1 }}>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="flex-start"
-                        spacing={1}
-                      >
-                        <Box>
-                          <Typography sx={{ fontWeight: 800 }}>
-                            {c.name}
-                          </Typography>
-                        </Box>
-                        <Chip
-                          label={c.status}
-                          size="small"
-                          sx={{
-                            fontSize: 11,
-                            fontWeight: 600,
-                            borderRadius: "999px",
-                            background:
-                              c.status === "Open to Offers"
-                                ? "rgba(34,197,94,0.08)"
-                                : c.status === "Seeking New Role"
-                                ? "rgba(59,130,246,0.08)"
-                                : "rgba(148,163,184,0.16)",
-                            color:
-                              c.status === "Open to Offers"
-                                ? "#15803d"
-                                : c.status === "Seeking New Role"
-                                ? "#1d4ed8"
-                                : "#475569",
-                          }}
-                        />
-                      </Stack>
+                    <Box>
+                      <Typography sx={{ fontWeight: 800 }}>{c.name}</Typography>
+                      <Chip
+                        label={c.status}
+                        size="small"
+                        sx={{
+                          mt: 0.5,
+                          fontSize: 11,
+                          borderRadius: "999px",
+                          background:
+                            c.status === "Open to Offers"
+                              ? "rgba(34,197,94,0.08)"
+                              : c.status === "Seeking New Role"
+                              ? "rgba(59,130,246,0.08)"
+                              : "rgba(148,163,184,0.16)",
+                          color:
+                            c.status === "Open to Offers"
+                              ? "#15803d"
+                              : c.status === "Seeking New Role"
+                              ? "#1d4ed8"
+                              : "#475569",
+                        }}
+                      />
 
-                      {/* Location */}
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        sx={{ mt: 0.75 }}
-                      >
-                        <LocationOnIcon
-                          sx={{ fontSize: 16, color: "#64748b" }}
-                        />
+                      <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                        <LocationOnIcon sx={{ fontSize: 16, color: "#64748b" }} />
                         <Typography sx={{ fontSize: 13, color: "#64748b" }}>
                           {c.city}, {c.country}
                         </Typography>
                       </Stack>
 
-                      {/* Education */}
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        sx={{ mt: 0.5 }}
-                      >
+                      <Stack direction="row" spacing={1} sx={{ mt: 0.5 }}>
                         <SchoolIcon sx={{ fontSize: 16, color: "#64748b" }} />
                         <Typography sx={{ fontSize: 13, color: "#64748b" }}>
                           {c.education}
@@ -610,24 +586,20 @@ export default function UnlockCandidates() {
                   </Stack>
 
                   {/* Skills */}
-                  <Box sx={{ mt: 1.5 }}>
-                    <Typography
-                      sx={{ fontSize: 13, fontWeight: 600, mb: 0.75 }}
-                    >
+                  <Box sx={{ mt: 2 }}>
+                    <Typography sx={{ fontSize: 13, fontWeight: 600 }}>
                       Skills
                     </Typography>
-                    <Stack direction="row" spacing={1} flexWrap="wrap">
+                    <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 1 }}>
                       {c.skills.map((s) => (
                         <Chip
                           key={s}
                           label={s}
                           size="small"
                           sx={{
-                            mr: 0.5,
-                            mb: 0.5,
-                            backgroundColor: "#f1f5f9",
-                            borderRadius: "999px",
+                            background: "#f1f5f9",
                             fontSize: 11,
+                            borderRadius: "999px",
                           }}
                         />
                       ))}
@@ -635,24 +607,20 @@ export default function UnlockCandidates() {
                   </Box>
 
                   {/* Languages */}
-                  <Box sx={{ mt: 1.5 }}>
-                    <Typography
-                      sx={{ fontSize: 13, fontWeight: 600, mb: 0.75 }}
-                    >
+                  <Box sx={{ mt: 2 }}>
+                    <Typography sx={{ fontSize: 13, fontWeight: 600 }}>
                       Languages
                     </Typography>
-                    <Stack direction="row" spacing={1} flexWrap="wrap">
-                      {c.languages.map((lang) => (
+                    <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 1 }}>
+                      {c.languages.map((l) => (
                         <Chip
-                          key={lang}
-                          label={lang}
+                          key={l}
+                          label={l}
                           size="small"
                           sx={{
-                            mr: 0.5,
-                            mb: 0.5,
-                            backgroundColor: "#eff6ff",
-                            borderRadius: "999px",
+                            background: "#eff6ff",
                             fontSize: 11,
+                            borderRadius: "999px",
                           }}
                         />
                       ))}
@@ -660,26 +628,22 @@ export default function UnlockCandidates() {
                   </Box>
 
                   {/* Phone */}
-                  <Box sx={{ mt: 1.5, display: "flex", alignItems: "center" }}>
-                    <PhoneIcon sx={{ fontSize: 16, color: "#2563eb", mr: 0.75 }} />
-                    <Typography
-                      sx={{ fontSize: 13, color: "#2563eb", fontWeight: 600 }}
-                    >
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2 }}>
+                    <PhoneIcon sx={{ fontSize: 16, color: "#2563eb" }} />
+                    <Typography sx={{ fontSize: 13, color: "#2563eb", fontWeight: 600 }}>
                       {c.phone}
                     </Typography>
-                  </Box>
+                  </Stack>
 
-                  {/* Footer actions */}
+                  {/* Footer */}
                   <Box
                     sx={{
-                      mt: 2,
-                      pt: 1.5,
+                      mt: "auto",
+                      pt: 2,
                       borderTop: "1px solid rgba(226,232,240,0.9)",
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      gap: 1,
-                      flexWrap: "wrap",
                     }}
                   >
                     <Stack direction="row" spacing={1}>
@@ -687,7 +651,6 @@ export default function UnlockCandidates() {
                         variant="outlined"
                         size="small"
                         onClick={() => handleViewResume(c)}
-                        sx={{ textTransform: "none", fontSize: 12 }}
                         disabled={!c.resume}
                       >
                         View Resume
@@ -696,16 +659,13 @@ export default function UnlockCandidates() {
                         variant="contained"
                         size="small"
                         onClick={() => handleDownloadResume(c)}
-                        sx={{ textTransform: "none", fontSize: 12 }}
                         disabled={!c.resume}
                       >
                         Download Resume
                       </Button>
                     </Stack>
 
-                    <Typography
-                      sx={{ fontSize: 12, color: "#64748b", whiteSpace: "nowrap" }}
-                    >
+                    <Typography sx={{ fontSize: 12, color: "#64748b" }}>
                       Active {c.lastActiveDays}d ago
                     </Typography>
                   </Box>
@@ -714,49 +674,27 @@ export default function UnlockCandidates() {
             ))}
           </Grid>
 
-          {/* Pagination (Previous / Next) */}
+          {/* Pagination */}
           {total > 0 && (
-            <Box
-              sx={{
-                mt: 4,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
+            <Box sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 2 }}>
               <Button
                 variant="outlined"
                 size="small"
                 disabled={page === 1}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                sx={{ textTransform: "none" }}
               >
                 Previous
               </Button>
 
-              <Paper
-                sx={{
-                  px: 2,
-                  py: 0.5,
-                  borderRadius: 999,
-                  minWidth: 40,
-                  textAlign: "center",
-                }}
-              >
-                <Typography sx={{ fontSize: 13, fontWeight: 600 }}>
-                  {page}
-                </Typography>
+              <Paper sx={{ px: 2, py: 1, borderRadius: "999px" }}>
+                <Typography sx={{ fontWeight: 600 }}>{page}</Typography>
               </Paper>
 
               <Button
                 variant="outlined"
                 size="small"
                 disabled={page === pageCount}
-                onClick={() =>
-                  setPage((p) => Math.min(pageCount, p + 1))
-                }
-                sx={{ textTransform: "none" }}
+                onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
               >
                 Next
               </Button>
@@ -765,26 +703,23 @@ export default function UnlockCandidates() {
         </Box>
       </Box>
 
-      {/* Mobile filter drawer */}
+      {/* Mobile Drawer Filters */}
       <Drawer
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        PaperProps={{ sx: { width: 320 } }}
+        PaperProps={{ sx: { width: 300 } }}
       >
         <Box sx={{ p: 2 }}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ mb: 1 }}
-          >
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Typography sx={{ fontWeight: 800 }}>Filters</Typography>
             <IconButton onClick={() => setDrawerOpen(false)}>
               <CloseIcon />
             </IconButton>
           </Stack>
-          <Divider sx={{ mb: 2 }} />
+
+          <Divider sx={{ my: 2 }} />
+
           {FiltersContent}
         </Box>
       </Drawer>
