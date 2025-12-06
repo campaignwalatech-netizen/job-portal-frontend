@@ -11,9 +11,10 @@
 	<img src="https://img.shields.io/github/languages/top/campaignwalatech-netizen/job-portal-frontend.git?style=default&color=0080ff" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/campaignwalatech-netizen/job-portal-frontend.git?style=default&color=0080ff" alt="repo-language-count">
 </p>
-<p align="left">
+<p align="left"><!-- default option, no dependency badges. -->
 </p>
 <p align="left">
+	<!-- default option, no dependency badges. -->
 </p>
 <br>
 
