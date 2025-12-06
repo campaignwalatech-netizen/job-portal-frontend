@@ -207,3 +207,9 @@ UI icons from Material Icon Theme
 Component-driven architecture using React best practices
 
 ---
+
+### 👩‍💻 Author
+Afreeda Asad
+Frontend Developer — Job Portal Platform
+https://github.com/afridaasad
+https://www.linkedin.com/in/afreedaasad
