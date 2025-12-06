@@ -7,12 +7,7 @@
 The platform provides separate experiences for Employers and Job Seekers, including dashboards, job postings, candidate search, authentication flows, and dynamic UI components.
 
 </p>
-<p align="left">
-	<img src="https://img.shields.io/github/license/campaignwalatech-netizen/job-portal-frontend.git?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/campaignwalatech-netizen/job-portal-frontend.git?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/campaignwalatech-netizen/job-portal-frontend.git?style=default&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/campaignwalatech-netizen/job-portal-frontend.git?style=default&color=0080ff" alt="repo-language-count">
-</p>
+
 <p align="left"><!-- default option, no dependency badges. -->
 </p>
 <p align="left">
@@ -123,7 +118,7 @@ Install job-portal-frontend.git using one of the following methods:
 3. Install the project dependencies:
 
 
-**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
+**Using `npm`** 
 
 ```sh
 ❯ npm install
@@ -134,7 +129,7 @@ Install job-portal-frontend.git using one of the following methods:
 
 ### 🤖 Usage
 Run job-portal-frontend.git using the following command:
-**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
+**Using `npm`** 
 
 ```sh
 ❯ npm start
@@ -143,7 +138,7 @@ Run job-portal-frontend.git using the following command:
 
 ### 🧪 Testing
 Run the test suite using the following command:
-**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
+**Using `npm`** 
 
 ```sh
 ❯ npm test
