@@ -135,182 +135,162 @@ export default function Billing() {
   ];
 
 const downloadInvoice = async (row) => {
-  const doc = new jsPDF("p", "mm", "a4"); // 210 x 297mm
+  const doc = new jsPDF("p", "mm", "a4");
 
-  // --- Load & convert logo (SVG -> high-res PNG) ---
+  // --- Convert SVG Logo to PNG ---
   const svgUrl = "/logo.svg";
   const img = new Image();
   img.src = svgUrl;
-  await new Promise((resolve) => (img.onload = resolve));
+  await new Promise((res) => (img.onload = res));
 
   const canvas = document.createElement("canvas");
   canvas.width = img.width * 4;
   canvas.height = img.height * 4;
   const ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  const pngLogo = canvas.toDataURL("image/png");
+  const logo = canvas.toDataURL("image/png");
 
-  // Helpers
-  const parseAmount = (str) => {
-    const num = parseFloat(str.replace(/[^\d.]/g, ""));
-    return Number.isNaN(num) ? 0 : num;
+  // ----------------- Helpers -----------------
+  const parse = (val) => Number(val.replace(/[^\d.]/g, "")) || 0;
+  const format = (n) => `₹ ${n.toLocaleString("en-IN")}`;
+
+  const right = (txt, xRight, y) => {
+    const w = doc.getTextWidth(txt);
+    doc.text(txt, xRight - w, y);
   };
 
-  const formatAmount = (num) => `₹ ${num.toLocaleString("en-IN")}`;
-
-  const baseAmount = parseAmount(row.amount);
-  const gstAmount = Math.round(baseAmount * 0.18);
-  const totalAmount = baseAmount + gstAmount;
+  const base = parse(row.amount);
+  const gst = Math.round(base * 0.18);
+  const total = base + gst;
 
   const statusColors = {
-    Success: { r: 22, g: 101, b: 52, br: 220, bg: 252, bb: 231 },
-    Pending: { r: 146, g: 64, b: 14, br: 254, bg: 243, bb: 199 },
-    Failed: { r: 185, g: 28, b: 28, br: 254, bg: 226, bb: 226 },
+    Success: { bg: "#dcfce7", txt: "#166534" },
+    Pending: { bg: "#fef3c7", txt: "#92400e" },
+    Failed: { bg: "#fee2e2", txt: "#b91c1c" },
   };
   const sc = statusColors[row.status] || statusColors.Success;
 
-  // ================= HEADER =================
-  doc.addImage(pngLogo, "PNG", 16, 14, 26, 26);
+  const hex = (h) => {
+    h = h.replace("#", "");
+    const n = parseInt(h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  };
+
+  // ----------------- HEADER -----------------
+  doc.setFillColor(37, 99, 235);
+  doc.rect(0, 0, 210, 45, "F");
+
+  doc.addImage(logo, "PNG", 15, 10, 26, 26);
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(20);
-  doc.text("Naukri Chahiye", 48, 24);
+  doc.setFontSize(22);
+  doc.setTextColor(255, 255, 255);
+  doc.text("Naukri Chahiye", 48, 20);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
-  doc.text("Employer Billing Invoice", 48, 31);
+  doc.text("Employer Billing Invoice", 48, 28);
 
-  // Invoice meta box (right top)
-  doc.setLineWidth(0.3);
-  doc.roundedRect(135, 14, 60, 28, 3, 3);
-
+  // Invoice Meta
   doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
-  doc.text("Invoice No.:", 140, 21);
+  doc.text("Invoice No:", 150, 12);
+  doc.text("Invoice Date:", 150, 18);
+  doc.text("Status:", 150, 24);
+
   doc.setFont("helvetica", "bold");
-  doc.text("INV-2025-0001", 162, 21);
+  doc.text("INV-2025-0001", 175, 12);
+  doc.text(row.date, 175, 18);
 
-  doc.setFont("helvetica", "normal");
-  doc.text("Invoice Date:", 140, 28);
-  doc.text(row.date, 162, 28);
+  // Status Pill
+  const [r, g, b] = hex(sc.bg);
+  doc.setFillColor(r, g, b);
+  doc.roundedRect(168, 20, 34, 10, 2, 2, "F");
 
-  doc.text("Status:", 140, 35);
+  const [r2, g2, b2] = hex(sc.txt);
+  doc.setTextColor(r2, g2, b2);
+  doc.text(row.status, 185, 27, { align: "center" });
 
-  // Status badge
-  doc.setFillColor(sc.br, sc.bg, sc.bb);
-  doc.roundedRect(160, 30, 30, 10, 2, 2, "F");
-  doc.setTextColor(sc.r, sc.g, sc.b);
-  doc.setFont("helvetica", "bold");
-  doc.text(row.status, 175, 37, { align: "center" });
   doc.setTextColor(0, 0, 0);
 
-  // Separator
-  doc.setLineWidth(0.3);
-  doc.line(15, 48, 195, 48);
+  // ----------------- BILLED FROM / BILLED TO -----------------
+  let y = 60;
 
-  // ================= BILLING BLOCKS =================
-  doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("Billed From", 15, 58);
-  doc.text("Billed To", 115, 58);
+  doc.setFontSize(13);
+  doc.text("Billed From", 15, y);
+  doc.text("Billed To", 115, y);
 
-  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
 
-  // Company (placeholder)
-  let y = 64;
+  y += 7;
   doc.text("Naukri Chahiye Pvt. Ltd.", 15, y);
-  y += 5;
-  doc.text("4th Floor, Tech Park", 15, y);
-  y += 5;
-  doc.text("Chennai, Tamil Nadu - 600000", 15, y);
-  y += 5;
-  doc.text("India", 15, y);
-  y += 5;
-  doc.text("GSTIN: 22AAAAA0000A1Z5", 15, y);
-  y += 5;
-  doc.text("support@naukrichahiye.com | +91-98765 43210", 15, y);
+  doc.text("GSTIN: 22AAAAA0000A1Z5", 15, y + 5);
+  doc.text("4th Floor, Tech Park", 15, y + 10);
+  doc.text("Chennai, Tamil Nadu - 600000", 15, y + 15);
 
-  // Billed To: from your billing details state
-  let y2 = 64;
-  doc.text("Registered Employer", 115, y2);
-  y2 += 5;
-  doc.text(`GSTIN: ${details.gstin}`, 115, y2);
-  y2 += 5;
-  doc.text(details.office, 115, y2);
-  y2 += 5;
-  doc.text(details.street, 115, y2);
-  y2 += 5;
+  doc.text("Registered Employer", 115, y);
+  doc.text(`GSTIN: ${details.gstin}`, 115, y + 5);
+  doc.text(details.office, 115, y + 10);
+  doc.text(details.street, 115, y + 15);
   doc.text(
     `${details.city}, ${details.state} - ${details.pincode}`,
     115,
-    y2
+    y + 20
   );
 
-  // ================= ITEM TABLE =================
-  const tableTop = 100;
-  const colX = { desc: 15, qty: 120, price: 145, amount: 175 };
+  // ----------------- ITEM TABLE -----------------
+  const tableTop = 110;
 
-  // Header row background
-  doc.setFillColor(248, 250, 252);
-  doc.rect(15, tableTop, 180, 8, "F");
+  doc.setFillColor(248, 250, 255);
+  doc.rect(15, tableTop, 180, 10, "F");
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.text("Description", colX.desc, tableTop + 5);
-  doc.text("Qty", colX.qty, tableTop + 5);
-  doc.text("Price", colX.price, tableTop + 5);
-  doc.text("Amount", colX.amount, tableTop + 5);
+  doc.setFontSize(11);
 
-  // Item row
-  const rowTop = tableTop + 10;
+  doc.text("Description", 20, tableTop + 7);
+  doc.text("Qty", 110, tableTop + 7);
+  doc.text("Price", 140, tableTop + 7);
+  doc.text("Amount", 170, tableTop + 7);
+
+  // Row
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
 
-  // Description (wrap if long)
-  const planLines = doc.splitTextToSize(row.plan, 100);
-  doc.text(planLines, colX.desc, rowTop + 4);
+  const rowY = tableTop + 17;
+  doc.text(row.plan, 20, rowY);
+  right("1", 115, rowY);
+  right(format(base), 150, rowY);
+  right(format(base), 190, rowY);
 
-  doc.text("1", colX.qty, rowTop + 4);
-  doc.text(formatAmount(baseAmount), colX.price, rowTop + 4);
-  doc.text(formatAmount(baseAmount), colX.amount, rowTop + 4);
+  // Border
+  doc.rect(15, tableTop, 180, 20);
 
-  // Table borders
-  doc.setLineWidth(0.2);
-  doc.rect(15, tableTop, 180, 10 + planLines.length * 5);
+  // ----------------- TOTAL SUMMARY BOX -----------------
+  const sumTop = tableTop + 30;
 
-  // ================= SUMMARY BOX =================
-  const sumTop = rowTop + 20;
-  const sumHeight = 26;
-  const sumLeft = 125;
-  const sumWidth = 70;
-
-  doc.setFillColor(248, 250, 252);
-  doc.roundedRect(sumLeft, sumTop, sumWidth, sumHeight, 2, 2, "F");
+  doc.setFillColor(248, 250, 255);
+  doc.roundedRect(115, sumTop, 80, 35, 3, 3, "F");
   doc.setLineWidth(0.3);
-  doc.roundedRect(sumLeft, sumTop, sumWidth, sumHeight, 2, 2);
+  doc.roundedRect(115, sumTop, 80, 35, 3, 3);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
 
-  doc.text("Subtotal:", sumLeft + 5, sumTop + 8);
-  doc.text(formatAmount(baseAmount), sumLeft + sumWidth - 5, sumTop + 8, {
-    align: "right",
-  });
-
-  doc.text("GST (18%):", sumLeft + 5, sumTop + 14);
-  doc.text(formatAmount(gstAmount), sumLeft + sumWidth - 5, sumTop + 14, {
-    align: "right",
-  });
+  doc.text("Subtotal:", 120, sumTop + 10);
+  doc.text("GST (18%):", 120, sumTop + 18);
 
   doc.setFont("helvetica", "bold");
-  doc.text("Total:", sumLeft + 5, sumTop + 21);
-  doc.text(formatAmount(totalAmount), sumLeft + sumWidth - 5, sumTop + 21, {
-    align: "right",
-  });
+  doc.text("Total:", 120, sumTop + 26);
 
-  // ================= TERMS & SIGNATURE =================
-  const termsTop = sumTop + sumHeight + 15;
+  // PERFECT RIGHT ALIGNMENT
+  right(format(base), 190, sumTop + 10);
+  right(format(gst), 190, sumTop + 18);
+  doc.setFont("helvetica", "bold");
+  right(format(total), 190, sumTop + 26);
+
+  // ----------------- TERMS -----------------
+  const termsTop = sumTop + 55;
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
@@ -319,32 +299,27 @@ const downloadInvoice = async (row) => {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
 
-  const termsText =
-    "1. This invoice is generated based on your Naukri Chahiye subscription.\n" +
-    "2. Payments once made are non-refundable as per platform policy.\n" +
-    "3. For any disputes or clarifications, please contact support within 7 days of invoice date.";
-  const wrapped = doc.splitTextToSize(termsText, 180);
-  doc.text(wrapped, 15, termsTop + 6);
+  const terms =
+    "1. Billing will follow Naukri Chahiye's employer policies.\n" +
+    "2. Payments made are non-refundable unless required by law.\n" +
+    "3. For clarifications, contact support within 7 days.";
+
+  doc.text(doc.splitTextToSize(terms, 180), 15, termsTop + 6);
 
   // Signature
   const sigTop = 260;
-  doc.setLineWidth(0.2);
   doc.line(150, sigTop, 195, sigTop);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
   doc.text("Authorised Signatory", 172.5, sigTop + 5, { align: "center" });
 
   // Footer
   doc.setFontSize(8);
   doc.text(
-    "This is a system-generated invoice. No physical signature is required.",
+    "This is a system-generated invoice from Naukri Chahiye.",
     15,
-    285
+    290
   );
 
-  const filename = `invoice-${row.date.replaceAll("-", "")}.pdf`;
-  doc.save(filename);
+  doc.save(`invoice-${row.date.replaceAll("-", "")}.pdf`);
 };
 
 

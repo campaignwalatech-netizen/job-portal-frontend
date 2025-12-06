@@ -20,6 +20,8 @@ const Notifications = lazy(() => import('./pages/employer/notifications'));
 const ProfileSettings = lazy(() => import('./pages/employer/ProfileSettings'));
 const Credits = lazy(() => import('./pages/employer/credits'));
 const Billing = lazy(() => import('./pages/employer/billing'));
+const UnlockCandidates = lazy(() => import('./pages/employer/database/UnlockCandidates'));
+
 
 
 
@@ -61,6 +63,7 @@ function App() {
               <Route path="profile" element={<ProfileSettings />} />
               <Route path="credits" element={<Credits />} />
               <Route path="billing" element={<Billing />} />
+              <Route path="database/unlocked" element={<UnlockCandidates />} />
 
 
 
